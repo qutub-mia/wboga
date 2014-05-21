@@ -7,7 +7,7 @@
     }
     </style>
     <meta charset="utf-8"/>
-    <title>Dashboard - OrosCapital web</title>
+    <title>Dashboard - World BOGA</title>
 
     <meta name="description" content="overview &amp; stats"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
