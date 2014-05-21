@@ -1,10 +1,7 @@
 <html xmlns="http://www.w3.org/1999/html">
 <head>
 	<meta name='layout' content='logintpl'/>
-	<title><g:message code="springSecurity.login.title"/></title>
-
-
-
+	<title>Welcome to World BOGA</title>
 </head>
 
 <body >
@@ -18,7 +15,7 @@
                         <div class="center">
                             <h1>
                                 <i class="icon-leaf green"></i>
-                                <span class="red"><g:message code="springSecurity.login.header.title"/></span>
+                                <span class="red"></span>
                             </h1>
                         </div>
                     </div>
@@ -32,7 +29,7 @@
                                     <div class="widget-main">
                                         <h4 class="header blue lighter bigger">
                                             <i class="icon-coffee green"></i>
-                                             <g:message code="springSecurity.login.header.insert.information"/>
+                                            //
                                         </h4>
 
                                        <h5 class="help-block"><g:if test='${flash.message}'>  <div class='login_message alert-danger '> <i class="icon-bell red"> <b> ${flash.message} </b> </i></div> </g:if> </h5>
@@ -42,10 +39,10 @@
                                         <form action='${postUrl}' method='POST' id='loginForm' class='cssform ' autocomplete='off'>
                                             <fieldset>
                                             <div class="form-group">
-                                                <label for='username' class=" control-label"><g:message code="springSecurity.login.username.label" default="User Name"/>:</label>
+                                                <label for='username' class=" control-label">Username</label>
                                              <div class=" ">
                                              <span class="block input-icon input-icon-right ">
-                                                    <input type="text" class="text_ span12 form-control" name='j_username' id='username' placeholder="Username" value="admin"   />
+                                                    <input type="text" class="text_ span12 form-control" name='j_username' id='username' placeholder="Username" value="admin"/>
                                                     <i class="icon-user"></i>
 
                                                 </span>
@@ -55,7 +52,7 @@
 
                                             <div class="form-group">
 
-                                            <label for='password' class=" control-label"><g:message code="springSecurity.login.password.label" default="Password"/>:</label>
+                                            <label for='password' class=" control-label">Password</label>
                                                 <div class="">
                                                  <span class="block input-icon input-icon-right">
                                                     <input type="password" class="text_ span12 form-control required" placeholder="Password" name='j_password' id='password' value="password" />
@@ -69,7 +66,7 @@
                                                 <div class="clearfix">
                                                     <label class="inline">
                                                     <input type='checkbox' class='chk' name='${rememberMeParameter}' id='remember_me' <g:if test='${hasCookie}'>checked='checked'</g:if>/
-                                                        <span class="lbl"> <label for='remember_me'><g:message code="springSecurity.login.remember.me.label" default="Remember Me"/></label></span>
+                                                        %{--<span class="lbl"> <label for='remember_me'></label></span>--}%
                                                     </label>
                                                     <input type="submit" value="Submit" name="submit" class="width-35 pull-right btn btn-small btn-primary" id="submit" />
                                                 </div>

@@ -8,12 +8,12 @@
     <a href="${g.createLink(controller: 'dashboard',action: 'index')}" class="navbar-brand">
         <small>
             <i class="icon-leaf"></i>
-            OrosCapital
+            World BOGA
         </small>
     </a><!-- /.brand -->
 </div><!-- /.navbar-header -->
 <div class="navbar-header pull-right" role="navigation">
-<ul class="nav ace-nav">
+%{--<ul class="nav ace-nav">
 <li class="grey">
     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
         <i class="icon-tasks"></i>
@@ -235,7 +235,7 @@
     </a>
 
     <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
-        %{--<li>
+        --}%%{--<li>
             <a href="#">
                 <i class="icon-cog"></i>
                 Settings
@@ -249,7 +249,7 @@
             </a>
         </li>
 
-        <li class="divider"></li>--}%
+        <li class="divider"></li>--}%%{--
 
         <li>
             <a href="${createLink(controller: 'logout')}">
@@ -259,7 +259,7 @@
         </li>
     </ul>
 </li>
-</ul><!-- /.ace-nav -->
+</ul>--}%<!-- /.ace-nav -->
 </div><!-- /.navbar-header -->
 </div><!-- /.container -->
 </div>
