@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="wboga"/>
-    <title>Welcome to OrosCapital</title>
+    <title>Welcome to World BOGA</title>
 
 </head>
 
@@ -13,7 +13,7 @@
         Dashboard
         <small>
             <i class="icon-double-angle-right"></i>
-            Chart &amp; graph
+            Somethings &amp;
         </small>
     </h1>
 </div><!-- /.page-header -->

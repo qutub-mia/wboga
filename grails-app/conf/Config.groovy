@@ -113,3 +113,25 @@ log4j = {
            'org.hibernate',
            'net.sf.ehcache.hibernate'
 }
+
+grails.plugin.springsecurity.userLookup.userDomainClassName = 'com.gsl.uma.security.User'
+grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'com.gsl.uma.security.UserRole'
+grails.plugin.springsecurity.authority.className = 'com.gsl.uma.security.Role'
+grails.plugin.springsecurity.requestMap.className = 'com.gsl.uma.security.RequestMap'
+grails.plugin.springsecurity.controllerAnnotations.staticRules = [
+//	'/':                              ['permitAll'],
+        '/**/js/**'                 : ['permitAll'],
+        '/**/css/**'                : ['permitAll'],
+        '/**/images/**'             : ['permitAll'],
+        '/**/imageIndirect/index/**': ['permitAll'],
+        '/**/favicon.ico'           : ['permitAll'],
+        '/login/**'                 : ['permitAll'],
+        '/logout'                   : ['permitAll'],
+        '/logout/**'                : ['permitAll'],
+        '/login'                    : ['permitAll']
+]
+grails.plugin.springsecurity.rejectIfNoRule = true
+grails.plugin.springsecurity.fii.rejectPublicInvocations = false
+//grails.plugin.springsecurity.successHandler.defaultTargetUrl = '/login/loginSuccess'
+grails.plugin.springsecurity.successHandler.alwaysUseDefault = true
+grails.plugin.springsecurity.logout.postOnly = false

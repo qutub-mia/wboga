@@ -5,9 +5,10 @@ grails.project.test.reports.dir = "target/test-reports"
 grails.project.work.dir = "target/work"
 grails.project.target.level = 1.6
 grails.project.source.level = 1.6
+grails.project.war.file = "target/wboga.war"
 //grails.project.war.file = "target/${appName}-${appVersion}.war"
 
-grails.project.fork = [
+/*grails.project.fork = [
     // configure settings for compilation JVM, note that if you alter the Groovy version forked compilation is required
     //  compile: [maxMemory: 256, minMemory: 64, debug: false, maxPerm: 256, daemon:true],
 
@@ -19,7 +20,7 @@ grails.project.fork = [
     war: [maxMemory: 768, minMemory: 64, debug: false, maxPerm: 256, forkReserve:false],
     // configure settings for the Console UI JVM
     console: [maxMemory: 768, minMemory: 64, debug: false, maxPerm: 256]
-]
+]*/
 
 grails.project.dependency.resolver = "maven" // or ivy
 grails.project.dependency.resolution = {
@@ -40,6 +41,8 @@ grails.project.dependency.resolution = {
         mavenLocal()
         grailsCentral()
         mavenCentral()
+        mavenRepo "http://repo.spring.io/milestone/"
+
         // uncomment these (or add new ones) to enable remote dependency resolution from public Maven repositories
         //mavenRepo "http://repository.codehaus.org"
         //mavenRepo "http://download.java.net/maven/2/"
@@ -47,6 +50,7 @@ grails.project.dependency.resolution = {
     }
 
     dependencies {
+        runtime 'mysql:mysql-connector-java:5.1.27'
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes e.g.
         // runtime 'mysql:mysql-connector-java:5.1.27'
         // runtime 'org.postgresql:postgresql:9.3-1100-jdbc41'
@@ -57,12 +61,12 @@ grails.project.dependency.resolution = {
         build ":tomcat:7.0.50.1"
 
         // plugins for the compile step
-        compile ":scaffolding:2.0.2"
+//        compile ":scaffolding:2.0.2"
         compile ':cache:1.1.1'
 
         // plugins needed at runtime but not for compilation
         runtime ":hibernate:3.6.10.8" // or ":hibernate4:4.3.1.1"
-        runtime ":database-migration:1.3.8"
+//        runtime ":database-migration:1.3.8"
         runtime ":jquery:1.11.0"
         runtime ":resources:1.2.1"
         // Uncomment these (or add new ones) to enable additional resources capabilities
@@ -78,5 +82,6 @@ grails.project.dependency.resolution = {
         //compile ":less-asset-pipeline:1.5.0"
         //compile ":coffee-asset-pipeline:1.5.0"
         //compile ":handlebars-asset-pipeline:1.0.0.3"
+        compile ":spring-security-core:2.0-RC2"
     }
 }
