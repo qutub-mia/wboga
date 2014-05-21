@@ -40,7 +40,7 @@
     <ul class="nav nav-list">
     <li>
         <a href="#">
-            <i class="icon-double-angle-right"></i>User</a>
+            <i class="icon-double-angle-right"></i>World BOGA</a>
     </li>
     </ul><!-- /.nav-list -->
 

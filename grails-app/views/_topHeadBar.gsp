@@ -11,10 +11,11 @@
             World BOGA
         </small>
     </a><!-- /.brand -->
-</div><!-- /.navbar-header -->
+</div>
+<!-- /.navbar-header -->
 <div class="navbar-header pull-right" role="navigation">
-%{--<ul class="nav ace-nav">
-<li class="grey">
+<ul class="nav ace-nav">
+%{--<li class="grey">
     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
         <i class="icon-tasks"></i>
         <span class="badge badge-grey">4</span>
@@ -85,9 +86,9 @@
             </a>
         </li>
     </ul>
-</li>
+</li>--}%
 
-<li class="purple">
+%{--<li class="purple">
     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
         <i class="icon-bell-alt icon-animated-bell"></i>
         <span class="badge badge-important">8</span>
@@ -149,9 +150,9 @@
             </a>
         </li>
     </ul>
-</li>
+</li>--}%
 
-<li class="green">
+%{--<li class="green">
     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
         <i class="icon-envelope icon-animated-vertical"></i>
         <span class="badge badge-success">5</span>
@@ -221,7 +222,7 @@
             </a>
         </li>
     </ul>
-</li>
+</li>--}%
 
 <li class="light-blue">
     <a data-toggle="dropdown" href="#" class="dropdown-toggle">
@@ -235,7 +236,7 @@
     </a>
 
     <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
-        --}%%{--<li>
+        %{--<li>
             <a href="#">
                 <i class="icon-cog"></i>
                 Settings
@@ -249,7 +250,7 @@
             </a>
         </li>
 
-        <li class="divider"></li>--}%%{--
+        <li class="divider"></li>--}%
 
         <li>
             <a href="${createLink(controller: 'logout')}">
@@ -259,7 +260,7 @@
         </li>
     </ul>
 </li>
-</ul>--}%<!-- /.ace-nav -->
+</ul><!-- /.ace-nav -->
 </div><!-- /.navbar-header -->
 </div><!-- /.container -->
 </div>

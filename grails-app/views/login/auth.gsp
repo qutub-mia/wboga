@@ -29,7 +29,7 @@
                                     <div class="widget-main">
                                         <h4 class="header blue lighter bigger">
                                             <i class="icon-coffee green"></i>
-                                            //
+                                           Welcome to World BOGA
                                         </h4>
 
                                        <h5 class="help-block"><g:if test='${flash.message}'>  <div class='login_message alert-danger '> <i class="icon-bell red"> <b> ${flash.message} </b> </i></div> </g:if> </h5>
@@ -64,11 +64,11 @@
                                                 <div class="space"></div>
 
                                                 <div class="clearfix">
-                                                    <label class="inline">
+                                                 %{--   <label class="inline">
                                                     <input type='checkbox' class='chk' name='${rememberMeParameter}' id='remember_me' <g:if test='${hasCookie}'>checked='checked'</g:if>/
-                                                        %{--<span class="lbl"> <label for='remember_me'></label></span>--}%
-                                                    </label>
-                                                    <input type="submit" value="Submit" name="submit" class="width-35 pull-right btn btn-small btn-primary" id="submit" />
+                                                        <span class="lbl"> <label for='remember_me'></label></span>
+                                                    </label>--}%
+                                                    <input type="submit" value="Login" name="submit" class="width-35 pull-right btn btn-small btn-primary" id="submit" />
                                                 </div>
                                                 <div class="space-4"></div>
                                             </fieldset>
@@ -76,12 +76,12 @@
                                     </div><!--/widget-main-->
 
                                     <div class="toolbar clearfix">
-                                        <div>
+                                        %{--<div>
                                             <a href="#"   class="forgot-password-link">
                                                 <i class="icon-arrow-left"></i>
                                                 I forgot my password
                                             </a>
-                                        </div>
+                                        </div>--}%
                                         <div>
                                             <a href="#"  class="user-signup-link">
                                                 I want to register
