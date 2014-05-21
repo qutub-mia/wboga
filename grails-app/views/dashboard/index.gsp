@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="layout" content="oros"/>
+    <meta name="layout" content="wboga"/>
     <title>Welcome to OrosCapital</title>
 
 </head>
