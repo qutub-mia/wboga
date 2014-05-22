@@ -37,10 +37,11 @@
     </div><!-- #sidebar-shortcuts -->
 
     <ul class="nav nav-list">
-    <li>
-        <a href="#">
-            <i class="icon-double-angle-right"></i>World BOGA</a>
-    </li>
+        <li>
+            <a href="#">
+                <i class="icon-dashboard"></i>
+                <i class="icon-double-angle-right"></i>World BOGA</a>
+        </li>
     </ul><!-- /.nav-list -->
 
     <div class="sidebar-collapse" id="sidebar-collapse">
