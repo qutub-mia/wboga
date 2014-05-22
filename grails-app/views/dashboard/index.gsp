@@ -13,7 +13,7 @@
         Dashboard
         <small>
             <i class="icon-double-angle-right"></i>
-            Somethings &amp;
+            Somethings for World BOGA&amp;
         </small>
     </h1>
 </div><!-- /.page-header -->
