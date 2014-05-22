@@ -114,10 +114,10 @@ log4j = {
            'net.sf.ehcache.hibernate'
 }
 
-grails.plugin.springsecurity.userLookup.userDomainClassName = 'com.gsl.uma.security.User'
-grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'com.gsl.uma.security.UserRole'
-grails.plugin.springsecurity.authority.className = 'com.gsl.uma.security.Role'
-grails.plugin.springsecurity.requestMap.className = 'com.gsl.uma.security.RequestMap'
+grails.plugin.springsecurity.userLookup.userDomainClassName = 'com.gsl.wboga.uma.security.User'
+grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'com.gsl.wboga.uma.security.UserRole'
+grails.plugin.springsecurity.authority.className = 'com.gsl.wboga.uma.security.Role'
+grails.plugin.springsecurity.requestMap.className = 'com.gsl.wboga.uma.security.RequestMap'
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 //	'/':                              ['permitAll'],
         '/**/js/**'                 : ['permitAll'],
