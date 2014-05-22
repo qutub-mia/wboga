@@ -175,7 +175,7 @@
         %{--<div class="widget-header widget-header-flat widget-header-small">--}%
             %{--<h5>--}%
                 %{--<i class="icon-signal"></i>--}%
-                %{--OrosCapital Comments Sources--}%
+
             %{--</h5>--}%
 
             %{--<div class="widget-toolbar no-border">--}%
@@ -538,14 +538,14 @@
         %{--<li class="item-green clearfix">--}%
             %{--<label class="inline">--}%
                 %{--<input type="checkbox" class="ace"/>--}%
-                %{--<span class="lbl"> Update your OrosCapital account</span>--}%
+
             %{--</label>--}%
         %{--</li>--}%
 
         %{--<li class="item-pink clearfix">--}%
             %{--<label class="inline">--}%
                 %{--<input type="checkbox" class="ace"/>--}%
-                %{--<span class="lbl"> Terms & Conditions to join OrosCapital</span>--}%
+                %{--<span class="lbl"> Terms & Conditions to join </span>--}%
             %{--</label>--}%
         %{--</li>--}%
     %{--</ul>--}%

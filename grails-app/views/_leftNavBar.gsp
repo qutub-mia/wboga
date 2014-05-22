@@ -1,4 +1,3 @@
-%{--<%@ page import="com.gsl.oros.core.banking.OpenAccountController" %>--}%
 <div class="sidebar" id="sidebar">
     <script type="text/javascript">
         try {
