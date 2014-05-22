@@ -1,4 +1,4 @@
-package com.gsl.uma.security
+package com.gsl.wboga.uma.security
 
 class UserController {
 
