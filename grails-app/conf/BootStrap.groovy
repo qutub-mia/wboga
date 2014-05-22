@@ -1,6 +1,6 @@
-import com.gsl.uma.security.Role
-import com.gsl.uma.security.User
-import com.gsl.uma.security.UserRole
+import com.gsl.wboga.uma.security.Role
+import com.gsl.wboga.uma.security.User
+import com.gsl.wboga.uma.security.UserRole
 import grails.plugin.springsecurity.SpringSecurityUtils
 import wboga.core.Country
 import wboga.core.Hint
@@ -42,7 +42,7 @@ class BootStrap {
 
     def createPackage(){
         new MemberType(name: "Free", amount:"0").save(failOnError: true)
-        new MemberType(name: "Primium", amount:"100").save(failOnError: true)
+        new MemberType(name: "Premium", amount:"100").save(failOnError: true)
         new MemberType(name: "Silver", amount:"200").save(failOnError: true)
         new MemberType(name: "Gold", amount:"300").save(failOnError: true)
     }

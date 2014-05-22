@@ -1,4 +1,4 @@
-package com.gsl.uma.security
+package com.gsl.wboga.uma.security
 
 import org.apache.commons.lang.builder.HashCodeBuilder
 

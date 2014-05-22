@@ -3,7 +3,7 @@
 <html>
 <head>
     <script src="${resource(dir: 'js', file: 'jquery-1.10.2.min.js')}"></script>
-    <meta name="layout" content="wboga"/>
+    %{--<meta name="layout" content="wboga"/>--}%
     <title>Registration</title>
     %{--<script src="${resource(dir: 'js/validate', file: 'jquery.validate.min.js')}"></script>--}%
 </head>
@@ -154,7 +154,7 @@
         $('#ageConditionDiv').hide();
 
 
-        /*$('#registrationForm').validate({
+        $('#registrationForm').validate({
 
             errorElement: 'small',
             errorClass: 'help-block',
@@ -267,23 +267,7 @@
                     }
                 })
             }
-        });*/
-
-        $('#registrationForm').submit(function(){
-            alert("Submit");
-            jQuery.ajax({
-                url:"${createLink(controller: 'registration', action: 'save')}",
-                type:'post',
-                data: $('#registrationForm').serialize(),
-                success:function(data){
-                    //$('#page-content').html(data);
-                    $('body').html(data);
-                },
-                failure:function(data){
-                }
-            })
         });
-
 
         function calcAge(dateString) {
             var birthday = +new Date(dateString);

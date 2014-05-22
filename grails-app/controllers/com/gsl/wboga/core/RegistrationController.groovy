@@ -27,18 +27,21 @@ class RegistrationController {
             redirect(action: 'create')
             return
         }
-
         boolean captchaValid = simpleCaptchaService.validateCaptcha(params.captcha)
         if(!captchaValid){
             flash.message = "Captcha problem! Try Again!!"
             redirect(action: 'create')
             return
         }
-
         //params.dob = new Date(params.dob)
         params.dob = Date.parse('dd/MM/yyyy', params.dob)
 
         Registration registration = new Registration(params)
+        if (!registration.validate()){
+            flash.message = "Not added validated!"
+            redirect(action: 'create')
+            return
+        }
         Registration savedRegistration = registration.save(flush: true)
         if(!savedRegistration){
             flash.message = "Not added Successfully"
