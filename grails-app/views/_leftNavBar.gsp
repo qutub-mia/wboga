@@ -38,9 +38,11 @@
 
     <ul class="nav nav-list">
         <li>
-            <a href="#">
+            <a href="#" class="">
                 <i class="icon-dashboard"></i>
-                <i class="icon-double-angle-right"></i>World BOGA</a>
+                <span class="menu-text">World BOGA Dashboard</span>
+                <b class="arrow icon-angle-down"></b>
+            </a>
         </li>
     </ul><!-- /.nav-list -->
 
