@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'ace-rtl.css')}"/>
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'ace-skins.css')}"/>
     <script src="${resource(dir: 'js', file: 'ace-extra.js')}"></script>
+    <link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery.gritter.css')}"/>
     <g:layoutHead/>
     <r:layoutResources/>
 
@@ -85,6 +86,7 @@
 <script src="${resource(dir: 'js', file: 'ace.js')}"></script>
 
 <script src="${resource(dir: 'js', file: 'ace-elements.js')}"></script>
+<script src="${resource(dir: 'js', file: 'jquery.gritter.min.js')}"></script>
 
 <!-- inline scripts related to this page -->
 
@@ -133,8 +135,32 @@
     };
 
     $(document).ready(function () {
+        showSuccessMsg("Welcome to World BOGA");
+//        showErrorMsg('This Field is required');
 
     });
+
+    function showSuccessMsg(message){
+        $.gritter.add({
+            // (string | mandatory) the heading of the notification
+            title: 'Success',
+            // (string | mandatory) the text inside the notification
+            text: message,
+            class_name: 'gritter-success gritter-light'
+        });
+        return false;
+    }
+
+    function showErrorMsg(message){
+        $.gritter.add({
+            title: 'Error',
+            text: message,
+            class_name: 'gritter-error gritter-light',
+            sticky: false
+        });
+        return false;
+    }
+
 
 
 </script>
