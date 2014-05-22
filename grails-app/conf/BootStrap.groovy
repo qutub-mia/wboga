@@ -2,11 +2,66 @@ import com.gsl.uma.security.Role
 import com.gsl.uma.security.User
 import com.gsl.uma.security.UserRole
 import grails.plugin.springsecurity.SpringSecurityUtils
+import wboga.core.Country
+import wboga.core.Hint
+import wboga.core.MemberType
 
 class BootStrap {
 
     def init = { servletContext ->
         createUserWithRole()
+
+        // rumee
+        createHint()
+        createPackage()
+        createCountryList()
+    }
+
+    def createHint(){
+        new Hint(question: "What is your feb color ?").save(failOnError: true)
+        new Hint(question: "What is the name of your best friend ?").save(failOnError: true)
+        new Hint(question: "What was the name of your third grade teacher?").save(failOnError: true)
+        new Hint(question: "What is the name of your favorite childhood friend?").save(failOnError: true)
+        new Hint(question: "Where were you New Year's 2000?").save(failOnError: true)
+        new Hint(question: "What is the name of your grandmother's dog?").save(failOnError: true)
+        new Hint(question: "What is your youngest sister's birthday?").save(failOnError: true)
+        new Hint(question: "What is your youngest brother's name?").save(failOnError: true)
+        new Hint(question: "What was your childhood nickname?").save(failOnError: true)
+        new Hint(question: "Who was your childhood hero?").save(failOnError: true)
+        new Hint(question: "What school did you attend for sixth grade?").save(failOnError: true)
+        new Hint(question: "In what city or town was your first job?").save(failOnError: true)
+        new Hint(question: "What is the name of the company of your first job?").save(failOnError: true)
+        new Hint(question: "What was your favorite place to visit as a child?").save(failOnError: true)
+        new Hint(question: "What was your dream job as a child? ").save(failOnError: true)
+        new Hint(question: "What are the last 5 of your Social Security number?").save(failOnError: true)
+        new Hint(question: "What are the last 5 digits of your credit card?").save(failOnError: true)
+        new Hint(question: "What is your mother's middle name? ").save(failOnError: true)
+        new Hint(question: "What is your grandmother's first name?").save(failOnError: true)
+        new Hint(question: "Where did you vacation last year?").save(failOnError: true)
+    }
+
+    def createPackage(){
+        new MemberType(name: "Free", amount:"0").save(failOnError: true)
+        new MemberType(name: "Primium", amount:"100").save(failOnError: true)
+        new MemberType(name: "Silver", amount:"200").save(failOnError: true)
+        new MemberType(name: "Gold", amount:"300").save(failOnError: true)
+    }
+
+    def createCountryList() {
+        def bangladesh = Country.findByName("BANGLADESH")
+        if (!bangladesh) {
+            bangladesh = new Country(name: "BANGLADESH").save(failOnError: true)
+        }
+
+        def afghanistan = Country.findByName("AFGHANISTAN")
+        if (!afghanistan) {
+            afghanistan = new Country(name: "AFGHANISTAN").save(failOnError: true)
+        }
+
+        def nigeria = Country.findByName("NIGERIA")
+        if (!nigeria) {
+            nigeria = new Country(name: "NIGERIA").save(failOnError: true)
+        }
     }
 
 
@@ -27,7 +82,6 @@ class BootStrap {
             adminUser.save(flush: true)
             new UserRole(user: adminUser, role: roleAdmin).save(flush: true)
         }
-
     }
 
 

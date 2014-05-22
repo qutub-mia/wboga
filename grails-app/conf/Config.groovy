@@ -135,3 +135,27 @@ grails.plugin.springsecurity.fii.rejectPublicInvocations = false
 //grails.plugin.springsecurity.successHandler.defaultTargetUrl = '/login/loginSuccess'
 grails.plugin.springsecurity.successHandler.alwaysUseDefault = true
 grails.plugin.springsecurity.logout.postOnly = false
+
+simpleCaptcha {
+    // font size used in CAPTCHA images
+    fontSize = 30
+    height = 200
+    width = 200
+
+    // number of characters in CAPTCHA text
+    length = 6
+
+    // amount of space between the bottom of the CAPTCHA text and the bottom of the CAPTCHA image
+    bottomPadding = 16
+
+    // distance between the diagonal lines used to obfuscate the text
+    lineSpacing = 10
+
+    // the charcters shown in the CAPTCHA text must be one of the following
+    chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+    // this param will be passed as the first argument to this java.awt.Font constructor
+    // http://docs.oracle.com/javase/6/docs/api/java/awt/Font.html#Font(java.lang.String,%20int,%20int)
+    font = "Serif"
+}
+

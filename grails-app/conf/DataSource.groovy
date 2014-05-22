@@ -16,7 +16,7 @@ environments {
         dataSource {
             dbCreate = "create-drop" // one of 'create-drop','update', 'validate', ''
             url = "jdbc:mysql://localhost:3306/wboga"
-            password = "root"
+            password = ""
             username = "root"
             logSql = true
         }
