@@ -100,7 +100,7 @@
                                 </label>
 
                                 <div class="col-md-6">
-                                    <input type="text" id="username" class="form-control" name="username" value=""
+                                    <input type="text" id="username" class="form-control" name="username"
                                            placeholder="Enter the username"/>
                                 </div>
                                 <div class="col-md-2"></div>
@@ -112,7 +112,7 @@
                                 </label>
 
                                 <div class="col-md-6">
-                                    <input type="password" id="password" class="form-control" name="password" value=""
+                                    <input type="password" id="password" class="form-control" name="password"
                                            placeholder="Enter the password"/>
                                 </div>
                                 <div class="col-md-2"></div>
