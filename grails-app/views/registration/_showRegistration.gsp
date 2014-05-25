@@ -2,146 +2,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-    <script type="text/javascript">
-        $(document).ready(function(){
-            $('#ageConditionDiv').hide();
-            // Date format
-            $("#openingDate").datepicker({
-                format: 'dd/mm/yyyy',
-                gotoCurrent: true,
-                autoclose: true
-            });
-
-            $('#registrationForm').validate({
-
-                errorElement: 'small',
-                errorClass: 'help-block',
-                focusInvalid: false,
-                rules: {
-                    name: {
-                        required: true
-                    },
-                    memberType: {
-                        required: true
-                    },
-                    dob: {
-                        required: true
-                    },
-                    country: {
-                        required: true
-                    },
-                    email: {
-                        required: true
-                    },
-                    username: {
-                        required: true
-                    },
-                    password: {
-                        required: true
-                    },
-                    cPassword: {
-                        required: true
-                    },
-                    answer: {
-                        required: true
-                    }
-                } ,
-                messages: {
-                    name: {
-                        required: " "
-                    },
-                    memberType: {
-                        required: " "
-                    },
-                    dob: {
-                        required: " "
-                    },
-                    country: {
-                        required: " "
-                    },
-                    email: {
-                        required: " "
-                    },
-                    username: {
-                        required: " "
-                    },
-                    password: {
-                        required: " "
-                    },
-                    cPassword: {
-                        required: " "
-                    },
-                    answer: {
-                        required: " "
-                    }
-                },
-                highlight: function (e) {
-                    $(e).closest('.form-group').removeClass('has-info').addClass('has-error');
-                },
-
-                success: function (e) {
-                    $(e).closest('.form-group').removeClass('has-error').addClass('has-info');
-                    $(e).remove();
-                },
-                invalidHandler: function (event, validator) { //display error alert on form submit
-                    $('.alert-danger', $('#chartClassForm')).show();
-                },
-                submitHandler: function (form) {
-
-                    // Date checking
-                    var dateString = $('#dob').val();
-                    var dateSplit = dateString.split("/");
-                    var dob = dateSplit[2]+"/"+dateSplit[1]+"/"+dateSplit[0];
-                    var dateDob = calcAge(dateString);
-                    if(dateDob < 18){
-                        $('#ageConditionDiv').show();
-                        var condition = $('#ageCondition').prop('checked');
-                        if(condition == false){
-                            return;
-                        }
-                    }
-
-                    // Confirm password checking
-                    var password = $('#password').val();
-                    var cPassword = $('#cPassword').val();
-                    if (password != cPassword){
-                        $('#cPassword').addClass('red');
-                        alert("Confirm password not match, Try again!");
-                        return;
-                    }
-                    else{
-                        $('#cPassword').removeClass('red');
-                    }
-
-
-                    jQuery.ajax({
-                        url:"${createLink(controller: 'registration', action: 'save')}",
-                        type:'post',
-                        data: $('#registrationForm').serialize(),
-                        success:function(data){
-                            //$('#page-content').html(data);
-                            $('body').html(data);
-                        },
-                        failure:function(data){
-                        }
-                    })
-                }
-            });
-
-            function calcAge(dateString) {
-                var birthday = +new Date(dateString);
-                return~~ ((Date.now() - birthday) / (31557600000));
-            }
-        });
-
-    </script>
+    <meta charset="utf-8"/>
 </head>
 
 <body>
 
 <g:if test="${flash.message}">
-
     <div class="alert alert-success">
         <i class="icon-bell green"> <b> ${flash.message} </b> </i> <a class="close" data-dismiss="alert">×</a>
     </div>
@@ -156,7 +22,7 @@
             <g:form class="form-horizontal" method="post" name="registrationForm" id="registrationForm" role="form" url="[action: 'saveRegistration', controller: 'deposit']" onsubmit="return false;">
                 <fieldset>
                     <div class="row">
-                        <div class="col-md-8">
+                        <div class="col-md-11">
 
                             <div class="form-group">
                                 <label for="memberType" class="control-label col-md-4">Package</label>
@@ -273,7 +139,7 @@
     </div>
 </div>
 
-<r:script type="text/javascript">
+<script type="text/javascript">
     $(document).ready(function(){
         $('#ageConditionDiv').hide();
         // Date format
@@ -285,8 +151,8 @@
 
         $('#registrationForm').validate({
 
-            errorElement: 'small',
-            errorClass: 'help-block',
+            errorPlacement: function (error, element) {
+            },
             focusInvalid: false,
             rules: {
                 name: {
@@ -302,50 +168,24 @@
                     required: true
                 },
                 email: {
-                    required: true
+                    required: true,
+                    email: true
                 },
                 username: {
                     required: true
                 },
-                password: {
-                    required: true
+                password:{
+                    required: true,
+                    minlength: 8
                 },
                 cPassword: {
-                    required: true
+                    equalTo: "#password"
                 },
                 answer: {
                     required: true
                 }
             } ,
-            messages: {
-                name: {
-                    required: " "
-                },
-                memberType: {
-                    required: " "
-                },
-                dob: {
-                    required: " "
-                },
-                country: {
-                    required: " "
-                },
-                email: {
-                    required: " "
-                },
-                username: {
-                    required: " "
-                },
-                password: {
-                    required: " "
-                },
-                cPassword: {
-                    required: " "
-                },
-                answer: {
-                    required: " "
-                }
-            },
+
             highlight: function (e) {
                $(e).closest('.form-group').removeClass('has-info').addClass('has-error');
             },
@@ -358,7 +198,6 @@
                $('.alert-danger', $('#chartClassForm')).show();
             },
             submitHandler: function (form) {
-
                // Date checking
                var dateString = $('#dob').val();
                var dateSplit = dateString.split("/");
@@ -390,8 +229,8 @@
                     type:'post',
                     data: $('#registrationForm').serialize(),
                     success:function(data){
-                        //$('#page-content').html(data);
                         $('body').html(data);
+
                     },
                     failure:function(data){
                     }
@@ -405,9 +244,7 @@
         }
      });
 
-</r:script>
-
-
+</script>
 
 </body>
 </html>

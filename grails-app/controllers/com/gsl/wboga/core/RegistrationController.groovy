@@ -17,7 +17,7 @@ class RegistrationController {
         render(view: '_showRegistration', model: [hint:hint])
     }
 
-    @Secured(['ROLE_SUPER_ADMIN'])
+    @Secured(['ROLE_ANONYMOUS'])
     def save(){
         if (!request.method == 'POST') {
             flash.message = "Registration data dose not added Successfully!"
@@ -46,6 +46,18 @@ class RegistrationController {
         }
         flash.message = "Added Successfully !!"
         redirect(action: 'create')
+    }
+
+    @Secured(['ROLE_ANONYMOUS'])
+    def checkEmail(){
+        println ">>"+ params
+        def email = params.email
+        def checkEmail = Registration.findByEmail(email)
+        if (checkEmail){
+            return true
+        }else {
+            return false
+        }
     }
 
 }

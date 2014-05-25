@@ -4,10 +4,8 @@
 <head>
     <meta charset="utf-8"/>
     <title>Member Registration - World BOGA</title>
-
     <meta name="description" content="overview &amp; stats"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
     <!-- basic styles -->
 
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'bootstrap.css')}"/>
