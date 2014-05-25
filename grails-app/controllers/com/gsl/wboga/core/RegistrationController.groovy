@@ -32,10 +32,9 @@ class RegistrationController {
         }
         //params.dob = new Date(params.dob)
         params.dob = Date.parse('dd/MM/yyyy', params.dob)
-
         Registration registration = new Registration(params)
         if (!registration.validate()){
-            flash.message = "Not added validated!"
+            flash.message = "Not added validated! Username & Email must be unique!"
             redirect(action: 'create')
             return
         }

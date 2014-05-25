@@ -13,12 +13,12 @@ class Registration {
     static belongsTo = [country: Country, hint: Hint, memberType: MemberType]
 
     static constraints = {
-        name blank: true, nullable: true
-        dob blank: true, nullable: true
-        email blank: true, nullable: true
-        username blank: true, nullable: true
-        password blank: true, nullable: true
-        answer blank: true, nullable: true
-        status blank: false, nullable: false
+        name blank: false, nullable: false
+        dob blank: false, nullable: false
+        email blank: false, nullable: false, unique: true
+        username blank: false, nullable: false, unique: true
+        password blank: false, nullable: false
+        answer blank: false, nullable: false
+        status blank: true, nullable: true
     }
 }
