@@ -138,8 +138,15 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="captcha" class="control-label col-md-4">Type the letters <img
-                                        src="${createLink(controller: 'simpleCaptcha', action: 'captcha')}"/></label>
+                                <div class="col-md-4"></div>
+
+                                <div class="col-md-6">
+                                    <img src="${createLink(controller: 'simpleCaptcha', action: 'captcha')}"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="captcha" class="control-label col-md-4">Type the letters</label>
 
                                 <div class="col-md-6">
                                     <input type="text" id="captcha" class="form-control" name="captcha" value=""
@@ -246,7 +253,7 @@
                 var confirmPassword = $('#confirmPassword').val();
                 if (password != confirmPassword) {
                     $('#confirmPassword').addClass('red');
-                    alert("Confirm password not match, Try again!");
+                    showError("Confirm password not match, Try again!");
                     return;
                 }
                 else {
@@ -271,6 +278,26 @@
             return~~((Date.now() - birthday) / (31557600000));
         }
     });
+    function showSuccessMsg(message){
+        $.gritter.add({
+            // (string | mandatory) the heading of the notification
+            title: 'Success',
+            // (string | mandatory) the text inside the notification
+            text: message,
+            class_name: 'gritter-success gritter-light'
+        });
+        return false;
+    }
+
+    function showErrorMsg(message){
+        $.gritter.add({
+            title: 'Error',
+            text: message,
+            class_name: 'gritter-error gritter-light',
+            sticky: false
+        });
+        return false;
+    }
 
 </script>
 
