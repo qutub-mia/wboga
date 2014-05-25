@@ -141,20 +141,15 @@
     </div>
 </div>
 
-%{--<g:javascript>alert('hello')</g:javascript>--}%
 <r:script type="text/javascript">
-
-alert("Yes");
     $(document).ready(function(){
+        $('#ageConditionDiv').hide();
         // Date format
         $("#openingDate").datepicker({
             format: 'dd/mm/yyyy',
             gotoCurrent: true,
             autoclose: true
         });
-
-        $('#ageConditionDiv').hide();
-
 
         $('#registrationForm').validate({
 
@@ -230,24 +225,12 @@ alert("Yes");
             invalidHandler: function (event, validator) { //display error alert on form submit
                $('.alert-danger', $('#chartClassForm')).show();
             },
-               submitHandler: function (form) {
+            submitHandler: function (form) {
 
+               // Date checking
                var dateString = $('#dob').val();
                var dateSplit = dateString.split("/");
                var dob = dateSplit[2]+"/"+dateSplit[1]+"/"+dateSplit[0];
-
-               var password = $('#password').val();
-               var cPassword = $('#cPassword').val();
-
-               if (password != cPassword){
-                   $('#cPassword').addClass('red');
-                   alert("Confirm password not match, Try again!");
-                   return;
-               }
-               else{
-                   $('#cPassword').removeClass('red');
-               }
-
                var dateDob = calcAge(dateString);
                if(dateDob < 18){
                    $('#ageConditionDiv').show();
@@ -255,6 +238,18 @@ alert("Yes");
                    if(condition == false){
                         return;
                    }
+               }
+
+               // Confirm password checking
+               var password = $('#password').val();
+               var cPassword = $('#cPassword').val();
+               if (password != cPassword){
+                   $('#cPassword').addClass('red');
+                   alert("Confirm password not match, Try again!");
+                   return;
+               }
+               else{
+                   $('#cPassword').removeClass('red');
                }
 
                 jQuery.ajax({
