@@ -2,8 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script src="${resource(dir: 'js', file: 'jquery-1.10.2.min.js')}"></script>
-    %{--<meta name="layout" content="wboga"/>--}%
+    <meta name="layout" content="wboga"/>
     <title>Registration</title>
     %{--<script src="${resource(dir: 'js/validate', file: 'jquery.validate.min.js')}"></script>--}%
 </head>
@@ -142,7 +141,10 @@
     </div>
 </div>
 
-<script type="text/javascript">
+%{--<g:javascript>alert('hello')</g:javascript>--}%
+<r:script type="text/javascript">
+
+alert("Yes");
     $(document).ready(function(){
         // Date format
         $("#openingDate").datepicker({
@@ -275,7 +277,7 @@
         }
      });
 
-</script>
+</r:script>
 
 
 

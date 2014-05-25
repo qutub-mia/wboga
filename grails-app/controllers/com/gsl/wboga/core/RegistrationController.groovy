@@ -9,7 +9,6 @@ import wboga.core.Registration
 class RegistrationController {
 
     def simpleCaptchaService
-
     def index() {}
 
     @Secured(['ROLE_SUPER_ADMIN'])

@@ -7,7 +7,7 @@ import wboga.core.Hint
 import wboga.core.MemberType
 
 class BootStrap {
-
+    def grailsApplication
     def init = { servletContext ->
         createUserWithRole()
 
