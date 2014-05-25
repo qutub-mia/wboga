@@ -9,12 +9,12 @@ class RegistrationController {
     def simpleCaptchaService
     def index() {}
 
-    @Secured(['ROLE_SUPER_ADMIN'])
+    @Secured(['ROLE_ANONYMOUS'])
     def create(){
         Random r = new Random();
         Long hintId = r.nextInt(Hint.count() - 0 + 1) + 0 as Long;
         Hint hint = Hint.get(hintId)
-        render(view: '/registration/create', model: [hint:hint])
+        render(view: '_showRegistration', model: [hint:hint])
     }
 
     @Secured(['ROLE_SUPER_ADMIN'])

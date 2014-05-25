@@ -44,13 +44,6 @@
                 <b class="arrow icon-angle-down"></b>
             </a>
         </li>
-        <li>
-            <a href="${createLink(controller: 'registration', action: 'create')}" class="">
-                <i class="icon-dashboard"></i>
-                <span class="menu-text">Registration</span>
-                <b class="arrow icon-angle-down"></b>
-            </a>
-        </li>
     </ul><!-- /.nav-list -->
 
     <div class="sidebar-collapse" id="sidebar-collapse">

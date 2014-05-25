@@ -1,3 +1,4 @@
+import com.gsl.wboga.uma.security.RequestMap
 import com.gsl.wboga.uma.security.Role
 import com.gsl.wboga.uma.security.User
 import com.gsl.wboga.uma.security.UserRole
@@ -15,6 +16,7 @@ class BootStrap {
         createHint()
         createPackage()
         createCountryList()
+        createCommonReqMap()
     }
 
     def createHint(){
@@ -110,6 +112,10 @@ class BootStrap {
 
         }
         println "Request Map code complete"
+    }
+
+    def createCommonReqMap(){
+        new RequestMap(url: '/registration/create', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY').save(flush: true)
     }
 
     def destroy = {

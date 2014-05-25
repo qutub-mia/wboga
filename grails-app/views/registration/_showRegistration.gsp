@@ -2,10 +2,142 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="layout" content="wboga"/>
-    <title>Registration</title>
-    %{--<script src="${resource(dir: 'js/validate', file: 'jquery.validate.min.js')}"></script>--}%
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#ageConditionDiv').hide();
+            // Date format
+            $("#openingDate").datepicker({
+                format: 'dd/mm/yyyy',
+                gotoCurrent: true,
+                autoclose: true
+            });
+
+            $('#registrationForm').validate({
+
+                errorElement: 'small',
+                errorClass: 'help-block',
+                focusInvalid: false,
+                rules: {
+                    name: {
+                        required: true
+                    },
+                    memberType: {
+                        required: true
+                    },
+                    dob: {
+                        required: true
+                    },
+                    country: {
+                        required: true
+                    },
+                    email: {
+                        required: true
+                    },
+                    username: {
+                        required: true
+                    },
+                    password: {
+                        required: true
+                    },
+                    cPassword: {
+                        required: true
+                    },
+                    answer: {
+                        required: true
+                    }
+                } ,
+                messages: {
+                    name: {
+                        required: " "
+                    },
+                    memberType: {
+                        required: " "
+                    },
+                    dob: {
+                        required: " "
+                    },
+                    country: {
+                        required: " "
+                    },
+                    email: {
+                        required: " "
+                    },
+                    username: {
+                        required: " "
+                    },
+                    password: {
+                        required: " "
+                    },
+                    cPassword: {
+                        required: " "
+                    },
+                    answer: {
+                        required: " "
+                    }
+                },
+                highlight: function (e) {
+                    $(e).closest('.form-group').removeClass('has-info').addClass('has-error');
+                },
+
+                success: function (e) {
+                    $(e).closest('.form-group').removeClass('has-error').addClass('has-info');
+                    $(e).remove();
+                },
+                invalidHandler: function (event, validator) { //display error alert on form submit
+                    $('.alert-danger', $('#chartClassForm')).show();
+                },
+                submitHandler: function (form) {
+
+                    // Date checking
+                    var dateString = $('#dob').val();
+                    var dateSplit = dateString.split("/");
+                    var dob = dateSplit[2]+"/"+dateSplit[1]+"/"+dateSplit[0];
+                    var dateDob = calcAge(dateString);
+                    if(dateDob < 18){
+                        $('#ageConditionDiv').show();
+                        var condition = $('#ageCondition').prop('checked');
+                        if(condition == false){
+                            return;
+                        }
+                    }
+
+                    // Confirm password checking
+                    var password = $('#password').val();
+                    var cPassword = $('#cPassword').val();
+                    if (password != cPassword){
+                        $('#cPassword').addClass('red');
+                        alert("Confirm password not match, Try again!");
+                        return;
+                    }
+                    else{
+                        $('#cPassword').removeClass('red');
+                    }
+
+
+                    jQuery.ajax({
+                        url:"${createLink(controller: 'registration', action: 'save')}",
+                        type:'post',
+                        data: $('#registrationForm').serialize(),
+                        success:function(data){
+                            //$('#page-content').html(data);
+                            $('body').html(data);
+                        },
+                        failure:function(data){
+                        }
+                    })
+                }
+            });
+
+            function calcAge(dateString) {
+                var birthday = +new Date(dateString);
+                return~~ ((Date.now() - birthday) / (31557600000));
+            }
+        });
+
+    </script>
 </head>
+
 <body>
 
 <g:if test="${flash.message}">
@@ -14,9 +146,9 @@
     </div>
 </g:if>
 
-<div class="widget-box">
+<div class="widget-box" style="margin: 5px 150px;">
     <div class="widget-header">
-        <h4 class="widget-title">Registration Form</h4>
+        <h4 class="widget-title">Member Registration</h4>
     </div>
     <div class="widget-body">
         <div class="widget-main no-padding">
@@ -140,141 +272,6 @@
         </div>
     </div>
 </div>
-
-<r:script type="text/javascript">
-    $(document).ready(function(){
-        $('#ageConditionDiv').hide();
-        // Date format
-        $("#openingDate").datepicker({
-            format: 'dd/mm/yyyy',
-            gotoCurrent: true,
-            autoclose: true
-        });
-
-        $('#registrationForm').validate({
-
-            errorElement: 'small',
-            errorClass: 'help-block',
-            focusInvalid: false,
-            rules: {
-                name: {
-                    required: true
-                },
-                memberType: {
-                    required: true
-                },
-                dob: {
-                    required: true
-                },
-                country: {
-                    required: true
-                },
-                email: {
-                    required: true
-                },
-                username: {
-                    required: true
-                },
-                password: {
-                    required: true
-                },
-                cPassword: {
-                    required: true
-                },
-                answer: {
-                    required: true
-                }
-            } ,
-            messages: {
-                name: {
-                    required: " "
-                },
-                memberType: {
-                    required: " "
-                },
-                dob: {
-                    required: " "
-                },
-                country: {
-                    required: " "
-                },
-                email: {
-                    required: " "
-                },
-                username: {
-                    required: " "
-                },
-                password: {
-                    required: " "
-                },
-                cPassword: {
-                    required: " "
-                },
-                answer: {
-                    required: " "
-                }
-            },
-            highlight: function (e) {
-               $(e).closest('.form-group').removeClass('has-info').addClass('has-error');
-            },
-
-            success: function (e) {
-               $(e).closest('.form-group').removeClass('has-error').addClass('has-info');
-               $(e).remove();
-            },
-            invalidHandler: function (event, validator) { //display error alert on form submit
-               $('.alert-danger', $('#chartClassForm')).show();
-            },
-            submitHandler: function (form) {
-
-               // Date checking
-               var dateString = $('#dob').val();
-               var dateSplit = dateString.split("/");
-               var dob = dateSplit[2]+"/"+dateSplit[1]+"/"+dateSplit[0];
-               var dateDob = calcAge(dateString);
-               if(dateDob < 18){
-                   $('#ageConditionDiv').show();
-                   var condition = $('#ageCondition').prop('checked');
-                   if(condition == false){
-                        return;
-                   }
-               }
-
-               // Confirm password checking
-               var password = $('#password').val();
-               var cPassword = $('#cPassword').val();
-               if (password != cPassword){
-                   $('#cPassword').addClass('red');
-                   alert("Confirm password not match, Try again!");
-                   return;
-               }
-               else{
-                   $('#cPassword').removeClass('red');
-               }
-
-
-                jQuery.ajax({
-                    url:"${createLink(controller: 'registration', action: 'save')}",
-                    type:'post',
-                    data: $('#registrationForm').serialize(),
-                    success:function(data){
-                        //$('#page-content').html(data);
-                        $('body').html(data);
-                    },
-                    failure:function(data){
-                    }
-                })
-            }
-        });
-
-        function calcAge(dateString) {
-            var birthday = +new Date(dateString);
-            return~~ ((Date.now() - birthday) / (31557600000));
-        }
-     });
-
-</r:script>
-
 
 
 </body>

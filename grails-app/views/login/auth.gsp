@@ -83,7 +83,7 @@
                                             </a>
                                         </div>--}%
                                         <div>
-                                            <a href="${createLink(controller: 'registration',action: 'create')}"  class="user-signup-link">
+                                            <a href="${createLink(controller: 'registration', action: 'create')}"  class="user-signup-link">
                                                 I want to register
                                                 <i class="icon-arrow-right"></i>
                                             </a>
