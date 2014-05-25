@@ -252,6 +252,7 @@
                    $('#cPassword').removeClass('red');
                }
 
+
                 jQuery.ajax({
                     url:"${createLink(controller: 'registration', action: 'save')}",
                     type:'post',
