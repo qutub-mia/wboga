@@ -12,19 +12,19 @@
         <i class="icon-bell green"><b>${flash.message}</b></i> <a class="close" data-dismiss="alert">×</a>
     </div>
 </g:if>
+<div class="row">
+    <div class="widget-box" style="margin: 5px 150px;">
+        <div class="widget-header">
+            <h4 class="widget-title">Member Registration</h4>
+        </div>
 
-<div class="widget-box" style="margin: 5px 150px;">
-    <div class="widget-header">
-        <h4 class="widget-title">Member Registration</h4>
-    </div>
+        <div class="widget-body">
+            <div class="widget-main no-padding">
+                <g:form class="form-horizontal" method="post" name="registrationForm" id="registrationForm" role="form"
+                        onsubmit="return false;">
+                    <fieldset>
 
-    <div class="widget-body">
-        <div class="widget-main no-padding">
-            <g:form class="form-horizontal" method="post" name="registrationForm" id="registrationForm" role="form"
-                    url="[action: 'saveRegistration', controller: 'deposit']" onsubmit="return false;">
-                <fieldset>
-                    <div class="row">
-                        <div class="col-md-11">
+                        <div class="col-md-12">
 
                             <div class="form-group">
                                 <label for="memberType" class="control-label col-md-4">Package</label>
@@ -36,6 +36,7 @@
                                               optionKey="id" optionValue="name">
                                     </g:select>
                                 </div>
+                                <div class="col-md-2"></div>
                             </div>
 
                             <div class="form-group">
@@ -45,6 +46,7 @@
                                     <input type="text" id="name" class="form-control" name="name" value=""
                                            placeholder="Enter the Name"/>
                                 </div>
+                                <div class="col-md-2"></div>
                             </div>
 
                             <div class="form-group">
@@ -66,6 +68,7 @@
                                         </small>
                                     </div>
                                 </div>
+                                <div class="col-md-2"></div>
                             </div>
 
                             <div class="form-group">
@@ -79,6 +82,7 @@
                                               optionKey="id" optionValue="name">
                                     </g:select>
                                 </div>
+                                <div class="col-md-2"></div>
                             </div>
 
                             <div class="form-group">
@@ -88,6 +92,7 @@
                                     <input type="text" id="email" class="form-control" name="email" value=""
                                            placeholder="Enter the email"/>
                                 </div>
+                                <div class="col-md-2"></div>
                             </div>
 
                             <div class="form-group">
@@ -98,6 +103,7 @@
                                     <input type="text" id="username" class="form-control" name="username" value=""
                                            placeholder="Enter the username"/>
                                 </div>
+                                <div class="col-md-2"></div>
                             </div>
 
 
@@ -106,9 +112,10 @@
                                 </label>
 
                                 <div class="col-md-6">
-                                    <input type="text" id="password" class="form-control" name="password" value=""
+                                    <input type="password" id="password" class="form-control" name="password" value=""
                                            placeholder="Enter the password"/>
                                 </div>
+                                <div class="col-md-2"></div>
                             </div>
 
                             <div class="form-group">
@@ -116,9 +123,11 @@
                                         class="red">*</sup></label>
 
                                 <div class="col-md-6">
-                                    <input type="text" id="confirmPassword" class="form-control" name="confirmPassword"
-                                           value="" placeholder="Enter the password"/>
+                                    <input type="password" id="confirmPassword" class="form-control"
+                                           name="confirmPassword"
+                                           value="" placeholder="Retype the password"/>
                                 </div>
+                                <div class="col-md-2"></div>
                             </div>
 
                             <div class="form-group">
@@ -135,6 +144,7 @@
                                     <input type="text" id="answer" class="form-control" name="answer" value=""
                                            placeholder="Enter the answer"/>
                                 </div>
+                                <div class="col-md-2"></div>
                             </div>
 
                             <div class="form-group">
@@ -143,6 +153,7 @@
                                 <div class="col-md-6">
                                     <img src="${createLink(controller: 'simpleCaptcha', action: 'captcha')}"/>
                                 </div>
+                                <div class="col-md-2"></div>
                             </div>
 
                             <div class="form-group">
@@ -152,30 +163,29 @@
                                     <input type="text" id="captcha" class="form-control" name="captcha" value=""
                                            placeholder="Enter the captcha"/>
                                 </div>
+                                <div class="col-md-2"></div>
                             </div>
 
                         </div>
-                    </div>
 
-                    <div class="clearfix form-actions">
-                        <div class="align-center">
-                            <button type="reset" class="btn">
-                                <i class="icon-undo bigger-110"></i>
-                                Reset
-                            </button>
-                            <button type="submit" class="btn btn-info">
-                                <i class="icon-ok bigger-110"></i>
-                                Create
-                            </button>
-                        </div>
+                    </fieldset>
+                </g:form>
+                <div class="clearfix form-actions">
+                    <div class="align-center">
+                        <button type="reset" class="btn">
+                            <i class="icon-undo bigger-110"></i>
+                            Reset
+                        </button>
+                        <button type="submit" class="btn btn-info">
+                            <i class="icon-ok bigger-110"></i>
+                            Create
+                        </button>
                     </div>
-
-                </fieldset>
-            </g:form>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-
 <script type="text/javascript">
     $(document).ready(function () {
         $('#ageConditionDiv').hide();
@@ -278,7 +288,7 @@
             return~~((Date.now() - birthday) / (31557600000));
         }
     });
-    function showSuccessMsg(message){
+    function showSuccessMsg(message) {
         $.gritter.add({
             // (string | mandatory) the heading of the notification
             title: 'Success',
@@ -289,7 +299,7 @@
         return false;
     }
 
-    function showErrorMsg(message){
+    function showErrorMsg(message) {
         $.gritter.add({
             title: 'Error',
             text: message,
