@@ -1,9 +1,7 @@
 package com.gsl.wboga.core
 
 import grails.plugin.springsecurity.annotation.Secured
-import wboga.core.Country
 import wboga.core.Hint
-import wboga.core.MemberType
 import wboga.core.Registration
 
 class RegistrationController {
