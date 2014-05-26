@@ -128,7 +128,6 @@
                             Add Attachment
                         </button>
                     </div>
-
                     <div class="space"></div>
                 </div>
             </form>
@@ -137,8 +136,6 @@
         </div><!-- /.col -->
     </div><!-- /.row -->
 </div><!-- /.page-content -->
-
-
 
 <r:script type="text/javascript">
     jQuery(function ($) {
