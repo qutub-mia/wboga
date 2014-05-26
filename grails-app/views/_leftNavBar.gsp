@@ -91,10 +91,10 @@
         <i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
     </div>
 
-    <r:script>
+    <script type="text/javascript">
         try {
             ace.settings.check('sidebar', 'collapsed')
         } catch (e) {
         }
-    </r:script>
+    </script>
 </div>

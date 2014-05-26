@@ -4,7 +4,6 @@
     <meta charset="utf-8" />
     <meta name="layout" content="wboga"/>
     <title>Inbox - Ace Admin</title>
-
 </head>
 
 <body>
@@ -140,12 +139,9 @@
 </div><!-- /.page-content -->
 
 
-<script src="${resource(dir: 'js', file: 'jquery.hotkeys.min.js')}"></script>
-<script src="${resource(dir: 'js', file: 'bootstrap-wysiwyg.min.js')}"></script>
 
-
-<script type="text/javascript">
-    jQuery(function($){
+<r:script type="text/javascript">
+    jQuery(function ($) {
         //handling tabs and loading/displaying relevant messages and forms
         //not needed if using the alternative view, as described in docs
         var prevTab = 'inbox'
@@ -161,7 +157,7 @@
                 //load and display the relevant messages
             }
             prevTab = currentTab;
-        })
+        });
 
 
         //display first message in a new area
@@ -267,7 +263,7 @@
 
                 Inbox.display_bar(count);
             }
-        }
+        };
 
 
         //show write mail form
@@ -303,7 +299,7 @@
                 $('.message-form').get(0).reset();
 
             }, 300 + parseInt(Math.random() * 300));
-        }
+        } ;
 
 
 
@@ -359,6 +355,6 @@
         }//initialize_form
 
     });
-</script>
+</r:script>
 </body>
 </html>
