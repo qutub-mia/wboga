@@ -224,15 +224,11 @@
     </ul>
 </li>--}%
 
-<li class="light-blue">
+<li class="light-blue" style="min-width: 150px">
     <a data-toggle="dropdown" href="#" class="dropdown-toggle">
         %{--<img class="nav-user-photo" src="${resource(dir: 'images/assets/avatars',file: 'user.jpg')}" alt="Jason's Photo" />--}%
-        <span class="user-info">
-            <small>Welcome,</small>
-            <sec:loggedInUserInfo field="username"/>
-        </span>
+        <span class="user-info" style="min-width: 120px">Welcome <sec:loggedInUserInfo field="username"/>&nbsp;<i class="icon-caret-down"></i></span>
 
-        <i class="icon-caret-down"></i>
     </a>
 
     <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
