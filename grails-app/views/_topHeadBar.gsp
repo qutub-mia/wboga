@@ -226,7 +226,7 @@
 
 <li class="light-blue">
     <a data-toggle="dropdown" href="#" class="dropdown-toggle">
-        <img class="nav-user-photo" src="${resource(dir: 'images/assets/avatars',file: 'user.jpg')}" alt="Jason's Photo" />
+        %{--<img class="nav-user-photo" src="${resource(dir: 'images/assets/avatars',file: 'user.jpg')}" alt="Jason's Photo" />--}%
         <span class="user-info">
             <small>Welcome,</small>
             <sec:loggedInUserInfo field="username"/>
