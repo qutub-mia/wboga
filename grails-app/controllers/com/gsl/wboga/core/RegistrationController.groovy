@@ -50,7 +50,6 @@ class RegistrationController {
 
     @Secured(['ROLE_ANONYMOUS'])
     def checkEmail(){
-        println ">>"+ params
         def email = params.email
         def checkEmail = Registration.findByEmail(email)
         if (checkEmail){

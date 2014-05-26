@@ -198,6 +198,7 @@
 
         $('#registrationForm').validate({
 
+
             errorPlacement: function (error, element) {
             },
             focusInvalid: false,
@@ -245,6 +246,7 @@
                 $('.alert-danger', $('#chartClassForm')).show();
             },
             submitHandler: function (form) {
+
                 // Date checking
                 var dateString = $('#dob').val();
                 var dateSplit = dateString.split("/");
@@ -259,7 +261,7 @@
                 }
 
                 // Confirm password checking
-                var password = $('#password').val();
+               /* var password = $('#password').val();
                 var confirmPassword = $('#confirmPassword').val();
                 if (password != confirmPassword) {
                     $('#confirmPassword').addClass('red');
@@ -268,7 +270,7 @@
                 }
                 else {
                     $('#confirmPassword').removeClass('red');
-                }
+                }*/
                 jQuery.ajax({
                     url: "${createLink(controller: 'registration', action: 'save')}",
                     type: 'post',

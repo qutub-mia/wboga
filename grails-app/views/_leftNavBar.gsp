@@ -44,6 +44,47 @@
                 <b class="arrow icon-angle-down"></b>
             </a>
         </li>
+
+        %{----}%
+        <li>
+            <a href="#" class="dropdown-toggle">
+                <span class="glyphicon glyphicon-comment"></span>
+                    Messaging
+                <b class="arrow icon-angle-down"></b>
+            </a>
+
+            <ul class="submenu">
+                <li>
+                    <a href="<g:createLink controller="messenger" action="inbox"/>">
+                        <i class="icon-double-angle-right"></i>
+                        Inbox
+                    </a>
+                </li>
+
+                <li>
+                    <a href="<g:createLink controller="messenger" action="send"/>">
+                        <i class="icon-double-angle-right"></i>
+                        Send
+                    </a>
+                </li>
+
+                <li>
+                    <a href="<g:createLink controller="messenger" action="trash"/>">
+                        <i class="icon-double-angle-right"></i>
+                        Trash
+                    </a>
+                </li>
+
+                <li>
+                    <a href="<g:createLink controller="messenger" action="chat"/>">
+                        <i class="icon-double-angle-right"></i>
+                        Chat
+                    </a>
+                </li>
+
+            </ul>
+        </li>
+
     </ul><!-- /.nav-list -->
 
     <div class="sidebar-collapse" id="sidebar-collapse">
