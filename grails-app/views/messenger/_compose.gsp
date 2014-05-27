@@ -1,182 +1,136 @@
+<%@ page import="wboga.core.Registration" %>
 <script src="${resource(dir: 'js', file: 'chosen.jquery.min.js')}"></script>
 
-    <!-- PAGE CONTENT BEGINS -->
-    <div class="row">
-        <div class="col-md-12">
-            <div class="tabbable">
-                <ul id="inbox-tabs" class="inbox-tabs nav nav-tabs padding-16 tab-size-bigger tab-space-1">
-                    <li class="li-new-mail pull-right">
-                        <a data-toggle="tab" href="#write" data-target="write" class="btn-new-mail">
-                            <span class="btn bt1n-small btn-purple no-border">
-                                <i class=" icon-envelope bigger-130"></i>
-                                <span class="bigger-110">Write Mail</span>
+<div class="tabbable">
+    <ul id="inbox-tabs" class="inbox-tabs nav nav-tabs padding-16 tab-size-bigger tab-space-1">
+
+        <li class="li-new-mail pull-right">
+            <a data-toggle="tab" href="#write" data-target="write" class="btn-new-mail">
+                <span class="btn bt1n-small btn-purple no-border">
+                    <i class=" icon-envelope bigger-130"></i>
+                    <span class="bigger-110">Write Mail</span>
+                </span>
+            </a>
+        </li><!-- ./li-new-mail -->
+    </ul>
+
+    <div class="tab-content no-border no-padding">
+        <div class="tab-pane in active">
+            <div class="message-container">
+                <div id="id-message-new-navbar" class="hide message-navbar align-center clearfix">
+                    <div class="message-bar">
+                        <div class="message-toolbar">
+                            %{--<a href="#" class="btn btn-xs btn-message">
+                                <i class="icon-save bigger-125"></i>
+                                <span class="bigger-110">Save Draft</span>
+                            </a>
+
+                            <a href="#" class="btn btn-xs btn-message">
+                                <i class="icon-remove bigger-125"></i>
+                                <span class="bigger-110">Discard</span>
+                            </a>--}%
+                        </div>
+                    </div>
+
+                    <div class="message-item-bar">
+                        <div class="messagebar-item-left">
+                            <a href="#" class="btn-back-message-list no-hover-underline">
+                                <i class="icon-arrow-left blue bigger-110 middle"></i>
+                                <b class="middle bigger-110">Back</b>
+                            </a>
+                        </div>
+
+                        <div class="messagebar-item-right">
+                            <span class="inline btn-send-message">
+                                <button type="button" id="submitButton" class="btn btn-sm btn-primary no-border">
+                                    <span class="bigger-110">Send</span>
+                                    <i class="icon-arrow-right icon-on-right"></i>
+                                </button>
                             </span>
-                        </a>
-                    </li><!-- ./li-new-mail -->
-                </ul>
-
-                <div class="tab-content no-border no-padding">
-                    <div class="tab-pane in active">
-                        <div class="message-container">
-                            <div id="id-message-new-navbar" class="hide message-navbar align-center clearfix">
-                                <div class="message-bar">
-                                    <div class="message-toolbar">
-                                        %{--<a href="#" class="btn btn-xs btn-message">
-                                            <i class="icon-save bigger-125"></i>
-                                            <span class="bigger-110">Save Draft</span>
-                                        </a>
-
-                                        <a href="#" class="btn btn-xs btn-message">
-                                            <i class="icon-remove bigger-125"></i>
-                                            <span class="bigger-110">Discard</span>
-                                        </a>--}%
-                                    </div>
-                                </div>
-
-                                <div class="message-item-bar">
-                                    <div class="messagebar-item-left">
-                                        <a href="#" class="btn-back-message-list no-hover-underline">
-                                            <i class="icon-arrow-left blue bigger-110 middle"></i>
-                                            <b class="middle bigger-110">Back</b>
-                                        </a>
-                                    </div>
-
-                                    <div class="messagebar-item-right">
-                                        <span class="inline btn-send-message">
-                                            <button type="button" class="btn btn-sm btn-primary no-border">
-                                                <span class="bigger-110">Send</span>
-
-                                                <i class="icon-arrow-right icon-on-right"></i>
-                                            </button>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div><!-- /.message-container -->
-                    </div><!-- /.tab-pane -->
-                </div><!-- /.tab-content -->
-            </div><!-- /.tabbable -->
-        </div><!-- /.col -->
-
-        <form id="id-message-form" class="hide form-horizontal message-form  col-xs-12">
-        <div class="">
-            <div class="form-group">
-                <label class="col-md-3 control-label no-padding-right" for="form-field-recipient">Recipient:</label>
-
-                <div class="col-md-9">
-                    %{--<span class="input-icon">
-                        <input type="email" name="recipient" id="form-field-recipient" data-value="alex@doe.com" value="alex@doe.com" placeholder="Recipient(s)" />
-                        <i class="icon-user"></i>
-                    </span>--}%
-
-                    <select data-placeholder="Choose a Country..." id="form-field-recipient" class="width-80 chosen-select" multiple="">
-                        <option value="">&nbsp;</option>
-                        <option value="AL">Alabama</option>
-                        <option value="AK">Alaska</option>
-                        <option value="AZ">Arizona</option>
-                        <option value="AR">Arkansas</option>
-                        <option value="CA">California</option>
-                        <option value="CO">Colorado</option>
-                        <option value="CT">Connecticut</option>
-                        <option value="DE">Delaware</option>
-                        <option value="FL">Florida</option>
-                        <option value="GA">Georgia</option>
-                        <option value="HI">Hawaii</option>
-                        <option value="ID">Idaho</option>
-                        <option value="IL">Illinois</option>
-                        <option value="IN">Indiana</option>
-                        <option value="IA">Iowa</option>
-                        <option value="KS">Kansas</option>
-                        <option value="KY">Kentucky</option>
-                        <option value="LA">Louisiana</option>
-                        <option value="ME">Maine</option>
-                        <option value="MD">Maryland</option>
-                        <option value="MA">Massachusetts</option>
-                        <option value="MI">Michigan</option>
-                        <option value="MN">Minnesota</option>
-                        <option value="MS">Mississippi</option>
-                        <option value="MO">Missouri</option>
-                        <option value="MT">Montana</option>
-                        <option value="NE">Nebraska</option>
-                        <option value="NV">Nevada</option>
-                        <option value="NH">New Hampshire</option>
-                        <option value="NJ">New Jersey</option>
-                        <option value="NM">New Mexico</option>
-                        <option value="NY">New York</option>
-                        <option value="NC">North Carolina</option>
-                        <option value="ND">North Dakota</option>
-                        <option value="OH">Ohio</option>
-                        <option value="OK">Oklahoma</option>
-                        <option value="OR">Oregon</option>
-                        <option value="PA">Pennsylvania</option>
-                        <option value="RI">Rhode Island</option>
-                        <option value="SC">South Carolina</option>
-                        <option value="SD">South Dakota</option>
-                        <option value="TN">Tennessee</option>
-                        <option value="TX">Texas</option>
-                        <option value="UT">Utah</option>
-                        <option value="VT">Vermont</option>
-                        <option value="VA">Virginia</option>
-                        <option value="WA">Washington</option>
-                        <option value="WV">West Virginia</option>
-                        <option value="WI">Wisconsin</option>
-                        <option value="WY">Wyoming</option>
-                    </select>
-
-                </div>
-            </div>
-
-            <div class="hr hr-18 dotted"></div>
-
-            <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="form-field-subject">Subject:</label>
-
-                <div class="col-sm-6 col-xs-12">
-                    <div class="input-icon block col-xs-12 no-padding">
-                        <input maxlength="100" type="text" class="col-xs-12" name="subject" id="form-field-subject" placeholder="Subject" />
-                        <i class="icon-comment-alt"></i>
+                        </div>
                     </div>
                 </div>
+
+            </div><!-- /.message-container -->
+        </div><!-- /.tab-pane -->
+    </div><!-- /.tab-content -->
+</div><!-- /.tabbable -->
+
+<form id="id-message-form" class="hide form-horizontal message-form col-md-12">
+    <div class="col-md-10">
+        <div class="form-group">
+            <label class="col-md-3 control-label no-padding-right" for="form-field-recipient">Recipient:</label>
+
+            <div class="col-md-9">
+                %{--<span class="input-icon">
+                    <input type="email" name="recipient" id="form-field-recipient" data-value="alex@doe.com" value="alex@doe.com" placeholder="Recipient(s)" />
+                    <i class="icon-user"></i>
+                </span>--}%
+
+
+                <select data-placeholder="User Name..." name="username" id="form-field-recipient"
+                        class="width-80 chosen-select" multiple="">
+                    <option value="">&nbsp;</option>
+                    <g:each in="${Registration.list(sort: 'name')}" var="register">
+                        <option value="${register?.id}">${register?.username}</option>
+                    </g:each>
+                </select>
             </div>
-
-            <div class="hr hr-18 dotted"></div>
-
-            <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right">
-                    <span class="inline space-24 hidden-480"></span>
-                    Message:
-                </label>
-
-                <div class="col-sm-9">
-                    <div class="wysiwyg-editor"></div>
-                </div>
-            </div>
-
-            <div class="hr hr-18 dotted"></div>
-
-            <div class="form-group no-margin-bottom">
-                <label class="col-sm-3 control-label no-padding-right">Attachments:</label>
-
-                <div class="col-sm-9">
-                    <div id="form-attachments">
-                        <input type="file" name="attachment[]" />
-                    </div>
-                </div>
-            </div>
-
-            <div class="align-right">
-                <button id="id-add-attachment" type="button" class="btn btn-sm btn-danger">
-                    <i class="icon-paper-clip bigger-140"></i>
-                    Add Attachment
-                </button>
-            </div>
-            <div class="space"></div>
         </div>
-    </form>
 
-    </div><!-- /.row -->
-    <!-- PAGE CONTENT ENDS -->
+        <div class="hr hr-18 dotted"></div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" for="form-field-subject">Subject:</label>
+
+            <div class="col-sm-6 col-xs-12">
+                <div class="input-icon block col-xs-12 no-padding">
+                    <input maxlength="100" type="text" class="col-xs-12" name="subject" id="form-field-subject"
+                           placeholder="Subject"/>
+                    <i class="icon-comment-alt"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="hr hr-18 dotted"></div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right">
+                <span class="inline space-24 hidden-480"></span>
+                Message:
+            </label>
+
+            <div class="col-sm-9">
+                %{--<div class="wysiwyg-editor"></div>--}%
+                <textarea name="messageBody" id="wysiwyg-editor" style="width: 100%" class="wysiwyg-editor"></textarea>
+            </div>
+        </div>
+
+        <div class="hr hr-18 dotted"></div>
+
+        <div class="form-group no-margin-bottom">
+            <label class="col-sm-3 control-label no-padding-right">Attachments:</label>
+
+            <div class="col-sm-9">
+                <div id="form-attachments">
+                    <input type="file" name="attachment[]"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="align-right">
+            <button id="id-add-attachment" type="button" class="btn btn-sm btn-danger">
+                <i class="icon-paper-clip bigger-140"></i>
+                Add Attachment
+            </button>
+        </div>
+
+        <div class="space"></div>
+
+    </div>
+</form>
+
+
 
 <r:script type="text/javascript">
     jQuery(function ($) {
@@ -406,6 +360,27 @@
                 { "bSortable": false }
             ]
         });
+
+
+        /* send */
+        $('#submitButton').click(function(){
+
+        /*var a = $('.wysiwyg-editor').val();
+        alert(a);*/
+//        $('#some-textarea').wysihtml5();
+
+            $.ajax({
+                url:"${createLink(controller: 'messenger', action: 'save')}",
+                type:'post',
+                data: $("#id-message-form").serialize(),
+                success:function(data){
+                    alert("Data gone!");
+                    $('body').html(data);
+                },
+                failure:function(data){
+                }
+            })
+        })
 
     });
 </r:script>

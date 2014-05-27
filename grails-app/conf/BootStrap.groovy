@@ -6,6 +6,7 @@ import grails.plugin.springsecurity.SpringSecurityUtils
 import wboga.core.Country
 import wboga.core.Hint
 import wboga.core.MemberType
+import wboga.core.Registration
 
 class BootStrap {
     def grailsApplication
@@ -17,6 +18,59 @@ class BootStrap {
         createPackage()
         createCountryList()
         createCommonReqMap()
+        createRegistration()
+    }
+
+    def createRegistration(){
+        new Registration(
+                name: "Nusrat",
+                dob: new Date("13/05/1970"),
+                email:"n@gmail.com",
+                username: "username1",
+                password: "password1",
+                answer: "abc",
+                country: 1,
+                hint: 2,
+                memberType: 1
+        ).save(failOnError: true)
+
+        new Registration(
+                name: "Rumee",
+                dob: new Date("13/05/1970"),
+                email:"r@gmail.com",
+                username: "username2",
+                password: "password2",
+                answer: "abc",
+                country: 1,
+                hint: 2,
+                memberType: 1
+        ).save(failOnError: true)
+
+
+        new Registration(
+                name: "Imram",
+                dob: new Date("13/05/1970"),
+                email:"i@gmail.com",
+                username: "username3",
+                password: "password3",
+                answer: "abc",
+                country: 1,
+                hint: 2,
+                memberType: 1
+        ).save(failOnError: true)
+
+
+        new Registration(
+                name: "Murshida",
+                dob: new Date("13/05/1970"),
+                email:"m@gmail.com",
+                username: "username4",
+                password: "password4",
+                answer: "abc",
+                country: 1,
+                hint: 2,
+                memberType: 1
+        ).save(failOnError: true)
     }
 
     def createHint(){

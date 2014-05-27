@@ -260,17 +260,6 @@
                     }
                 }
 
-                // Confirm password checking
-               /* var password = $('#password').val();
-                var confirmPassword = $('#confirmPassword').val();
-                if (password != confirmPassword) {
-                    $('#confirmPassword').addClass('red');
-                    showError("Confirm password not match, Try again!");
-                    return;
-                }
-                else {
-                    $('#confirmPassword').removeClass('red');
-                }*/
                 jQuery.ajax({
                     url: "${createLink(controller: 'registration', action: 'save')}",
                     type: 'post',
