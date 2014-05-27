@@ -15,7 +15,7 @@
         <li id="notify"></li>
     </ul><!-- .breadcrumb -->--}%
     <div id="spinner-div" class="col-md-12 pull-right">
-        <span><i class="icon-spinner icon-spin orange bigger-200" style="margin-top: 6px"></i></span>
+        <span><i class="icon-spinner icon-spin orange bigger-200" style="margin-top: 6px; display: none"></i></span>
     </div>
 
     %{--<div class="nav-search" id="nav-search">--}%

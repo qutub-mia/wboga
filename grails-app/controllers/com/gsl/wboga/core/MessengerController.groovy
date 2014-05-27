@@ -18,7 +18,7 @@ class MessengerController {
 
     @Secured(['ROLE_SUPER_ADMIN'])
     def compose(){
-
+        render(view: '_compose')
     }
 
     @Secured(['ROLE_SUPER_ADMIN'])

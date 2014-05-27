@@ -37,10 +37,6 @@
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'chosen.css')}"/>
 
 
-    <!--[if IE 7]>
-		  <!--<link rel="stylesheet" href="${resource(dir: 'css', file: 'font-awesome-ie7.css')}" />-->
-		<![endif]-->
-
     <!-- page specific plugin styles -->
 
     <!-- fonts -->
@@ -57,7 +53,7 @@
 
     <!-- ace settings handler -->
 
-    <script src="${resource(dir: 'js/uncompressed', file: 'ace-extra.js')}"></script>
+    <script src="${resource(dir: 'js', file: 'ace-extra.js')}"></script>
 
     <g:layoutHead/>
     <r:layoutResources/>
@@ -170,7 +166,7 @@
 		  <script src="${resource(dir: 'js', file: 'excanvas.js')}"></script>
 <![endif]-->
 
-<script src="${resource(dir: 'js/uncompressed', file: 'chosen.jquery.js')}"></script>
+<script src="${resource(dir: 'js', file: 'chosen.jquery.js')}"></script>
 
 %{--<script src="${resource(dir: 'js', file: 'jquery.slimscroll.js')}"></script>--}%
 
@@ -187,7 +183,7 @@
 <r:layoutResources/>
 
 <script type="text/javascript">
-/*    $.ajaxSetup({
+    /*$.ajaxSetup({
         timeout:50000,
         statusCode: {
             404: function() {
@@ -202,10 +198,10 @@
             },
             0: function() {
                 bootstrap_alert.warning("Ooops.. this is taking much time.. retry"); //alert( "aborted" );
-            }*//*,
+            }*//**//*,
             200:function(){
                 bootstrap_alert.success("Done"); //alert( "aborted" );
-            }*//*
+            }
         }
     });*/
     $(document)
@@ -216,7 +212,7 @@
 //                $loading.hide();
                 showSpinner(false);
             });
-    /*bootstrap_alert = function() {};
+/*    bootstrap_alert = function() {};
     bootstrap_alert.warning = function(message) {
         $('#notify').html('<div class="alert alert-warning"><a class="close" data-dismiss="alert">×</a><span>'+message+'</span></div>')
     };
@@ -224,12 +220,11 @@
         $('#notify').html('<div class="alert alert-error"><a class="close" data-dismiss="alert">×</a><span>'+message+'</span></div>')
     };
     bootstrap_alert.success = function(message) {
-        $('#notify').html('<div class="alert alert-success"><a class="close" data-dismiss="alert">×</a><span>'+message+'</span></div>')*/
-    }
+        $('#notify').html('<div class="alert alert-success"><a class="close" data-dismiss="alert">×</a><span>'+message+'</span></div>')
+    };*/
 
     $(document).ready(function () {
         showSuccessMsg("Welcome to World BOGA");
-//        showErrorMsg('This Field is required');
 
     });
 
