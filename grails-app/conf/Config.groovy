@@ -131,6 +131,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
         '/login'                    : ['permitAll'],
         '/simpleCaptcha/captcha'    : ['permitAll']
 ]
+
 grails.plugin.springsecurity.rejectIfNoRule = true
 grails.plugin.springsecurity.fii.rejectPublicInvocations = false
 //grails.plugin.springsecurity.successHandler.defaultTargetUrl = '/login/loginSuccess'
