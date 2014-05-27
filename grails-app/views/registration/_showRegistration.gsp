@@ -151,7 +151,7 @@
                                 <div class="col-md-4"></div>
 
                                 <div class="col-md-6">
-                                    <img src="${createLink(controller: 'simpleCaptcha', action: 'captcha')}"/>
+                                    <img src="${createLink(controller: 'simpleCaptcha', action: 'captcha')}" width="175" height="35"/>
                                 </div>
                                 <div class="col-md-2"></div>
                             </div>
