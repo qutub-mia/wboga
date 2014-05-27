@@ -128,8 +128,10 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
         '/login/**'                 : ['permitAll'],
         '/logout'                   : ['permitAll'],
         '/logout/**'                : ['permitAll'],
-        '/login'                    : ['permitAll']
+        '/login'                    : ['permitAll'],
+        '/simpleCaptcha/captcha'    : ['permitAll']
 ]
+
 grails.plugin.springsecurity.rejectIfNoRule = true
 grails.plugin.springsecurity.fii.rejectPublicInvocations = false
 //grails.plugin.springsecurity.successHandler.defaultTargetUrl = '/login/loginSuccess'
@@ -139,8 +141,8 @@ grails.plugin.springsecurity.logout.postOnly = false
 simpleCaptcha {
     // font size used in CAPTCHA images
     fontSize = 25
-    height = 150
-    width = 300
+    height = 200
+    width = 350
 
     // number of characters in CAPTCHA text
     length = 4
@@ -152,7 +154,7 @@ simpleCaptcha {
     lineSpacing = 8
 
     // the charcters shown in the CAPTCHA text must be one of the following
-    chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+    chars = "abcdefghijklmnopqrstubwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 
     // this param will be passed as the first argument to this java.awt.Font constructor
     // http://docs.oracle.com/javase/6/docs/api/java/awt/Font.html#Font(java.lang.String,%20int,%20int)

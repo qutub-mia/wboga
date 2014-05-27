@@ -29,9 +29,8 @@
 
     <link href="${resource(dir: 'css', file: 'bootstrap.css')}" rel="stylesheet"/>
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'font-awesome.css')}"/>
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'select2.css')}"/>
-    <link rel="stylesheet" href="${resource(dir: 'css/jqGrid', file: 'ui.jqgrid.css')}"/>
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery-ui-1.10.3.full.min.css')}"/>
+    %{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'select2.css')}"/>--}%
+    %{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery-ui-1.10.3.full.min.css')}"/>--}%
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'datepicker.css')}" />
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery.gritter.css')}"/>
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'chosen.css')}"/>
@@ -147,10 +146,10 @@
 
 
 
-<script src="//cdn.datatables.net/1.10.0/js/jquery.dataTables.js"></script>
+%{--<script src="//cdn.datatables.net/1.10.0/js/jquery.dataTables.js"></script>--}%
 <script src="${resource(dir: 'js', file: 'jquery.dataTables.bootstrap.js')}"></script>
 
-<script src="${resource(dir: 'js/date-time', file: 'bootstrap-datepicker.min.js')}"></script>
+<script src="${resource(dir: 'js', file: 'bootstrap-datepicker.min.js')}"></script>
 
 
 <script src="${resource(dir: 'js', file: 'bootstrap.js')}"></script>
@@ -162,15 +161,11 @@
 
 <!-- inline scripts related to this page -->
 
-<!--[if lte IE 8]>
-		  <script src="${resource(dir: 'js', file: 'excanvas.js')}"></script>
-<![endif]-->
-
 <script src="${resource(dir: 'js', file: 'chosen.jquery.js')}"></script>
 
 %{--<script src="${resource(dir: 'js', file: 'jquery.slimscroll.js')}"></script>--}%
 
-<script src="${resource(dir: 'js', file: 'jquery.sparkline.js')}"></script>
+%{--<script src="${resource(dir: 'js', file: 'jquery.sparkline.js')}"></script>--}%
 
 
 <!-- ace scripts -->
@@ -179,6 +174,7 @@
 <script src="${resource(dir: 'js', file: 'spin.min.js')}"></script>
 <script src="${resource(dir: 'js', file: 'ace-elements.min.js')}"></script>
 <script src="${resource(dir: 'js', file: 'ace.js')}"></script>
+<script src="${resource(dir: 'js', file: 'jquery.gritter.min.js')}"></script>
 
 <r:layoutResources/>
 
@@ -225,7 +221,6 @@
 
     $(document).ready(function () {
         showSuccessMsg("Welcome to World BOGA");
-
     });
 
     function showSuccessMsg(message){
