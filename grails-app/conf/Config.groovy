@@ -128,7 +128,8 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
         '/login/**'                 : ['permitAll'],
         '/logout'                   : ['permitAll'],
         '/logout/**'                : ['permitAll'],
-        '/login'                    : ['permitAll']
+        '/login'                    : ['permitAll'],
+        '/simpleCaptcha/captcha'    : ['permitAll']
 ]
 grails.plugin.springsecurity.rejectIfNoRule = true
 grails.plugin.springsecurity.fii.rejectPublicInvocations = false

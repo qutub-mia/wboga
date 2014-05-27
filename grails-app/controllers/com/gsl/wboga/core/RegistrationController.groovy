@@ -26,7 +26,7 @@ class RegistrationController {
         }
         boolean captchaValid = simpleCaptchaService.validateCaptcha(params.captcha)
         if(!captchaValid){
-            flash.message = "Captcha problem! Try Again!!"
+            flash.message = "Captcha did not match! Try Again!!"
             redirect(action: 'create')
             return
         }
