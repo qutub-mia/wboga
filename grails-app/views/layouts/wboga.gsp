@@ -180,9 +180,7 @@
 <!-- ace scripts -->
 <script src="${resource(dir: 'js', file: 'fuelux.wizard.min.js')}"></script>
 <script src="${resource(dir: 'js', file: 'jquery.validate.min.js')}"></script>
-
-
-
+<script src="${resource(dir: 'js', file: 'spin.min.js')}"></script>
 <script src="${resource(dir: 'js', file: 'ace-elements.min.js')}"></script>
 <script src="${resource(dir: 'js', file: 'ace.js')}"></script>
 
@@ -211,7 +209,7 @@
             }*//*
         }
     });*/
-/*    $(document)
+    $(document)
             .ajaxStart(function () {
                 showSpinner(true);
             })
@@ -219,7 +217,7 @@
 //                $loading.hide();
                 showSpinner(false);
             });
-    bootstrap_alert = function() {};
+    /*bootstrap_alert = function() {};
     bootstrap_alert.warning = function(message) {
         $('#notify').html('<div class="alert alert-warning"><a class="close" data-dismiss="alert">×</a><span>'+message+'</span></div>')
     };
@@ -227,8 +225,8 @@
         $('#notify').html('<div class="alert alert-error"><a class="close" data-dismiss="alert">×</a><span>'+message+'</span></div>')
     };
     bootstrap_alert.success = function(message) {
-        $('#notify').html('<div class="alert alert-success"><a class="close" data-dismiss="alert">×</a><span>'+message+'</span></div>')
-    };*/
+        $('#notify').html('<div class="alert alert-success"><a class="close" data-dismiss="alert">×</a><span>'+message+'</span></div>')*/
+    }
 
     $(document).ready(function () {
         showSuccessMsg("Welcome to World BOGA");
@@ -257,6 +255,14 @@
         return false;
     }
 
+    function showSpinner(control) {
+        if (control) {
+            $('.icon-spinner').modal('show');
+        } else {
+            $('.icon-spinner').modal('hide');
+        }
+        return false;
+    }
 </script>
 </body>
 </html>

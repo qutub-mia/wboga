@@ -11,9 +11,13 @@
         padding: 5px;
     }
 </style>
-    <ul class="breadcrumb">
+    %{--<ul class="breadcrumb">
         <li id="notify"></li>
-    </ul><!-- .breadcrumb -->
+    </ul><!-- .breadcrumb -->--}%
+    <div id="spinner-div" class="col-md-12 pull-right">
+        <span><i class="icon-spinner icon-spin orange bigger-200" style="margin-top: 6px"></i></span>
+    </div>
+
 
     %{--<div class="nav-search" id="nav-search">--}%
         %{--<form class="form-search">--}%
