@@ -147,10 +147,10 @@
 
 
 
-<script src="//cdn.datatables.net/1.10.0/js/jquery.dataTables.js"></script>
+%{--<script src="//cdn.datatables.net/1.10.0/js/jquery.dataTables.js"></script>--}%
 <script src="${resource(dir: 'js', file: 'jquery.dataTables.bootstrap.js')}"></script>
 
-<script src="${resource(dir: 'js/date-time', file: 'bootstrap-datepicker.min.js')}"></script>
+<script src="${resource(dir: 'js', file: 'bootstrap-datepicker.min.js')}"></script>
 
 
 <script src="${resource(dir: 'js', file: 'bootstrap.js')}"></script>
@@ -163,14 +163,14 @@
 <!-- inline scripts related to this page -->
 
 <!--[if lte IE 8]>
-		  <script src="${resource(dir: 'js', file: 'excanvas.js')}"></script>
+		  <!--<script src="${resource(dir: 'js', file: 'excanvas.js')}"></script>-->
 <![endif]-->
 
 <script src="${resource(dir: 'js', file: 'chosen.jquery.js')}"></script>
 
 %{--<script src="${resource(dir: 'js', file: 'jquery.slimscroll.js')}"></script>--}%
 
-<script src="${resource(dir: 'js', file: 'jquery.sparkline.js')}"></script>
+%{--<script src="${resource(dir: 'js', file: 'jquery.sparkline.js')}"></script>--}%
 
 
 <!-- ace scripts -->
