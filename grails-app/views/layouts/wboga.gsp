@@ -184,7 +184,6 @@
 <script src="${resource(dir: 'js', file: 'ace-elements.min.js')}"></script>
 <script src="${resource(dir: 'js', file: 'ace.js')}"></script>
 
-
 <r:layoutResources/>
 
 <script type="text/javascript">

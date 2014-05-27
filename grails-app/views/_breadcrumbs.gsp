@@ -18,7 +18,6 @@
         <span><i class="icon-spinner icon-spin orange bigger-200" style="margin-top: 6px"></i></span>
     </div>
 
-
     %{--<div class="nav-search" id="nav-search">--}%
         %{--<form class="form-search">--}%
             %{--<span class="input-icon">--}%
