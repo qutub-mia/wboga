@@ -69,19 +69,19 @@ class MessengerController {
 
             if (!savedMessenger){
                 flash.message = "Not Added!"
-                render(view: 'inbox')
+                render(view: 'send')
                 return
             }
         }
 
         flash.message = "Send Message Successfully!!"
-        redirect(action: 'inbox')
+        redirect(controller: 'messenger', action: 'send')
     }
 
 
     @Secured(['ROLE_SUPER_ADMIN'])
-    def inboxList(){
-        Registration sender = Registration.get(2) // default value for sender
+    def sendList(){
+        Registration sender = Registration.get(2) // default value for sender __ user role
 
         int sEcho = params.sEcho?params.getInt('sEcho'):1
         int iDisplayStart = params.iDisplayStart? params.getInt('iDisplayStart'):0
@@ -93,12 +93,71 @@ class MessengerController {
         if(sSearch){
             sSearch = "%"+sSearch+"%"
         }
+
+
+        String sortColumn = MessengerUtility.getSortColumn(iSortingCol)
+        List dataReturns = new ArrayList()
+        def c = Messenger.createCriteria()
+
+        Messenger messenger1 = new Messenger()
+
+
+
+        def results = c.list (max: iDisplayLength, offset:iDisplayStart) {
+            and {
+                eq('sender',sender)
+            }
+            if(sSearch){
+                or {
+                    ilike('subject',sSearch)
+                }
+            }
+            order(sortColumn, sSortDir)
+        }
+
+        println ">>" + results
+        int totalCount = results.totalCount
+        int serial = iDisplayStart;
+        if(totalCount>0){
+            if(sSortDir.equalsIgnoreCase('desc')){
+                serial =(totalCount+1)-iDisplayStart
+            }
+            results.each {Messenger messenger ->
+                if(sSortDir.equalsIgnoreCase('asc')){
+                    serial++
+                }else{
+                    serial--
+                }
+                dataReturns.add([DT_RowId:messenger.id,0:serial,1:messenger.receiver.name,2:messenger.subject,3:''])
+            }
+        }
+        Map gridData =[iTotalRecords:totalCount,iTotalDisplayRecords:totalCount,aaData:dataReturns]
+        String result = gridData as JSON
+        render result
+    }
+
+    @Secured(['ROLE_SUPER_ADMIN'])
+    def inboxList(){
+        Registration receiver = Registration.get(2) // default value for sender __ user role
+
+        int sEcho = params.sEcho?params.getInt('sEcho'):1
+        int iDisplayStart = params.iDisplayStart? params.getInt('iDisplayStart'):0
+        int iDisplayLength = params.iDisplayLength? params.getInt('iDisplayLength'):10
+        String sSortDir = params.sSortDir_0? params.sSortDir_0:'asc'
+        int iSortingCol = params.iSortingCols? params.getInt('iSortingCols'):1
+        //Search string, use or logic to all fields that required to include
+        String sSearch = params.sSearch?params.sSearch:null
+        if(sSearch){
+            sSearch = "%"+sSearch+"%"
+        }
+
+
         String sortColumn = MessengerUtility.getSortColumn(iSortingCol)
         List dataReturns = new ArrayList()
         def c = Messenger.createCriteria()
         def results = c.list (max: iDisplayLength, offset:iDisplayStart) {
             and {
-                eq('sender',sender)
+                eq('receiver',receiver)
             }
             if(sSearch){
                 or {
@@ -120,7 +179,7 @@ class MessengerController {
                 }else{
                     serial--
                 }
-                dataReturns.add([DT_RowId:messenger.id,0:serial,1:messenger.receiver.name,2:messenger.subject,3:''])
+                dataReturns.add([DT_RowId:messenger.id,0:serial,1:messenger.sender.name,2:messenger.subject,3:''])
             }
         }
         Map gridData =[iTotalRecords:totalCount,iTotalDisplayRecords:totalCount,aaData:dataReturns]

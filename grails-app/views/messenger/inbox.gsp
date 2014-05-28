@@ -21,7 +21,7 @@
                     <thead>
                     <tr>
                         <th>Serial</th>
-                        <th>Sender</th>
+                        <th>Receiver</th>
                         <th>Subject</th>
                         <th>Action</th>
                     </tr>

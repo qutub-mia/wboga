@@ -84,6 +84,7 @@
             autoclose: true
         });
 
+
         $('#registrationForm').validate({
 
             errorPlacement: function (error, element) {
@@ -106,15 +107,15 @@
                     required: true,
                     email: true
                 },
-                username: {
+                regUsername: {
                     required: true
                 },
-                password: {
+                regPassword: {
                     required: true,
                     minlength: 8
                 },
                 confirmPassword: {
-                    equalTo: "#password"
+                    equalTo: "#regPassword"
                 },
                 answer: {
                     required: true
@@ -133,27 +134,12 @@
                 $('.alert-danger', $('#chartClassForm')).show();
             },
             submitHandler: function (form) {
-
-                // Date checking
-                var dateString = $('#dob').val();
-                var dateSplit = dateString.split("/");
-                var dob = dateSplit[2] + "/" + dateSplit[1] + "/" + dateSplit[0];
-                var dateDob = calcAge(dateString);
-                if (dateDob < 18) {
-                    $('#ageConditionDiv').show();
-                    var condition = $('#ageCondition').prop('checked');
-                    if (condition == false) {
-                        return;
-                    }
-                }
-
                 jQuery.ajax({
                     url: "${createLink(controller: 'registration', action: 'save')}",
                     type: 'post',
                     data: $('#registrationForm').serialize(),
                     success: function (data) {
                         $('body').html(data);
-
                     },
                     failure: function (data) {
                     }
@@ -161,12 +147,31 @@
             }
         });
 
+        // Date checking
+        $('#dob').change(function(){
+            var dateString = $('#dob').val();
+            var dateSplit = dateString.split("/");
+            var dob = dateSplit[2] + "/" + dateSplit[1] + "/" + dateSplit[0];
+            var dateDob = calcAge(dateString);
+            if (dateDob < 18) {
+                $('#ageConditionDiv').show();
+                var condition = $('#ageCondition').prop('checked');
+                if (condition == false) {
+                    return;
+                }
+            }
+            else{
+                $('#ageConditionDiv').hide();
+            }
+        })
 
-        function calcAge(dateString) {
-            var birthday = +new Date(dateString);
-            return~~((Date.now() - birthday) / (31557600000));
-        }
     });
+
+    function calcAge(dateString) {
+        var birthday = +new Date(dateString);
+        return~~((Date.now() - birthday) / (31557600000));
+    }
+
     function showSuccessMsg(message) {
         $.gritter.add({
             // (string | mandatory) the heading of the notification

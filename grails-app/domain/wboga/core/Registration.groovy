@@ -8,9 +8,9 @@ class Registration {
     String username
     String password
     String answer
-    Boolean status = true
+    boolean status = true
 
-    //static hasMany = [senders: Messenger, receivers: Messenger]
+    //static hasMany = [sender: Messenger]
     static belongsTo = [country: Country, hint: Hint, memberType: MemberType]
 
     static constraints = {

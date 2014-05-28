@@ -11,7 +11,7 @@ import org.apache.commons.lang.StringUtils
  * To change this template use File | Settings | File Templates.
  */
 class MessengerUtility {
-    static final String[] sortColumns = ['id','subject']
+    static final String[] sortColumns = ['id','subject','sender']
     public static String getSortColumn(int idx){
         int columnCounts = sortColumns.length
         if(idx>0 && idx<columnCounts){

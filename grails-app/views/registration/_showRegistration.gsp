@@ -96,11 +96,11 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="username" class="control-label col-md-4">Username <sup class="red">*</sup>
+                                <label for="regUsername" class="control-label col-md-4">Username <sup class="red">*</sup>
                                 </label>
 
                                 <div class="col-md-6">
-                                    <input type="text" id="username" class="form-control" name="username"
+                                    <input type="text" id="regUsername" class="form-control" value="" name="username"
                                            placeholder="Enter the username"/>
                                 </div>
                                 <div class="col-md-2"></div>
@@ -108,18 +108,18 @@
 
 
                             <div class="form-group">
-                                <label for="password" class="control-label col-md-4">Password <sup class="red">*</sup>
+                                <label for="regPassword" class="control-label col-md-4">Password <sup class="red">*</sup>
                                 </label>
 
                                 <div class="col-md-6">
-                                    <input type="password" id="password" class="form-control" name="password"
+                                    <input type="password" id="regPassword" value="" class="form-control" name="password"
                                            placeholder="Enter the password"/>
                                 </div>
                                 <div class="col-md-2"></div>
                             </div>
 
                             <div class="form-group">
-                                <label for="password" class="control-label col-md-4">Confirm Password <sup
+                                <label for="confirmPassword" class="control-label col-md-4">Confirm Password <sup
                                         class="red">*</sup></label>
 
                                 <div class="col-md-6">

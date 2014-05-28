@@ -17,6 +17,6 @@ class Messenger {
         messageBody blank:true, nullable:true
         /*showOn blank:false, nullable:false*/
         messagerFile blank: true, nullable: true
-        messenger nullable: true, blank: true
+        /*messenger nullable: true, blank: true*/
     }
 }
