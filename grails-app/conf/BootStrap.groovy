@@ -177,7 +177,15 @@ class BootStrap {
     }
 
     def createCommonReqMap(){
+        new RequestMap(url: '/login/**', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY').save(flush: true)
+        new RequestMap(url: '/login', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY').save(flush: true)
+        new RequestMap(url: '/logout/**', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY').save(flush: true)
+        new RequestMap(url: '/**/images/**', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY').save(flush: true)
+        new RequestMap(url: '/dashboard/index', configAttribute: 'ROLE_ADMIN,ROLE_MEMBER').save(flush: true)
+        new RequestMap(url: '/simpleCaptcha/captcha', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY').save(flush: true)
         new RequestMap(url: '/registration/create', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY').save(flush: true)
+        new RequestMap(url: '/registration/save', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY').save(flush: true)
+        new RequestMap(url: '/', configAttribute: 'ROLE_SUPER_ADMIN,ROLE_ADMIN,ROLE_MEMBER').save(flush: true)
     }
 
     def destroy = {

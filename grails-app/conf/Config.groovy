@@ -27,6 +27,7 @@ grails.mime.types = [ // the first one is the default format
     multipartForm: 'multipart/form-data',
     rss:           'application/rss+xml',
     text:          'text/plain',
+    pdf: 'application/pdf',
     hal:           ['application/hal+json','application/hal+xml'],
     xml:           ['text/xml', 'application/xml']
 ]
@@ -118,23 +119,30 @@ grails.plugin.springsecurity.userLookup.userDomainClassName = 'com.gsl.wboga.uma
 grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'com.gsl.wboga.uma.security.UserRole'
 grails.plugin.springsecurity.authority.className = 'com.gsl.wboga.uma.security.Role'
 grails.plugin.springsecurity.requestMap.className = 'com.gsl.wboga.uma.security.RequestMap'
-grails.plugin.springsecurity.controllerAnnotations.staticRules = [
-//	'/':                              ['permitAll'],
-        '/**/js/**'                 : ['permitAll'],
-        '/**/css/**'                : ['permitAll'],
-        '/**/images/**'             : ['permitAll'],
-        '/**/imageIndirect/index/**': ['permitAll'],
-        '/**/favicon.ico'           : ['permitAll'],
-        '/login/**'                 : ['permitAll'],
+grails.plugin.springsecurity.securityConfigType = grails.plugin.springsecurity.SecurityConfigType.Requestmap
+grails.plugin.springsecurity.successHandler.defaultTargetUrl = '/'//''/login/loginSuccess'
+
+/*grails.plugins.springsecurity.errors.login.fail = "Invalid ID or Password."
+grails.plugins.springsecurity.errors.login.disabled = "Sorry, your account is not activated yet."
+grails.plugins.springsecurity.errors.login.expired = "Sorry, your account has expired."
+grails.plugins.springsecurity.errors.login.passwordExpired = "Sorry, your password has expired."
+grails.plugins.springsecurity.errors.login.locked = "Sorry, your account is locked."*/
+/*grails.plugin.springsecurity.controllerAnnotations.staticRules = [
+	    '/'                         : ['permitAll'],
+        '*//**//*js*//**'                 : ['permitAll'],
+        '*//**//*css*//**'                : ['permitAll'],
+        '*//**//*images*//**'             : ['permitAll'],
+        '*//**//*imageIndirect/index*//**': ['permitAll'],
+        '*//**//*favicon.ico'           : ['permitAll'],
+        '/login*//**'                 : ['permitAll'],
         '/logout'                   : ['permitAll'],
-        '/logout/**'                : ['permitAll'],
+        '/logout*//**'                : ['permitAll'],
         '/login'                    : ['permitAll'],
         '/simpleCaptcha/captcha'    : ['permitAll']
-]
+]*/
 
 grails.plugin.springsecurity.rejectIfNoRule = true
 grails.plugin.springsecurity.fii.rejectPublicInvocations = false
-//grails.plugin.springsecurity.successHandler.defaultTargetUrl = '/login/loginSuccess'
 grails.plugin.springsecurity.successHandler.alwaysUseDefault = true
 grails.plugin.springsecurity.logout.postOnly = false
 

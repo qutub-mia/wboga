@@ -13,7 +13,7 @@ class RegistrationController {
 
     def index() {}
 
-    @Secured(['ROLE_ANONYMOUS'])
+
     def create(){
         Random r = new Random();
         Long hintId = r.nextInt(Hint.count() - 0 + 1) + 0 as Long;
@@ -21,7 +21,7 @@ class RegistrationController {
         render(view: '_showRegistration', model: [hint:hint])
     }
 
-    @Secured(['ROLE_ANONYMOUS'])
+
     def save() {
         if (!request.method == 'POST') {
             flash.message = "Registration data dose not added Successfully!"
@@ -63,7 +63,7 @@ class RegistrationController {
         redirect([controller: 'login', action: 'auth'])
     }
 
-    @Secured(['ROLE_ANONYMOUS'])
+
     def checkEmail() {
         def email = params.email
         def checkEmail = Registration.findByEmail(email)

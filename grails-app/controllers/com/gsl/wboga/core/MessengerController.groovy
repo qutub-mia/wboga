@@ -9,33 +9,31 @@ import wboga.core.Registration
 class MessengerController {
 
     def index() {}
-
-    @Secured(['ROLE_SUPER_ADMIN'])
     def inbox(){
         render(view: 'inbox')
     }
 
-    @Secured(['ROLE_SUPER_ADMIN'])
+
     def send(){
 
     }
 
-    @Secured(['ROLE_SUPER_ADMIN'])
+
     def compose(){
         render(view: '_compose')
     }
 
-    @Secured(['ROLE_SUPER_ADMIN'])
+
     def trash(){
 
     }
 
-    @Secured(['ROLE_SUPER_ADMIN'])
+
     def chat(){
 
     }
 
-    @Secured(['ROLE_SUPER_ADMIN'])
+
     def save(){
 
         // Default Sender
