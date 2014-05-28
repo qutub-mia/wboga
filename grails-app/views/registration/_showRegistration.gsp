@@ -20,7 +20,7 @@
 
         <div class="widget-body">
             <div class="widget-main no-padding">
-                <g:form class="form-horizontal" method="post" name="registrationForm" id="registrationForm" role="form"
+                <form class="form-horizontal" method="post" name="registrationForm" id="registrationForm" role="form"
                         onsubmit="return false;">
                     <fieldset>
 
@@ -169,139 +169,25 @@
                         </div>
 
                     </fieldset>
-                </g:form>
-                <div class="clearfix form-actions">
-                    <div class="align-center">
-                        <button type="reset" class="btn">
-                            <i class="icon-undo bigger-110"></i>
-                            Reset
-                        </button>
-                        <button type="submit" class="btn btn-info">
-                            <i class="icon-ok bigger-110"></i>
-                            Create
-                        </button>
+                    <div class="clearfix form-actions">
+                        <div class="align-center">
+                            <button type="reset" class="btn">
+                                <i class="icon-undo bigger-110"></i>
+                                Reset
+                            </button>
+                            <button type="submit" class="btn btn-info">
+                                <i class="icon-ok bigger-110"></i>
+                                Create
+                            </button>
+                        </div>
                     </div>
-                </div>
+                </form>
+
             </div>
         </div>
     </div>
 </div>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#ageConditionDiv').hide();
-        // Date format
-        $("#openingDate").datepicker({
-            format: 'dd/mm/yyyy',
-            gotoCurrent: true,
-            autoclose: true
-        });
 
-        $('#registrationForm').validate({
-
-
-            errorPlacement: function (error, element) {
-            },
-            focusInvalid: false,
-            rules: {
-                name: {
-                    required: true
-                },
-                memberType: {
-                    required: true
-                },
-                dob: {
-                    required: true
-                },
-                country: {
-                    required: true
-                },
-                email: {
-                    required: true,
-                    email: true
-                },
-                username: {
-                    required: true
-                },
-                password: {
-                    required: true,
-                    minlength: 8
-                },
-                confirmPassword: {
-                    equalTo: "#password"
-                },
-                answer: {
-                    required: true
-                }
-            },
-
-            highlight: function (e) {
-                $(e).closest('.form-group').removeClass('has-info').addClass('has-error');
-            },
-
-            success: function (e) {
-                $(e).closest('.form-group').removeClass('has-error').addClass('has-info');
-                $(e).remove();
-            },
-            invalidHandler: function (event, validator) { //display error alert on form submit
-                $('.alert-danger', $('#chartClassForm')).show();
-            },
-            submitHandler: function (form) {
-
-                // Date checking
-                var dateString = $('#dob').val();
-                var dateSplit = dateString.split("/");
-                var dob = dateSplit[2] + "/" + dateSplit[1] + "/" + dateSplit[0];
-                var dateDob = calcAge(dateString);
-                if (dateDob < 18) {
-                    $('#ageConditionDiv').show();
-                    var condition = $('#ageCondition').prop('checked');
-                    if (condition == false) {
-                        return;
-                    }
-                }
-
-                jQuery.ajax({
-                    url: "${createLink(controller: 'registration', action: 'save')}",
-                    type: 'post',
-                    data: $('#registrationForm').serialize(),
-                    success: function (data) {
-                        $('body').html(data);
-
-                    },
-                    failure: function (data) {
-                    }
-                })
-            }
-        });
-
-
-        function calcAge(dateString) {
-            var birthday = +new Date(dateString);
-            return~~((Date.now() - birthday) / (31557600000));
-        }
-    });
-    function showSuccessMsg(message) {
-        $.gritter.add({
-            // (string | mandatory) the heading of the notification
-            title: 'Success',
-            // (string | mandatory) the text inside the notification
-            text: message,
-            class_name: 'gritter-success gritter-light'
-        });
-        return false;
-    }
-
-    function showErrorMsg(message) {
-        $.gritter.add({
-            title: 'Error',
-            text: message,
-            class_name: 'gritter-error gritter-light',
-            sticky: false
-        });
-        return false;
-    }
-
-</script>
 
 </body>
 </html>

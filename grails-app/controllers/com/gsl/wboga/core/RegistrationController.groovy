@@ -53,7 +53,7 @@ class RegistrationController {
         )
         user.save(flush: true)
         flash.message = "Added Successfully !!"
-        redirect(action: 'create')
+        redirect(controller: 'login', action: 'auth')
     }
 
     @Secured(['ROLE_ANONYMOUS'])

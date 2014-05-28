@@ -110,9 +110,6 @@ class MessengerController {
             order(sortColumn, sSortDir)
         }
 
-        println ">" + results.size()
-
-
         int totalCount = results.totalCount
         int serial = iDisplayStart;
         if(totalCount>0){
