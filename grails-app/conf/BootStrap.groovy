@@ -10,6 +10,8 @@ import wboga.core.Registration
 
 class BootStrap {
     def grailsApplication
+
+    Role role
     def init = { servletContext ->
         createUserWithRole()
 
@@ -17,6 +19,7 @@ class BootStrap {
         createHint()
         createPackage()
         createCountryList()
+        createCommonRole()
         createCommonReqMap()
         createRegistration()
     }
@@ -166,6 +169,11 @@ class BootStrap {
 
         }
         println "Request Map code complete"
+    }
+
+    def createCommonRole(){
+        role = new Role(id: 3, authority: 'ROLE_MEMBER')
+        role.save(flush: true)
     }
 
     def createCommonReqMap(){

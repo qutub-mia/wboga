@@ -1,4 +1,4 @@
-<%@ page import="com.gsl.uma.security.Role" contentType="text/html;charset=UTF-8" %>
+<%@ page import="com.gsl.wboga.uma.security.Role; com.gsl.uma.security.Role" contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <title></title>
@@ -84,7 +84,7 @@
                     <div class="clearfix">
                         <g:select class="width-40 chosen-select" id="role" name='role'
                                   noSelection="${['': 'Select Role...']}"
-                                  from='${Role.findAllByAuthorityNotIlike('ROLE_SUPER_ADMIN')}'
+                                  from='${com.gsl.wboga.uma.security.Role.findAllByAuthorityNotIlike('ROLE_SUPER_ADMIN')}'
                                   optionKey="id" optionValue="authority"></g:select>
                     </div>
                 </div>
