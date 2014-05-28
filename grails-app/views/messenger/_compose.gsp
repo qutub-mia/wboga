@@ -57,6 +57,9 @@
 </div><!-- /.tabbable -->
 
 <form id="id-message-form" class="hide form-horizontal message-form col-md-12">
+
+    <input type="hidden" name="messenger" id="messenger" value="" />
+
     <div class="col-md-10">
         <div class="form-group">
             <label class="col-md-3 control-label no-padding-right" for="form-field-recipient">Recipient:</label>
@@ -85,7 +88,7 @@
 
             <div class="col-sm-6 col-xs-12">
                 <div class="input-icon block col-xs-12 no-padding">
-                    <input maxlength="100" type="text" class="col-xs-12" name="subject" id="form-field-subject"
+                    <input maxlength="100" type="text" class="col-xs-12" value="subjectDefault" name="subject" id="form-field-subject"
                            placeholder="Subject"/>
                     <i class="icon-comment-alt"></i>
                 </div>
@@ -102,7 +105,7 @@
 
             <div class="col-sm-9">
                 %{--<div class="wysiwyg-editor"></div>--}%
-                <textarea name="messageBody" id="wysiwyg-editor" style="width: 100%" class="wysiwyg-editor"></textarea>
+                <textarea name="messageBody" id="wysiwyg-editor" style="width: 100%" class="wysiwyg-editor">Message Body this!</textarea>
             </div>
         </div>
 
@@ -349,26 +352,8 @@
             });
         }//initialize_form
 
-
-        // dataTable
-        var inboxTable = $('#messenger-inbox-tbl').DataTable({
-            "sDom": "<'row'<'col-md-4'><'col-md-4'><'col-md-4'f>r>t<'row'<'col-md-4'l><'col-md-4'i><'col-md-4'p>>", //<'row'<'col-md-4'><'col-md-4'><'col-md-4'f>r>t<'row'<'col-md-4'l><'col-md-4'i><'col-md-4'p>> ,
-            "bAutoWidth": true,
-            "aoColumns": [
-                null,
-                null,
-                { "bSortable": false }
-            ]
-        });
-
-
         /* send */
         $('#submitButton').click(function(){
-
-        /*var a = $('.wysiwyg-editor').val();
-        alert(a);*/
-//        $('#some-textarea').wysihtml5();
-
             $.ajax({
                 url:"${createLink(controller: 'messenger', action: 'save')}",
                 type:'post',

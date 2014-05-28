@@ -20,22 +20,17 @@
                 <table id="messenger-inbox-tbl" class="table table-striped table-bordered table-hover">
                     <thead>
                     <tr>
-                        <th>Sender Name</th>
+                        <th>Serial</th>
+                        <th>Receiver</th>
                         <th>Subject</th>
                         <th>Action</th>
                     </tr>
                     </thead>
                     <tbody id="introducerTableId">
                     <g:each in="${retailAccount?.retailIntroducer}" var="introducer" status="i">
-                    <g:if test="${introducer.status == true}">
                         <tr>
-                            <td id="attCaption">${introducer.client.name}</td>
+                            %{--<td id="attCaption">${introducer.client.name}</td>
                             <td id="attName">${introducer.client.accountNo}</td>
-
-                            <td id="attDescription">${introducer.relation}</td>
-                            <td id="attSize">${introducer.client.address}</td>
-                            <td id="attType">${introducer.client.contactNo}</td>
-
 
                             <td class="actions ">
                                 <div class="btn-group">
@@ -43,14 +38,47 @@
                                        href="" id="${introducer.id}" retailAccount = "${retailAccount?.id}"
                                        title="Delete"><i class="glyphicon glyphicon-remove "></i></a>
                                 </div>
-                            </td>
+                            </td>--}%
                         </tr>
-                     </g:if>
                     </g:each>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
+
+<r:script>
+    jQuery(function ($) {
+        // dataTable
+        var inboxTable = $('#messenger-inbox-tbl').dataTable({
+            "sDom": "<'row'<'col-md-4'><'col-md-4'><'col-md-4'f>r>t<'row'<'col-md-4'l><'col-md-4'i><'col-md-4'p>>",
+            "bProcessing": false,
+            "bAutoWidth": true,
+            "bServerSide": true,
+            "sAjaxSource": "${g.createLink(controller: 'messenger',action: 'inboxList')}",
+            "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+                $('td:eq(3)', nRow).html(getActionButtons(nRow, aData));
+                return nRow;
+            },
+            "aoColumns": [
+                null,
+                null,
+                null,
+                { "bSortable": false }
+            ]
+        });
+    })
+
+    function getActionButtons(nRow, aData) {
+        var actionButtons = "";
+        actionButtons += '<span class="col-xs-6"><a href="" userId="'+aData.DT_RowId+ '" class="edit-user" title="Edit">';
+        actionButtons += '<span class="green glyphicon glyphicon-edit"></span>';
+        actionButtons += '</a></span>';
+        actionButtons += '<span class="col-xs-6"><a href="" userId="'+aData.DT_RowId+ '" class="delete-user" title="Delete">';
+        actionButtons += '<span class="red glyphicon glyphicon-trash"></span>';
+        actionButtons += '</a></span>';
+        return actionButtons;
+    }
+</r:script>
 </body>
 </html>
