@@ -3,16 +3,12 @@ package com.gsl.wboga.core
 import com.gsl.wboga.uma.security.Role
 import com.gsl.wboga.uma.security.User
 import com.gsl.wboga.uma.security.UserRole
-import grails.plugin.springsecurity.annotation.Secured
 import wboga.core.Hint
 import wboga.core.Registration
 
 class RegistrationController {
 
     def simpleCaptchaService
-
-    def index() {}
-
 
     def create(){
         Random r = new Random();
@@ -24,7 +20,7 @@ class RegistrationController {
 
     def save() {
         if (!request.method == 'POST') {
-            flash.message = "Registration data dose not added Successfully!"
+            flash.message = "Registration Error."
             redirect(action: 'create')
             return
         }
@@ -38,13 +34,13 @@ class RegistrationController {
         params.dob = Date.parse('dd/MM/yyyy', params.dob)
         Registration registration = new Registration(params)
         if (!registration.validate()) {
-            flash.message = "Not added validated! Username & Email must be unique!"
+            flash.message = "Username & Email must be unique!"
             redirect(action: 'create')
             return
         }
         Registration savedRegistration = registration.save(flush: true)
         if (!savedRegistration) {
-            flash.message = "Not added Successfully"
+            flash.message = "Registration failed."
             redirect(action: 'create')
             return
         }
@@ -59,7 +55,7 @@ class RegistrationController {
         UserRole userRole = new UserRole(user: user, role: role)
         userRole.save(flush: true)
 
-        flash.message = "Added Successfully !!"
+        flash.message = "Registration success"
         redirect([controller: 'login', action: 'auth'])
     }
 
