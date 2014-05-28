@@ -135,7 +135,7 @@
 
 
 
-<r:script type="text/javascript">
+<script type="text/javascript">
     jQuery(function ($) {
         //$(".chosen-select").chosen();
         $(".chosen-select").chosen({width: "95%", height:"100%"});
@@ -368,4 +368,4 @@
         })
 
     });
-</r:script>
+</script>

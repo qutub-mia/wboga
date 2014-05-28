@@ -8,6 +8,7 @@ class Messenger {
     boolean showOn = false
     String messagerFile
 
+
     static hasMany = [messengers: Messenger]
     static belongsTo = [sender: Registration, receiver: Registration, messenger: Messenger]
 

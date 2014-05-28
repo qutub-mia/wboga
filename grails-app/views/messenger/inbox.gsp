@@ -47,7 +47,7 @@
         </div>
     </div>
 
-<r:script>
+<script>
     jQuery(function ($) {
         // dataTable
         var inboxTable = $('#messenger-inbox-tbl').dataTable({
@@ -79,6 +79,6 @@
         actionButtons += '</a></span>';
         return actionButtons;
     }
-</r:script>
+</script>
 </body>
 </html>

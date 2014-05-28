@@ -20,6 +20,7 @@ class MessengerUtility {
         return sortColumns[0]
     }
 
+
     public static String buildAccessUrl(String original, boolean allowAccess, String authority){
         String returnStr = "permitAll"
         String[] returnArray = null
