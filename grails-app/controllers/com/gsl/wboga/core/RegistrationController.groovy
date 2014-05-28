@@ -1,5 +1,6 @@
 package com.gsl.wboga.core
 
+import com.gsl.wboga.uma.security.User
 import grails.plugin.springsecurity.annotation.Secured
 import wboga.core.Hint
 import wboga.core.Registration
@@ -44,6 +45,13 @@ class RegistrationController {
             redirect(action: 'create')
             return
         }
+        User user = new User(
+                username:savedRegistration.username,
+                email: savedRegistration.email,
+                password: savedRegistration.password,
+                enabled: true
+        )
+        user.save(flush: true)
         flash.message = "Added Successfully !!"
         redirect(action: 'create')
     }
