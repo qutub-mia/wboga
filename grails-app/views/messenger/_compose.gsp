@@ -88,7 +88,7 @@
 
             <div class="col-sm-6 col-xs-12">
                 <div class="input-icon block col-xs-12 no-padding">
-                    <input maxlength="100" type="text" class="col-xs-12" value="subjectDefault" name="subject" id="form-field-subject"
+                    <input maxlength="100" type="text" class="col-xs-12" name="subject" id="form-field-subject"
                            placeholder="Subject"/>
                     <i class="icon-comment-alt"></i>
                 </div>
@@ -135,7 +135,7 @@
 
 
 
-<script type="text/javascript">
+<r:script>
     jQuery(function ($) {
         //$(".chosen-select").chosen();
         $(".chosen-select").chosen({width: "95%", height:"100%"});
@@ -368,4 +368,4 @@
         })
 
     });
-</script>
+</r:script>
