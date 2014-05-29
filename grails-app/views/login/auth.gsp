@@ -1,6 +1,6 @@
 <html xmlns="http://www.w3.org/1999/html">
 <head>
-	<meta name='layout' content='logintpl'/>
+	%{--<meta name='layout' content='logintpl'/>--}%
 	<title>Welcome to World BOGA</title>
 </head>
 
@@ -11,14 +11,14 @@
         <div class="row">
             <div class="span12">
                 <div class="login-container">
-                    <div class="row">
+                    %{--<div class="row">
                         <div class="center">
                             <h1>
                                 <i class="icon-leaf green"></i>
                                 <span class="red"></span>
                             </h1>
                         </div>
-                    </div>
+                    </div>--}%
 
                     <div class="space-6"></div>
 
