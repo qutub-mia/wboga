@@ -60,7 +60,7 @@ class LoginController {
             return
         }
 
-        String view = '/login/ auth'
+        String view = '/login/auth'
         String postUrl = "${request.contextPath}${config.apf.filterProcessesUrl}"
         render view: view, model: [postUrl: postUrl,
                 rememberMeParameter: config.rememberMe.parameter]

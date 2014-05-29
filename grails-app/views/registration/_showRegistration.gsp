@@ -1,12 +1,4 @@
 <%@ page import="wboga.core.Country; wboga.core.MemberType" %>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8"/>
-</head>
-
-<body>
-
 <g:if test="${flash.message}">
     <div class="alert alert-success">
         <i class="icon-bell green"><b>${flash.message}</b></i> <a class="close" data-dismiss="alert">×</a>
@@ -20,8 +12,8 @@
 
         <div class="widget-body">
             <div class="widget-main no-padding">
-                <form class="form-horizontal" method="post" name="registrationForm" id="registrationForm" role="form"
-                        onsubmit="return false;">
+                <g:form class="form-horizontal" method="POST" url="[controller: 'registration',action: 'save']"
+                      name="registrationForm" id="registrationForm" role="form">
                     <fieldset>
 
                         <div class="col-md-12">
@@ -181,13 +173,8 @@
                             </button>
                         </div>
                     </div>
-                </form>
-
+                </g:form>
             </div>
         </div>
     </div>
 </div>
-
-
-</body>
-</html>

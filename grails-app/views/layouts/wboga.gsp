@@ -1,16 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <style>
-    div.ui-ios-overlay {
-        background: none repeat scroll 0 0 rgb(136, 136, 136);
-    }
-    </style>
     <meta charset="utf-8"/>
-    <title>Dashboard - World BOGA</title>
-
     <meta name="description" content="overview &amp; stats"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>Dashboard - World BOGA</title>
 
     <!-- basic styles -->
 

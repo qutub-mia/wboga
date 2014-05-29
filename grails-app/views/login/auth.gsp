@@ -1,6 +1,6 @@
 <html xmlns="http://www.w3.org/1999/html">
 <head>
-	%{--<meta name='layout' content='logintpl'/>--}%
+	<meta name='layout' content='logintpl'/>
 	<title>Welcome to World BOGA</title>
 </head>
 
@@ -32,7 +32,7 @@
                                            Welcome to World BOGA
                                         </h4>
 
-                                       <h5 class="help-block"><g:if test='${flash.message}'>  <div class='login_message alert-danger '> <i class="icon-bell red"> <b> ${flash.message} </b> </i></div> </g:if> </h5>
+                                       <h5 class="help-block"><g:if test='${flash.message}'>  <div class='login_message alert-danger '> <i class="blue"> <b> ${flash.message} </b> </i></div> </g:if> </h5>
 
                                         <div class="space-6"></div>
 
@@ -48,8 +48,6 @@
                                                 </span>
                                                  </div>
                                              </div>
-                                            </label>
-
                                             <div class="form-group">
 
                                             <label for='password' class=" control-label">Password</label>

@@ -132,8 +132,8 @@
             },
             invalidHandler: function (event, validator) { //display error alert on form submit
                 $('.alert-danger', $('#chartClassForm')).show();
-            },
-            submitHandler: function (form) {
+            }
+       /*     ,submitHandler: function (form) {
                 jQuery.ajax({
                     url: "${createLink(controller: 'registration', action: 'save')}",
                     type: 'post',
@@ -144,7 +144,7 @@
                     failure: function (data) {
                     }
                 })
-            }
+            }*/
         });
 
         // Date checking

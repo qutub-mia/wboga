@@ -55,7 +55,7 @@ class RegistrationController {
         UserRole userRole = new UserRole(user: user, role: role)
         userRole.save(flush: true)
 
-        flash.message = "Registration success"
+        flash.message = "Registration success. Please login here"
         redirect([controller: 'login', action: 'auth'])
     }
 
