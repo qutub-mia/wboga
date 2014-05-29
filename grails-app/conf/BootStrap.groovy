@@ -21,6 +21,7 @@ class BootStrap {
         createCountryList()
         createCommonRole()
         createCommonReqMap()
+        createAccessReqMap()
         createRegistration()
     }
 
@@ -183,6 +184,8 @@ class BootStrap {
         new RequestMap(url: '/login/**', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY').save(flush: true)
         new RequestMap(url: '/login', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY').save(flush: true)
         new RequestMap(url: '/logout/**', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY').save(flush: true)
+        new RequestMap(url: '/**/js/**', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY').save(flush: true)
+        new RequestMap(url: '/**/css/**', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY').save(flush: true)
         new RequestMap(url: '/**/images/**', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY').save(flush: true)
         new RequestMap(url: '/dashboard/index', configAttribute: 'ROLE_ADMIN,ROLE_MEMBER').save(flush: true)
         new RequestMap(url: '/simpleCaptcha/captcha', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY').save(flush: true)
@@ -192,6 +195,9 @@ class BootStrap {
 
         // Edit by Rumee
 
+    }
+
+    def createAccessReqMap(){
         // Messenger Controller
         new RequestMap(url: '/messenger/inbox',     configAttribute: 'ROLE_MEMBER').save(flush: true)
         new RequestMap(url: '/messenger/send',      configAttribute: 'ROLE_MEMBER').save(flush: true)
@@ -201,6 +207,5 @@ class BootStrap {
         new RequestMap(url: '/messenger/save',      configAttribute: 'ROLE_MEMBER').save(flush: true)
         new RequestMap(url: '/messenger/sendList',  configAttribute: 'ROLE_MEMBER').save(flush: true)
         new RequestMap(url: '/messenger/inboxList', configAttribute: 'ROLE_MEMBER').save(flush: true)
-
     }
 }
