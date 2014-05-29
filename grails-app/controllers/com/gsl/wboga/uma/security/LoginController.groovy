@@ -25,7 +25,6 @@ import org.springframework.security.web.WebAttributes
 
 import javax.servlet.http.HttpServletResponse
 
-
 class LoginController {
 
     /**

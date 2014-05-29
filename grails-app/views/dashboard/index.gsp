@@ -3,7 +3,6 @@
 <head>
     <meta name="layout" content="wboga"/>
     <title>Welcome to World BOGA</title>
-
 </head>
 
 <body>
