@@ -120,7 +120,7 @@ grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'com.gsl.wboga.
 grails.plugin.springsecurity.authority.className = 'com.gsl.wboga.uma.security.Role'
 grails.plugin.springsecurity.requestMap.className = 'com.gsl.wboga.uma.security.RequestMap'
 grails.plugin.springsecurity.securityConfigType = grails.plugin.springsecurity.SecurityConfigType.Requestmap
-grails.plugin.springsecurity.successHandler.defaultTargetUrl = '/'//''/login/loginSuccess'
+//grails.plugin.springsecurity.successHandler.defaultTargetUrl = '/'//''/login/loginSuccess'
 
 /*grails.plugins.springsecurity.errors.login.fail = "Invalid ID or Password."
 grails.plugins.springsecurity.errors.login.disabled = "Sorry, your account is not activated yet."

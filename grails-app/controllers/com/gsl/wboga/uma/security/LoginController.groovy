@@ -16,7 +16,6 @@ package com.gsl.wboga.uma.security
 
 import grails.converters.JSON
 import grails.plugin.springsecurity.SpringSecurityUtils
-import org.springframework.security.access.annotation.Secured
 import org.springframework.security.authentication.AccountExpiredException
 import org.springframework.security.authentication.CredentialsExpiredException
 import org.springframework.security.authentication.DisabledException
@@ -26,7 +25,7 @@ import org.springframework.security.web.WebAttributes
 
 import javax.servlet.http.HttpServletResponse
 
-@Secured('permitAll')
+
 class LoginController {
 
     /**
@@ -64,8 +63,8 @@ class LoginController {
 
         String view = 'auth'
         String postUrl = "${request.contextPath}${config.apf.filterProcessesUrl}"
-        render view: view, model: [postUrl            : postUrl,
-                                   rememberMeParameter: config.rememberMe.parameter]
+        render view: view, model: [postUrl: postUrl,
+                rememberMeParameter: config.rememberMe.parameter]
     }
 
     def loginSuccess() {
@@ -98,7 +97,7 @@ class LoginController {
         def config = SpringSecurityUtils.securityConfig
         render view: 'auth', params: params,
                 model: [hasCookie: authenticationTrustResolver.isRememberMe(SCH.context?.authentication),
-                        postUrl  : "${request.contextPath}${config.apf.filterProcessesUrl}"]
+                        postUrl: "${request.contextPath}${config.apf.filterProcessesUrl}"]
     }
 
     /**

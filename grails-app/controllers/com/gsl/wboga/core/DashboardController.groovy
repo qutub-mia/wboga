@@ -4,6 +4,6 @@ import grails.plugin.springsecurity.annotation.Secured
 
 class DashboardController {
     def index() {
-        render(view: 'index')
+        render(view: '/dashboard/index')
     }
 }
