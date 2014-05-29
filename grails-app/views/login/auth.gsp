@@ -4,7 +4,7 @@
 	<title>Welcome to World BOGA</title>
 </head>
 
-<body >
+<body>
 
 <div class="main-container container">
     <div class="main-content">
@@ -28,7 +28,7 @@
                                 <div class="widget-body">
                                     <div class="widget-main">
                                         <h4 class="header blue lighter bigger">
-                                            <i class="icon-coffee green"></i>
+                                            <i class=""></i>
                                            Welcome to World BOGA
                                         </h4>
 

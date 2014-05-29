@@ -84,9 +84,7 @@
             autoclose: true
         });
 
-
         $('#registrationForm').validate({
-
             errorPlacement: function (error, element) {
             },
             focusInvalid: false,
@@ -133,18 +131,6 @@
             invalidHandler: function (event, validator) { //display error alert on form submit
                 $('.alert-danger', $('#chartClassForm')).show();
             }
-       /*     ,submitHandler: function (form) {
-                jQuery.ajax({
-                    url: "${createLink(controller: 'registration', action: 'save')}",
-                    type: 'post',
-                    data: $('#registrationForm').serialize(),
-                    success: function (data) {
-                        $('body').html(data);
-                    },
-                    failure: function (data) {
-                    }
-                })
-            }*/
         });
 
         // Date checking
