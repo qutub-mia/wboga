@@ -10,7 +10,6 @@ class Registration {
     String answer
     boolean status = true
 
-    //static hasMany = [sender: Messenger]
     static belongsTo = [country: Country, hint: Hint, memberType: MemberType]
 
     static constraints = {

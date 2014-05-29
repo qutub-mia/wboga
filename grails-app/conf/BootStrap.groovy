@@ -176,6 +176,9 @@ class BootStrap {
         role.save(flush: true)
     }
 
+    def destroy = {
+    }
+
     def createCommonReqMap(){
         new RequestMap(url: '/login/**', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY').save(flush: true)
         new RequestMap(url: '/login', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY').save(flush: true)
@@ -186,8 +189,18 @@ class BootStrap {
         new RequestMap(url: '/registration/create', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY').save(flush: true)
         new RequestMap(url: '/registration/save', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY').save(flush: true)
         new RequestMap(url: '/', configAttribute: 'ROLE_SUPER_ADMIN,ROLE_ADMIN,ROLE_MEMBER').save(flush: true)
-    }
 
-    def destroy = {
+        // Edit by Rumee
+
+        // Messenger Controller
+        new RequestMap(url: '/messenger/inbox',     configAttribute: 'ROLE_MEMBER').save(flush: true)
+        new RequestMap(url: '/messenger/send',      configAttribute: 'ROLE_MEMBER').save(flush: true)
+        new RequestMap(url: '/messenger/compose',   configAttribute: 'ROLE_MEMBER').save(flush: true)
+        new RequestMap(url: '/messenger/trash',     configAttribute: 'ROLE_MEMBER').save(flush: true)
+        new RequestMap(url: '/messenger/chat',      configAttribute: 'ROLE_MEMBER').save(flush: true)
+        new RequestMap(url: '/messenger/save',      configAttribute: 'ROLE_MEMBER').save(flush: true)
+        new RequestMap(url: '/messenger/sendList',  configAttribute: 'ROLE_MEMBER').save(flush: true)
+        new RequestMap(url: '/messenger/inboxList', configAttribute: 'ROLE_MEMBER').save(flush: true)
+
     }
 }

@@ -9,7 +9,7 @@ class Messenger {
     String messagerFile
 
     static hasMany = [messengers: Messenger]
-    static belongsTo = [sender: Registration, receiver: Registration, messenger: Messenger]
+    static belongsTo = [receiver: Registration,sender: Registration, messenger: Messenger]
 
     static constraints = {
         dateOfMessage blank:true, nullable:true

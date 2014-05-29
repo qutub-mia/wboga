@@ -8,7 +8,6 @@ import wboga.core.Registration
 
 class MessengerController {
 
-    def index() {}
     def inbox(){
         render(view: 'inbox')
     }
@@ -18,26 +17,21 @@ class MessengerController {
 
     }
 
-
     def compose(){
         render(view: '_compose')
     }
-
 
     def trash(){
 
     }
 
-
     def chat(){
 
     }
 
-
     def save(){
-
         // Default Sender
-        Registration senderRegistration = Registration.read(2 as Long)
+        Registration sender = Registration.read(2 as Long)
 
         Messenger messenger
         for (def userId in params.username){
@@ -45,7 +39,6 @@ class MessengerController {
             String subject = params.subject
             String messageBody= params.messageBody
             String messagerFile = "wright.jpeg"
-            def sender = senderRegistration
             def receiver = userId
             def messengerId = params.messenger
 
@@ -78,8 +71,6 @@ class MessengerController {
         redirect(controller: 'messenger', action: 'send')
     }
 
-
-    @Secured(['ROLE_SUPER_ADMIN'])
     def sendList(){
         Registration sender = Registration.get(2) // default value for sender __ user role
 
@@ -136,7 +127,6 @@ class MessengerController {
         render result
     }
 
-    @Secured(['ROLE_SUPER_ADMIN'])
     def inboxList(){
         Registration receiver = Registration.get(2) // default value for sender __ user role
 
