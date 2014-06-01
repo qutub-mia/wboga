@@ -1,4 +1,5 @@
-<%@ page import="wboga.core.Country; wboga.core.MemberType" %>
+<%@ page import="com.gsl.wboga.core.MemberType; com.gsl.wboga.core.Country" %>
+
 <g:if test="${flash.message}">
     <div class="alert alert-success">
         <i class="icon-bell green"><b>${flash.message}</b></i> <a class="close" data-dismiss="alert">×</a>

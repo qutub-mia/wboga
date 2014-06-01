@@ -12,6 +12,10 @@
         <i class="icon-bell green"><b>${flash.message}</b></i> <a class="close" data-dismiss="alert">×</a>
     </div>
 </g:if>
+<div class="page-header">
+    <h1>Sendbox Message</h1>
+</div>
+
 <div class="row">
     <div class="col-md-12">
         <g:render template="compose"/>
@@ -21,8 +25,9 @@
                 <thead>
                 <tr>
                     <th>Serial</th>
-                    <th>Sender</th>
+                    <th>Name</th>
                     <th>Subject</th>
+                    <th>Date</th>
                     <th>Action</th>
                 </tr>
                 </thead>
@@ -57,10 +62,11 @@
             "bServerSide": true,
             "sAjaxSource": "${g.createLink(controller: 'messenger',action: 'sendList')}",
             "fnRowCallback": function (nRow, aData, iDisplayIndex) {
-                $('td:eq(3)', nRow).html(getActionButtons(nRow, aData));
+                $('td:eq(4)', nRow).html(getActionButtons(nRow, aData));
                 return nRow;
             },
             "aoColumns": [
+                null,
                 null,
                 null,
                 null,
@@ -71,12 +77,16 @@
 
     function getActionButtons(nRow, aData) {
         var actionButtons = "";
-        actionButtons += '<span class="col-xs-6"><a href="" userId="'+aData.DT_RowId+ '" class="edit-user" title="Edit">';
-actionButtons += '<span class="green glyphicon glyphicon-edit"></span>';
-actionButtons += '</a></span>';
-        actionButtons += '<span class="col-xs-6"><a href="" userId="'+aData.DT_RowId+ '" class="delete-user" title="Delete">';
-actionButtons += '<span class="red glyphicon glyphicon-trash"></span>';
-actionButtons += '</a></span>';
+        actionButtons += '<span class="col-xs-3"><a href="" userId="'+aData.DT_RowId+ '" class="view-user" title="View">';
+        actionButtons += '<span class="glyphicon glyphicon-envelope"></span>';
+        actionButtons += '</a></span>';
+        /*actionButtons += '<span class="col-xs-3"><a href="" userId="'+aData.DT_RowId+ '" class="edit-user" title="Reply">';
+        actionButtons += '<span class="green glyphicon glyphicon-share"></span>';
+        actionButtons += '</a></span>';*/
+        actionButtons += '<span class="col-xs-3"><a href="" userId="'+aData.DT_RowId+ '" class="delete-user" title="Delete">';
+        actionButtons += '<span class="red glyphicon glyphicon-trash"></span>';
+        actionButtons += '</a></span>';
+
         return actionButtons;
     }
 </r:script>

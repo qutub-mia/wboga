@@ -1,20 +1,20 @@
 package com.gsl.wboga.core
 
+import com.gsl.wboga.uma.security.User
 import grails.converters.JSON
-import grails.plugin.springsecurity.annotation.Secured
-import wboga.core.Messenger
-import wboga.core.MessengerUtility
-import wboga.core.Registration
+
 
 class MessengerController {
 
     def inbox(){
-        render(view: 'inbox')
+        User user = getAuthenticatedUser()
+        render(view: 'messageInbox', model: [userId : user.id])
     }
 
 
     def send(){
-
+        User user = getAuthenticatedUser()
+        render(view: 'messageSend', model: [userId : user.id])
     }
 
     def compose(){
@@ -30,25 +30,21 @@ class MessengerController {
     }
 
     def save(){
-        // Default Sender
-        Registration sender = Registration.read(2 as Long)
+        User user = getAuthenticatedUser()
+        Registration senderReg = Registration.findByUser(user)
 
         Messenger messenger
         for (def userId in params.username){
             def dateOfMessage = new Date()
             String subject = params.subject
             String messageBody= params.messageBody
-            String messagerFile = "wright.jpeg"
             def receiver = userId
             def messengerId = params.messenger
 
             messenger = new Messenger(
-                    dateOfMessage: dateOfMessage,
                     subject: subject,
                     messageBody: messageBody,
-                    showOn: false,
-                    messagerFile: messagerFile,
-                    sender: sender,
+                    sender: senderReg,
                     receiver: receiver,
                     messenger: messengerId
             )
@@ -62,17 +58,71 @@ class MessengerController {
 
             if (!savedMessenger){
                 flash.message = "Not Added!"
-                render(view: 'send')
+                render(view: 'messageSend')
                 return
             }
         }
 
         flash.message = "Send Message Successfully!!"
-        redirect(controller: 'messenger', action: 'send')
+        //redirect(controller: 'messenger', action: 'send')
+        render(view: 'messageSend', model: [userId : user.id])
+    }
+
+    def view(){
+        Messenger messengerList = Messenger.get(params.id as Long)
+
+//        println ">>" + messengerList.messengers.receiver.id
+        render(view: 'messageView', model: [messengerList: messengerList])
+    }
+
+    def reply(){
+        println ">>" + params.parentId
+        println ">>" + params.messageBody
+
+        /**/
+        User user = getAuthenticatedUser()
+        Registration senderReg = Registration.findByUser(user)
+
+        Messenger messenger = Messenger.read(params.parentId as Long)
+
+        def subject = messenger.subject
+        def dateOfMessage = new Date()
+        String messageBody= params.messageBody
+        def receiver = messenger.sender
+        def messengerId = messenger
+
+        messenger = new Messenger(
+                subject: subject,
+                messageBody: messageBody,
+                sender: senderReg,
+                receiver: receiver,
+                messenger: messengerId
+        )
+
+        if (!messenger.validate()){
+            flash.message = "Not added validated!"
+            redirect(action: 'inbox')
+            return
+        }
+        Messenger savedMessenger = messenger.save(flush: true)
+
+        if (!savedMessenger){
+            flash.message = "Not Added!"
+            render(view: 'messageSend')
+            return
+        }
+
+        flash.message = "Reply Message Successfully!!"
+        /**/
+
+
+        Messenger messengerList = Messenger.read(params.parentId as Long)
+        render(view: 'messageView', model: [messengerList: messengerList])
     }
 
     def sendList(){
-        Registration sender = Registration.get(2) // default value for sender __ user role
+        User user = getAuthenticatedUser()
+        Registration senderReg = Registration.findByUser(user)
 
         int sEcho = params.sEcho?params.getInt('sEcho'):1
         int iDisplayStart = params.iDisplayStart? params.getInt('iDisplayStart'):0
@@ -96,7 +146,7 @@ class MessengerController {
 
         def results = c.list (max: iDisplayLength, offset:iDisplayStart) {
             and {
-                eq('sender',sender)
+                eq('sender',senderReg)
             }
             if(sSearch){
                 or {
@@ -119,7 +169,7 @@ class MessengerController {
                 }else{
                     serial--
                 }
-                dataReturns.add([DT_RowId:messenger.id,0:serial,1:messenger.receiver.name,2:messenger.subject,3:''])
+                dataReturns.add([DT_RowId:messenger.id,0:serial,1:messenger.receiver.name,2:messenger.subject,3:messenger.dateOfMessage.format('dd/MM/yyyy'),4:''])
             }
         }
         Map gridData =[iTotalRecords:totalCount,iTotalDisplayRecords:totalCount,aaData:dataReturns]
@@ -128,7 +178,8 @@ class MessengerController {
     }
 
     def inboxList(){
-        Registration receiver = Registration.get(2) // default value for sender __ user role
+        User user = getAuthenticatedUser()
+        Registration receiverReg = Registration.findByUser(user)
 
         int sEcho = params.sEcho?params.getInt('sEcho'):1
         int iDisplayStart = params.iDisplayStart? params.getInt('iDisplayStart'):0
@@ -147,7 +198,7 @@ class MessengerController {
         def c = Messenger.createCriteria()
         def results = c.list (max: iDisplayLength, offset:iDisplayStart) {
             and {
-                eq('receiver',receiver)
+                eq('receiver',receiverReg)
             }
             if(sSearch){
                 or {
@@ -169,7 +220,7 @@ class MessengerController {
                 }else{
                     serial--
                 }
-                dataReturns.add([DT_RowId:messenger.id,0:serial,1:messenger.sender.name,2:messenger.subject,3:''])
+                dataReturns.add([DT_RowId:messenger.id,0:serial,1:messenger.sender.name,2:messenger.subject,3:messenger.dateOfMessage.format('dd/MM/yyyy'),4:''])
             }
         }
         Map gridData =[iTotalRecords:totalCount,iTotalDisplayRecords:totalCount,aaData:dataReturns]

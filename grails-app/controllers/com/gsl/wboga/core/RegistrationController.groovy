@@ -3,8 +3,6 @@ package com.gsl.wboga.core
 import com.gsl.wboga.uma.security.Role
 import com.gsl.wboga.uma.security.User
 import com.gsl.wboga.uma.security.UserRole
-import wboga.core.Hint
-import wboga.core.Registration
 
 class RegistrationController {
 
@@ -30,11 +28,38 @@ class RegistrationController {
             redirect(action: 'create')
             return
         }
-        //params.dob = new Date(params.dob)
-        params.dob = Date.parse('dd/MM/yyyy', params.dob)
-        Registration registration = new Registration(params)
-        if (!registration.validate()) {
+
+        // Save User
+        User user = new User(
+                username: params.username,
+                email: params.email,
+                password: params.password,
+                enabled: true
+        )
+
+        User savedUser = user.save(flush: true)
+        if (!savedUser){
             flash.message = "Username & Email must be unique!"
+            redirect(action: 'create')
+            return
+        }
+        Role role = Role.read(3)
+        UserRole userRole = new UserRole(user: user, role: role)
+        userRole.save(flush: true)
+
+        // Save Registration
+        params.dob = Date.parse('dd/MM/yyyy', params.dob)
+        Registration registration = new Registration(
+                name: params.name,
+                dob: params.dob,
+                user: savedUser,
+                answer: params.answer,
+                country: params.country,
+                hint: params.hint ,
+                memberType: params.memberType
+        )
+        if (!registration.validate()) {
+            flash.message = "Have some validated problem!"
             redirect(action: 'create')
             return
         }
@@ -44,19 +69,8 @@ class RegistrationController {
             redirect(action: 'create')
             return
         }
-        User user = new User(
-                username: savedRegistration.username,
-                email: savedRegistration.email,
-                password: savedRegistration.password,
-                enabled: true
-        )
-        user.save(flush: true)
-        Role role = Role.read(3)
-        UserRole userRole = new UserRole(user: user, role: role)
-        userRole.save(flush: true)
-
         flash.message = "Registration success. Please login here"
-        redirect([controller: 'login', action: 'auth'])
+        redirect(controller: 'login', action: 'auth')
     }
 
 

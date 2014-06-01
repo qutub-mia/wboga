@@ -1,6 +1,5 @@
-<%@ page import="wboga.core.Registration" %>
+<%@ page import="com.gsl.wboga.core.Registration" %>
 <script src="${resource(dir: 'js', file: 'chosen.jquery.min.js')}"></script>
-
 <div class="tabbable">
     <ul id="inbox-tabs" class="inbox-tabs nav nav-tabs padding-16 tab-size-bigger tab-space-1">
 
@@ -71,11 +70,12 @@
                 </span>--}%
 
 
-                <select data-placeholder="User Name..." name="username" id="form-field-recipient"
+                <select data-placeholder="User Name..." name="username"  id="form-field-recipient"
                         class="width-80 chosen-select" multiple="">
                     <option value="">&nbsp;</option>
                     <g:each in="${Registration.list(sort: 'name')}" var="register">
-                        <option value="${register?.id}">${register?.username}</option>
+
+                        <option value="${register?.id}" ${userId == register?.user?.id ? 'disabled' : '' }>${register?.user?.username}</option>
                     </g:each>
                 </select>
             </div>
@@ -359,7 +359,7 @@
                 type:'post',
                 data: $("#id-message-form").serialize(),
                 success:function(data){
-                    alert("Data gone!");
+                    //alert("Data gone!");
                     $('body').html(data);
                 },
                 failure:function(data){

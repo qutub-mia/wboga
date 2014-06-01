@@ -1,4 +1,3 @@
-<%@ page import="wboga.core.Country; wboga.core.MemberType" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>

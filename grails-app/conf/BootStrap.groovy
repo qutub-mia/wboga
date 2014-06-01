@@ -3,10 +3,10 @@ import com.gsl.wboga.uma.security.Role
 import com.gsl.wboga.uma.security.User
 import com.gsl.wboga.uma.security.UserRole
 import grails.plugin.springsecurity.SpringSecurityUtils
-import wboga.core.Country
-import wboga.core.Hint
-import wboga.core.MemberType
-import wboga.core.Registration
+import com.gsl.wboga.core.Country
+import com.gsl.wboga.core.Hint
+import com.gsl.wboga.core.MemberType
+import com.gsl.wboga.core.Registration
 
 class BootStrap {
     def grailsApplication
@@ -22,59 +22,66 @@ class BootStrap {
         createCommonRole()
         createCommonReqMap()
         createAccessReqMap()
-        createRegistration()
+        createRegistration() // default User add
     }
 
     def createRegistration(){
-        new Registration(
-                name: "Nusrat",
-                dob: new Date("13/05/1970"),
-                email:"n@gmail.com",
-                username: "nusrat",
-                password: "nusrat",
-                answer: "abc",
-                country: 1,
-                hint: 2,
-                memberType: 1
-        ).save(failOnError: true)
 
-        new Registration(
-                name: "Rumee",
-                dob: new Date("13/05/1970"),
-                email:"r@gmail.com",
-                username: "rumee",
-                password: "rumee",
-                answer: "abc",
-                country: 1,
-                hint: 2,
-                memberType: 1
-        ).save(failOnError: true)
+        def superAdmin = Role.findByAuthority('ROLE_MEMBER') ?: new Role(authority: 'ROLE_MEMBER').save(failOnError: true)
+        // Rumee User
+        User userOne = User.findByUsername('rumee')
+        if (!userOne) {
+            userOne = new User(username: 'rumee', email: 'rumee@mail.com', password: 'rumeegsl', enabled: true, accountExpired: false, accountLocked: false, passwordExpired: false)
+            def userOneSaved = userOne.save(flush: true)
+            new UserRole(user: userOneSaved, role: superAdmin).save(flush: true)
 
+            new Registration(
+                    name: "Rumee",
+                    dob: new Date("13/05/1970"),
+                    answer: "abc",
+                    country: 1,
+                    hint: 2,
+                    memberType: 1,
+                    user: userOneSaved
+            ).save(failOnError: true)
+        }
 
-        new Registration(
-                name: "Imram",
-                dob: new Date("13/05/1970"),
-                email:"i@gmail.com",
-                username: "imran",
-                password: "imran",
-                answer: "abc",
-                country: 1,
-                hint: 2,
-                memberType: 1
-        ).save(failOnError: true)
+        // Imran User
+        User userTwo = User.findByUsername('imran')
+        if (!userTwo) {
+            userTwo = new User(username: 'imran', email: 'imran@mail.com', password: 'imrangsl', enabled: true, accountExpired: false, accountLocked: false, passwordExpired: false)
+            def userTwoSaved = userTwo.save(flush: true)
+            new UserRole(user: userTwoSaved, role: superAdmin).save(flush: true)
 
+            new Registration(
+                    name: "Imran",
+                    dob: new Date("13/05/1970"),
+                    answer: "abc",
+                    country: 1,
+                    hint: 2,
+                    memberType: 1,
+                    user: userTwoSaved
+            ).save(failOnError: true)
+        }
 
-        new Registration(
-                name: "Murshida",
-                dob: new Date("13/05/1970"),
-                email:"m@gmail.com",
-                username: "murshida",
-                password: "murshida",
-                answer: "abc",
-                country: 1,
-                hint: 2,
-                memberType: 1
-        ).save(failOnError: true)
+        // Imran User
+        User userThree = User.findByUsername('jalal')
+        if (!userThree) {
+            userThree = new User(username: 'jalal', email: 'jalal@mail.com', password: 'jalalgsl', enabled: true, accountExpired: false, accountLocked: false, passwordExpired: false)
+            def userThreeSaved = userThree.save(flush: true)
+            new UserRole(user: userThreeSaved, role: superAdmin).save(flush: true)
+
+            new Registration(
+                    name: "Jalal",
+                    dob: new Date("13/05/1970"),
+                    answer: "abc",
+                    country: 1,
+                    hint: 2,
+                    memberType: 1,
+                    user: userThreeSaved
+            ).save(failOnError: true)
+        }
+
     }
 
     def createHint(){
@@ -101,10 +108,10 @@ class BootStrap {
     }
 
     def createPackage(){
-        new MemberType(name: "Free", amount:"0").save(failOnError: true)
-        new MemberType(name: "Premium", amount:"100").save(failOnError: true)
-        new MemberType(name: "Silver", amount:"200").save(failOnError: true)
-        new MemberType(name: "Gold", amount:"300").save(failOnError: true)
+        new MemberType(name: "Free", amount:0).save(failOnError: true)
+        new MemberType(name: "Premium", amount:100).save(failOnError: true)
+        new MemberType(name: "Silver", amount:200).save(failOnError: true)
+        new MemberType(name: "Gold", amount:300).save(failOnError: true)
     }
 
     def createCountryList() {
@@ -192,9 +199,6 @@ class BootStrap {
         new RequestMap(url: '/registration/create', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY').save(flush: true)
         new RequestMap(url: '/registration/save', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY').save(flush: true)
         new RequestMap(url: '/', configAttribute: 'ROLE_SUPER_ADMIN,ROLE_ADMIN,ROLE_MEMBER').save(flush: true)
-
-        // Edit by Rumee
-
     }
 
     def createAccessReqMap(){
@@ -207,5 +211,7 @@ class BootStrap {
         new RequestMap(url: '/messenger/save',      configAttribute: 'ROLE_MEMBER').save(flush: true)
         new RequestMap(url: '/messenger/sendList',  configAttribute: 'ROLE_MEMBER').save(flush: true)
         new RequestMap(url: '/messenger/inboxList', configAttribute: 'ROLE_MEMBER').save(flush: true)
+        new RequestMap(url: '/messenger/view',      configAttribute: 'ROLE_MEMBER').save(flush: true)
+        new RequestMap(url: '/messenger/reply',      configAttribute: 'ROLE_MEMBER').save(flush: true)
     }
 }
