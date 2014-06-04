@@ -37,12 +37,38 @@ class MessengerController {
             redirect(action: 'trash')
             return
         }
-        def deleteMessage = messenger.delete()
-        if(deleteMessage != null){
-            flash.message = "Message not delete in trash box!"
+
+        User user = getAuthenticatedUser()
+        Registration registration = Registration.findByUser(user)
+
+        def messengerSenderList = Messenger.findAllBySender(registration)
+        if(messengerSenderList != null){
+            for (def messengerSender in messengerSenderList ){
+                messengerSender.senderTrash = "delete"
+                messengerSender.save(flush: true)
+            }
+        }
+
+        def messengerReceiverList = Messenger.findAllByReceiver(registration)
+        if(messengerReceiverList != null){
+            for (def messengerReceiver in messengerReceiverList){
+                messengerReceiver.receiverTrash = "delete"
+                messengerReceiver.save(flush: true)
+            }
+        }
+
+        if( (messenger.receiverTrash == "delete") && (messenger.senderTrash == "delete") ){
+            def deleteMessage = messenger.delete()
+            if(!deleteMessage){
+                flash.message = "Message not delete in trash box!"
+                redirect(action: 'trash')
+                return
+            }
+            flash.message = "Message delete form trash box!"
             redirect(action: 'trash')
             return
         }
+
         flash.message = "Message delete form trash box!"
         redirect(action: 'trash')
     }
@@ -61,18 +87,37 @@ class MessengerController {
             return
         }
 
-        if(params.undo == "undo"){
-            messenger.trash = "off"
-        }else{
-            messenger.trash = "on"
+        User user = getAuthenticatedUser()
+        Registration registration = Registration.findByUser(user)
+
+        if(action == "send"){
+            def messengerSenderList = Messenger.findAllBySender(registration)
+            if(messengerSenderList != null){
+                for (def messengerSender in messengerSenderList){
+                    messengerSender.senderTrash = "senderOff"
+                    messengerSender.save(flush: true)
+                }
+            }
         }
 
-        def trashMessage = messenger.save(flush: true)
-        if(trashMessage != null){
+        if (action == "inbox"){
+            def messengerReceiverList = Messenger.findByReceiver(registration)
+            if(messengerReceiverList != null){
+                for (def messengerReceiver in messengerReceiverList){
+                    messengerReceiver.receiverTrash = "receiverOff"
+                    messengerReceiver.save(flush: true)
+                }
+            }
+        }
+
+
+
+        /*def trashMessage = messenger.save(flush: true)
+        if(!trashMessage){
             flash.message = "Message not delete in "+action+" box!"
             redirect(action: action)
             return
-        }
+        }*/
         flash.message = "Message delete form "+action+" box!"
         redirect(action: action)
     }
@@ -222,13 +267,11 @@ class MessengerController {
         List dataReturns = new ArrayList()
         def c = Messenger.createCriteria()
 
-        Messenger messenger1 = new Messenger()
-
         def results = c.list (max: iDisplayLength, offset:iDisplayStart) {
             and {
                 eq('sender',senderReg)
                 ne('receiver',senderReg)
-                eq('trash',"off")
+                eq('senderTrash',"off")
             }
             if(sSearch){
                 or {
@@ -239,11 +282,7 @@ class MessengerController {
             distinct('subject')
         }
 
-
-
         int totalCount = results.totalCount
-
-        println ">>" + totalCount
 
         int serial = iDisplayStart;
         if(totalCount>0){
@@ -293,7 +332,7 @@ class MessengerController {
             and {
                 eq('receiver',receiverReg)
                 ne('sender',receiverReg)
-                eq('trash',"off")
+                eq('receiverTrash',"off")
             }
             if(sSearch){
                 or {
@@ -356,13 +395,16 @@ class MessengerController {
         List dataReturns = new ArrayList()
         def c = Messenger.createCriteria()
 
-        Messenger messenger1 = new Messenger()
-
         def results = c.list (max: iDisplayLength, offset:iDisplayStart) {
-            and {
-                eq('sender',senderReg)
-                ne('receiver',senderReg)
-                eq('trash',"on")
+            or{
+                and{
+                    eq('senderTrash',"senderOff")
+                    eq('sender',senderReg)
+                }
+                and{
+                    eq('receiverTrash',"receiverOff")
+                    eq('receiver',senderReg)
+                }
             }
             if(sSearch){
                 or {
