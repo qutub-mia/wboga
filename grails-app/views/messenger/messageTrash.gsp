@@ -13,7 +13,7 @@
     </div>
 </g:if>
 <div class="page-header">
-    <h1>Sendbox Message</h1>
+    <h1>Trash Message</h1>
 </div>
 
 <div class="row">
@@ -21,7 +21,7 @@
         <g:render template="compose"/>
 
         <div class="message-list">
-            <table id="messenger-inbox-tbl" class="table table-striped table-bordered table-hover">
+            <table id="messenger-trash-tbl" class="table table-striped table-bordered table-hover">
                 <thead>
                 <tr>
                     <th>Serial</th>
@@ -55,12 +55,12 @@
 <r:script>
     jQuery(function ($) {
         // dataTable
-        var inboxTable = $('#messenger-inbox-tbl').dataTable({
+        var inboxTable = $('#messenger-trash-tbl').dataTable({
             "sDom": "<'row'<'col-md-4'><'col-md-4'><'col-md-4'f>r>t<'row'<'col-md-4'l><'col-md-4'i><'col-md-4'p>>",
             "bProcessing": false,
             "bAutoWidth": true,
             "bServerSide": true,
-            "sAjaxSource": "${g.createLink(controller: 'messenger',action: 'sendList')}",
+            "sAjaxSource": "${g.createLink(controller: 'messenger',action: 'trashList')}",
             "fnRowCallback": function (nRow, aData, iDisplayIndex) {
                 $('td:eq(4)', nRow).html(getActionButtons(nRow, aData));
                 return nRow;
@@ -75,12 +75,12 @@
         });
 
         // Delete
-        $('#messenger-inbox-tbl').on('click', 'a.delete-user', function(e) {
+        $('#messenger-trash-tbl').on('click', 'a.delete-user', function(e) {
             var control = this;
             var userId = $(control).attr('userId');
             jQuery.ajax({
                 type: 'POST',
-                url: "${g.createLink(controller: 'messenger',action: 'delete')}?id="+userId+"&view=send",
+                url: "${g.createLink(controller: 'messenger',action: 'trashDelete')}?id="+userId,
                 success: function (data, textStatus) {
                     $('body').html(data);
                 },
@@ -92,7 +92,7 @@
         });
 
         // View
-        $('#messenger-inbox-tbl').on('click', 'a.view-user', function(e) {
+        $('#messenger-trash-tbl').on('click', 'a.view-user', function(e) {
             var control = this;
             var userId = $(control).attr('userId');
             jQuery.ajax({
@@ -107,19 +107,36 @@
             });
             e.preventDefault();
         });
+
+        // View
+        $('#messenger-trash-tbl').on('click', 'a.undo-user', function(e) {
+            var control = this;
+            var userId = $(control).attr('userId');
+            jQuery.ajax({
+                type: 'POST',
+                url: "${g.createLink(controller: 'messenger',action: 'delete')}?id="+userId+"&undo=undo&view=trash",
+                success: function (data, textStatus) {
+                    $('body').html(data);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+//                    $('#'+updateDiv).html(data);
+                }
+            });
+            e.preventDefault();
+        });
     })
 
     function getActionButtons(nRow, aData) {
         var actionButtons = "";
         actionButtons += '<span class="col-xs-3"><a href="" userId="'+aData.DT_RowId+ '" class="view-user" title="View">';
-        actionButtons += '<span class="glyphicon glyphicon-envelope"></span>';
-        actionButtons += '</a></span>';
-        /*actionButtons += '<span class="col-xs-3"><a href="" userId="'+aData.DT_RowId+ '" class="edit-user" title="Reply">';
-        actionButtons += '<span class="green glyphicon glyphicon-share"></span>';
-        actionButtons += '</a></span>';*/
+actionButtons += '<span class="blue glyphicon glyphicon-envelope"></span>';
+actionButtons += '</a></span>';
+        actionButtons += '<span class="col-xs-3"><a href="" userId="'+aData.DT_RowId+ '" class="undo-user" title="Reply">';
+actionButtons += '<span class="green glyphicon glyphicon-repeat"></span>';
+actionButtons += '</a></span>';
         actionButtons += '<span class="col-xs-3"><a href="" userId="'+aData.DT_RowId+ '" class="delete-user" title="Delete">';
-        actionButtons += '<span class="red glyphicon glyphicon-trash"></span>';
-        actionButtons += '</a></span>';
+actionButtons += '<span class="red glyphicon glyphicon-trash"></span>';
+actionButtons += '</a></span>';
 
         return actionButtons;
     }

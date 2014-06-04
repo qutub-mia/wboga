@@ -52,6 +52,7 @@
         </div>
     </div>
 
+
 <r:script>
     jQuery(function ($) {
         // dataTable
@@ -78,10 +79,9 @@
         $('#messenger-inbox-tbl').on('click', 'a.view-user', function(e) {
             var control = this;
             var userId = $(control).attr('userId');
-            alert(userId);
             jQuery.ajax({
                 type: 'POST',
-                url: "${g.createLink(controller: 'messenger',action: 'view')}?id="+userId,
+                url: "${g.createLink(controller: 'messenger',action: 'view')}?id="+userId+"&inbox=inbox",
                 success: function (data, textStatus) {
                     $('body').html(data);
                 },
@@ -92,17 +92,15 @@
             e.preventDefault();
         });
 
-        // Reply
-        $('#messenger-inbox-tbl').on('click', 'a.reply-user', function(e) {
+        // Delete
+        $('#messenger-inbox-tbl').on('click', 'a.delete-user', function(e) {
             var control = this;
             var userId = $(control).attr('userId');
-            alert("Yes");
-            alert(userId);
             jQuery.ajax({
                 type: 'POST',
-                url: "${g.createLink(controller: 'messenger',action: 'save')}?id="+userId,
+                url: "${g.createLink(controller: 'messenger',action: 'delete')}?id="+userId+"&view=inbox",
                 success: function (data, textStatus) {
-                    $('#body').html(data);
+                    $('body').html(data);
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                 //$('#'+updateDiv).html(data);
@@ -112,19 +110,16 @@
         });
 })
 
-function getActionButtons(nRow, aData) {
-var actionButtons = "";
-actionButtons += '<span class="col-xs-6"><a href="" userId="'+aData.DT_RowId+ '" class="view-user" title="View">';
-        actionButtons += '<span class="glyphicon glyphicon-envelope"></span>';
-        actionButtons += '</a></span>';
-        /*actionButtons += '<span class="col-xs-3"><a href="" userId="'+aData.DT_RowId+ '" class="reply-user" title="Reply">';
-        actionButtons += '<span class="green glyphicon glyphicon-share"></span>';
-        actionButtons += '</a></span>';*/
-        actionButtons += '<span class="col-xs-6"><a href="" userId="'+aData.DT_RowId+ '" class="delete-user" title="Delete">';
-        actionButtons += '<span class="red glyphicon glyphicon-trash"></span>';
-        actionButtons += '</a></span>';
-        return actionButtons;
-    }
+        function getActionButtons(nRow, aData) {
+            var actionButtons = "";
+            actionButtons += '<span class="col-xs-6"><a href="" userId="'+aData.DT_RowId+ '" class="view-user" title="View">';
+            actionButtons += '<span class="glyphicon glyphicon-envelope"></span>';
+            actionButtons += '</a></span>';
+            actionButtons += '<span class="col-xs-6"><a href="" userId="'+aData.DT_RowId+ '" class="delete-user" title="Delete">';
+            actionButtons += '<span class="red glyphicon glyphicon-trash"></span>';
+            actionButtons += '</a></span>';
+            return actionButtons;
+        }
 </r:script>
 </body>
 </html>

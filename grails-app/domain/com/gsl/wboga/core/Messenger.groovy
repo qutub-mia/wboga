@@ -8,6 +8,7 @@ class Messenger {
     Boolean isRead = false
     Registration receiver
     Registration sender
+    String trash = "off"
 
     static hasMany = [messengers: Messenger]
     static belongsTo = [messenger: Messenger] //receiver: Registration,sender: Registration

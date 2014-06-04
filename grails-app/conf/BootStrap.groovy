@@ -207,11 +207,13 @@ class BootStrap {
         new RequestMap(url: '/messenger/send',      configAttribute: 'ROLE_MEMBER').save(flush: true)
         new RequestMap(url: '/messenger/compose',   configAttribute: 'ROLE_MEMBER').save(flush: true)
         new RequestMap(url: '/messenger/trash',     configAttribute: 'ROLE_MEMBER').save(flush: true)
-        new RequestMap(url: '/messenger/chat',      configAttribute: 'ROLE_MEMBER').save(flush: true)
         new RequestMap(url: '/messenger/save',      configAttribute: 'ROLE_MEMBER').save(flush: true)
         new RequestMap(url: '/messenger/sendList',  configAttribute: 'ROLE_MEMBER').save(flush: true)
         new RequestMap(url: '/messenger/inboxList', configAttribute: 'ROLE_MEMBER').save(flush: true)
         new RequestMap(url: '/messenger/view',      configAttribute: 'ROLE_MEMBER').save(flush: true)
-        new RequestMap(url: '/messenger/reply',      configAttribute: 'ROLE_MEMBER').save(flush: true)
+        new RequestMap(url: '/messenger/reply',     configAttribute: 'ROLE_MEMBER').save(flush: true)
+        new RequestMap(url: '/messenger/trashList', configAttribute: 'ROLE_MEMBER').save(flush: true)
+        new RequestMap(url: '/messenger/delete',    configAttribute: 'ROLE_MEMBER').save(flush: true)
+        new RequestMap(url: '/messenger/trashDelete',configAttribute: 'ROLE_MEMBER').save(flush: true)
     }
 }

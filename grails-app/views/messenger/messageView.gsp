@@ -26,16 +26,18 @@
                         <span class="blue bigger-125">Subject:</span> <span class="bigger-125"> ${messenger.subject} </span>
                         <div class="space-4"></div>
                         <i class="icon-star orange2 mark-star"></i>
-                        <a class="sender" href="#">${messenger.sender.user.username}</a>
+                        <a class="sender" href="#">
+                            ${messenger.sender.user.username}
+                        </a>
                         <i class="icon-time bigger-110 orange middle"></i>
                         <span class="time">${messenger.dateOfMessage.format('dd/MM/yyyy, hh:mm a')}%{--Today, 7:15 pm--}%</span>
                     </div>
 
-                    <div class="action-buttons pull-right">
+                    %{--<div class="action-buttons pull-right">
                         <a href="#" id="replyBox" title="Reply"><i class="icon-reply green icon-only bigger-130"></i></a>
                         <a href="#"><i class="icon-mail-forward blue icon-only bigger-130"></i></a>
                         <a href="#"><i class="icon-trash red icon-only bigger-130"></i></a>
-                    </div>
+                    </div>--}%
                 </div>
 
                 <div class="hr hr-double"></div>
@@ -48,7 +50,7 @@
                 <div class="hr"></div>
 
                 %{-- reply --}%
-                <g:each in="${messengerList.messengers}" var="replyMessage">
+                <g:each in="${messengerList.messengers.sort{it.id}}" var="replyMessage">
                     <div class="message-header clearfix">
                         <div class="pull-left">
                             <i class="icon-star orange2 mark-star"></i>
@@ -57,11 +59,11 @@
                             <span class="time">${replyMessage.dateOfMessage.format('dd/MM/yyyy, hh:mm a')}%{--Today, 7:15 pm--}%</span>
                         </div>
 
-                        <div class="action-buttons pull-right">
+                        %{--<div class="action-buttons pull-right">
                             <a href="#" id="replyBox" title="Reply"><i class="icon-reply green icon-only bigger-130"></i></a>
                             <a href="#"><i class="icon-mail-forward blue icon-only bigger-130"></i></a>
                             <a href="#"><i class="icon-trash red icon-only bigger-130"></i></a>
-                        </div>
+                        </div>--}%
                     </div>
                     <div class="hr hr-double"></div>
 
@@ -72,8 +74,19 @@
                     </div>
                     <div class="hr"></div>
                 </g:each>
+
                 %{-- reply end --}%
+
+                <div class="message-header clearfix">
+                    <div class="action-buttons pull-right">
+                        <a href="#" id="replyBox" title="Reply"><i class="icon-reply green icon-only bigger-130"></i></a>
+                        %{--<a href="#"><i class="icon-mail-forward blue icon-only bigger-130"></i></a>
+                        <a href="#"><i class="icon-trash red icon-only bigger-130"></i></a>--}%
+                    </div>
+                </div>
+
             </g:each>
+
         </div>
     </div>
 
@@ -88,11 +101,14 @@
 
         <div class="widget-body">
             <div class="widget-main">
-                <form action="${createLink(controller: 'messenger', action: 'reply')}" method="post" class="">
+                <form id="id-message-replyForm" class="form-horizontal">
                     <input type="hidden" name="parentId" value="${messengerList.id}" />
-                    <textarea name="messageBody" class="col-md-12" />
+                    <textarea name="messageBody" class="col-md-12"></textarea>
 
-                    <input type="submit" class="btn btn-info btn-sm tooltip-info" value="Send" />
+                    <button type="button" id="replyButton" class="btn btn-sm btn-primary no-border">
+                        <span class="bigger-110">Send</span>
+                        <i class="icon-arrow-right icon-on-right"></i>
+                    </button>
                 </form>
             </div>
         </div>
@@ -101,18 +117,25 @@
 
 <r:script>
     jQuery(function ($) {
-        // dataTable
-        var inboxTable = $('#messenger-inbox-tbl').dataTable({
-            "sDom": " ", // <'row'<'col-md-4'><'col-md-4'><'col-md-4'f>r>t<'row'<'col-md-4'l><'col-md-4'i><'col-md-4'p>>
-            "bProcessing": false,
-            "bAutoWidth": true
-        });
 
         $('.replyDiv').hide();
+
         $('#replyBox').click(function(){
-            //alert("Yes reply On!");
             $('.replyDiv').show();
-        })
+        });
+
+        $('#replyButton').click(function(){
+            $.ajax({
+                url:"${createLink(controller: 'messenger', action: 'reply')}",
+                type:'post',
+                data: $("#id-message-replyForm").serialize(),
+                success:function(data){
+                    $('body').html(data);
+                },
+                failure:function(data){
+                }
+            })
+        });
 
     })
 </r:script>
