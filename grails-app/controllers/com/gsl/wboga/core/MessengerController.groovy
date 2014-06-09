@@ -6,33 +6,33 @@ import grails.converters.JSON
 
 class MessengerController {
 
-    def inbox(){
+    def inbox() {
         User user = getAuthenticatedUser()
-        render(view: 'messageInbox', model: [userId : user.id])
+        render(view: 'messageInbox', model: [userId: user.id])
     }
 
-    def send(){
+    def send() {
         User user = getAuthenticatedUser()
-        render(view: 'messageSend', model: [userId : user.id])
+        render(view: 'messageSend', model: [userId: user.id])
     }
 
-    def compose(){
+    def compose() {
         render(view: '_compose')
     }
 
-    def trash(){
+    def trash() {
         User user = getAuthenticatedUser()
-        render(view: 'messageTrash', model: [userId : user.id])
+        render(view: 'messageTrash', model: [userId: user.id])
     }
 
-    def trashDelete(){
+    def trashDelete() {
         if (!request.method == 'POST') {
             flash.message = "Message not Delete!"
             redirect(action: 'inbox')
             return
         }
         Messenger messenger = Messenger.get(params.id as Long)
-        if(!messenger){
+        if (!messenger) {
             flash.message = "Message invalid!"
             redirect(action: 'trash')
             return
@@ -43,9 +43,9 @@ class MessengerController {
         Registration registration = Registration.findByUser(user)
 
         def messengerSenderList = Messenger.findAllBySenderAndSubject(registration, subject)
-        if(messengerSenderList != null){
-            for (def messengerSender in messengerSenderList ){
-                if(messengerSender.senderTrash == "isSenderOff"){
+        if (messengerSenderList != null) {
+            for (def messengerSender in messengerSenderList) {
+                if (messengerSender.senderTrash == "isSenderOff") {
                     messengerSender.senderTrash = "delete"
                     messengerSender.save(flush: true)
                 }
@@ -53,18 +53,18 @@ class MessengerController {
         }
 
         def messengerReceiverList = Messenger.findAllByReceiverAndSubject(registration, subject)
-        if(messengerReceiverList != null){
-            for (def messengerReceiver in messengerReceiverList){
-                if(messengerReceiver.receiverTrash == "isReceiverOff"){
+        if (messengerReceiverList != null) {
+            for (def messengerReceiver in messengerReceiverList) {
+                if (messengerReceiver.receiverTrash == "isReceiverOff") {
                     messengerReceiver.receiverTrash = "delete"
                     messengerReceiver.save(flush: true)
                 }
             }
         }
 
-        if( (messenger.receiverTrash == "delete") && (messenger.senderTrash == "delete") ){
+        if ((messenger.receiverTrash == "delete") && (messenger.senderTrash == "delete")) {
             def deleteMessage = messenger.delete()
-            if(!deleteMessage){
+            if (!deleteMessage) {
                 flash.message = "Message not delete in trash box!"
                 redirect(action: 'trash')
                 return
@@ -78,7 +78,7 @@ class MessengerController {
         redirect(action: 'trash')
     }
 
-    def delete(){
+    def delete() {
         if (!request.method == 'POST') {
             flash.message = "Message not Delete!"
             redirect(action: 'inbox')
@@ -86,7 +86,7 @@ class MessengerController {
         }
         String action = (params.view as String).trim()
         Messenger messenger = Messenger.get(params.id as Long)
-        if(!messenger){
+        if (!messenger) {
             flash.message = "Message invalid!"
             redirect(action: action)
             return
@@ -95,25 +95,25 @@ class MessengerController {
         User user = getAuthenticatedUser()
         Registration registration = Registration.findByUser(user)
 
-        if(action == "send"){
-            def messengerSenderList = Messenger.findAllBySenderAndSubjectAndSenderTrash(registration,subject,"off")
-            if(messengerSenderList != null){
-                for (def messengerSender in messengerSenderList){
+        if (action == "send") {
+            def messengerSenderList = Messenger.findAllBySenderAndSubjectAndSenderTrash(registration, subject, "off")
+            if (messengerSenderList != null) {
+                for (def messengerSender in messengerSenderList) {
                     //if (messengerSender.senderTrash == "off"){
-                        messengerSender.senderTrash = "isSenderOff"
-                        messengerSender.save(flush: true)
-                   // }
+                    messengerSender.senderTrash = "isSenderOff"
+                    messengerSender.save(flush: true)
+                    // }
                 }
             }
         }
 
-        if (action == "inbox"){
-            def messengerReceiverList = Messenger.findAllByReceiverAndSubjectAndReceiverTrash(registration,subject,"off")
-            if(messengerReceiverList != null){
-                for (def messengerReceiver in messengerReceiverList){
+        if (action == "inbox") {
+            def messengerReceiverList = Messenger.findAllByReceiverAndSubjectAndReceiverTrash(registration, subject, "off")
+            if (messengerReceiverList != null) {
+                for (def messengerReceiver in messengerReceiverList) {
                     //if(messengerReceiver.receiverTrash == "off"){
-                        messengerReceiver.receiverTrash = "isReceiverOff"
-                        messengerReceiver.save(flush: true)
+                    messengerReceiver.receiverTrash = "isReceiverOff"
+                    messengerReceiver.save(flush: true)
                     //}
                 }
             }
@@ -125,11 +125,11 @@ class MessengerController {
             redirect(action: action)
             return
         }*/
-        flash.message = "Message delete form "+action+" box!"
+        flash.message = "Message delete form " + action + " box!"
         redirect(action: action)
     }
 
-    def save(){
+    def save() {
         if (!request.method == 'POST') {
             flash.message = "Message not send!"
             redirect(action: 'inbox')
@@ -139,9 +139,9 @@ class MessengerController {
         Registration senderReg = Registration.findByUser(user)
 
         Messenger messenger
-        for (def userId in params.username){
+        for (def userId in params.username) {
             String subject = params.subject
-            String messageBody= params.messageBody
+            String messageBody = params.messageBody
             def receiver = userId
             def messengerId = params.messenger
 
@@ -153,14 +153,14 @@ class MessengerController {
                     messenger: messengerId
             )
 
-            if (!messenger.validate()){
+            if (!messenger.validate()) {
                 flash.message = "Not added validated!"
                 redirect(action: 'inbox')
                 return
             }
             Messenger savedMessenger = messenger.save(flush: true)
 
-            if (!savedMessenger){
+            if (!savedMessenger) {
                 flash.message = "Not Added!"
                 render(view: 'messageSend')
                 return
@@ -169,10 +169,10 @@ class MessengerController {
 
         flash.message = "Send Message Successfully!!"
         //redirect(controller: 'messenger', action: 'send')
-        render(view: 'messageSend', model: [userId : user.id])
+        render(view: 'messageSend', model: [userId: user.id])
     }
 
-    def view(){
+    def view() {
         if (!request.method == 'POST') {
             flash.message = "Message Request Type Problem!"
             redirect(action: 'inbox')
@@ -180,26 +180,26 @@ class MessengerController {
         }
         Messenger aMessenger = Messenger.get(params.id as Long)
         List<Messenger> aMessageList = Messenger.findAllByMessenger(aMessenger)
-        if (!aMessenger){
+        if (!aMessenger) {
             flash.message = "Message invalid!"
             redirect(action: 'inbox')
             return
         }
 
-        if(params.inbox == "inbox"){
-            if (aMessageList != null){
+        if (params.inbox == "inbox") {
+            if (aMessageList != null) {
                 aMessenger.isRead = true
-                aMessenger.save(flash:true)
+                aMessenger.save(flash: true)
             }
-            for (def a in aMessageList){
+            for (def a in aMessageList) {
                 a.isRead = true
-                a.save(flash:true)
+                a.save(flash: true)
             }
         }
         render(view: 'messageView', model: [messengerList: aMessenger])
     }
 
-    def reply(){
+    def reply() {
         if (!request.method == 'POST') {
             flash.message = "Message Request Type Problem!"
             redirect(action: 'inbox')
@@ -210,14 +210,14 @@ class MessengerController {
         Registration senderReg = Registration.findByUser(user)
 
         Messenger messenger = Messenger.read(params.parentId as Long)
-        if(!messenger){
+        if (!messenger) {
             flash.message = "Message invalid!"
             redirect(action: 'inbox')
             return
         }
 
         def subject = messenger.subject
-        String messageBody= params.messageBody
+        String messageBody = params.messageBody
         def receiver = messenger.sender
         def messengerId = messenger
 
@@ -229,14 +229,14 @@ class MessengerController {
                 messenger: messengerId
         )
 
-        if (!messenger.validate()){
+        if (!messenger.validate()) {
             flash.message = "Message Not send, try again!!"
             redirect(action: 'inbox')
             return
         }
         Messenger savedMessenger = messenger.save(flush: true)
 
-        if (!savedMessenger){
+        if (!savedMessenger) {
             flash.message = "Message Not send!"
             render(view: 'messageSend')
             return
@@ -247,14 +247,14 @@ class MessengerController {
         render(view: 'messageView', model: [messengerList: messengerList])
     }
 
-    def undo(){
+    def undo() {
         if (!request.method == 'POST') {
             flash.message = "Message Request Type Problem!"
             redirect(action: 'trash')
             return
         }
         Messenger messenger = Messenger.get(params.id as Long)
-        if(!messenger){
+        if (!messenger) {
             flash.message = "Message invalid!"
             redirect(action: action)
             return
@@ -263,18 +263,18 @@ class MessengerController {
         User user = getAuthenticatedUser()
         Registration registration = Registration.findByUser(user)
 
-        def messengerSenderList = Messenger.findAllBySenderAndSubjectAndSenderTrash(registration,subject,"isSenderOff")
+        def messengerSenderList = Messenger.findAllBySenderAndSubjectAndSenderTrash(registration, subject, "isSenderOff")
         //println ">>" + messengerSenderList.size()
 
-        if(messengerSenderList != null){
-            for (def messengerSender in messengerSenderList){
+        if (messengerSenderList != null) {
+            for (def messengerSender in messengerSenderList) {
                 messengerSender.senderTrash = "off"
                 messengerSender.save(flush: true)
             }
         }
-        def messengerReceiverList = Messenger.findAllByReceiverAndSubjectAndReceiverTrash(registration,subject,"isReceiverOff")
-        if(messengerReceiverList != null){
-            for (def messengerReceiver in messengerReceiverList){
+        def messengerReceiverList = Messenger.findAllByReceiverAndSubjectAndReceiverTrash(registration, subject, "isReceiverOff")
+        if (messengerReceiverList != null) {
+            for (def messengerReceiver in messengerReceiverList) {
                 messengerReceiver.receiverTrash = "off"
                 messengerReceiver.save(flush: true)
             }
@@ -284,35 +284,35 @@ class MessengerController {
         redirect(action: 'trash')
     }
 
-    def sendList(){
+    def sendList() {
         User user = getAuthenticatedUser()
         Registration senderReg = Registration.findByUser(user)
 
-        int sEcho = params.sEcho?params.getInt('sEcho'):1
-        int iDisplayStart = params.iDisplayStart? params.getInt('iDisplayStart'):0
-        int iDisplayLength = params.iDisplayLength? params.getInt('iDisplayLength'):10
-        String sSortDir = params.sSortDir_0? params.sSortDir_0:'asc'
-        int iSortingCol = params.iSortingCols? params.getInt('iSortingCols'):1
+        int sEcho = params.sEcho ? params.getInt('sEcho') : 1
+        int iDisplayStart = params.iDisplayStart ? params.getInt('iDisplayStart') : 0
+        int iDisplayLength = params.iDisplayLength ? params.getInt('iDisplayLength') : 10
+        String sSortDir = params.sSortDir_0 ? params.sSortDir_0 : 'asc'
+        int iSortingCol = params.iSortingCols ? params.getInt('iSortingCols') : 1
         //Search string, use or logic to all fields that required to include
-        String sSearch = params.sSearch?params.sSearch:null
+        String sSearch = params.sSearch ? params.sSearch : null
 
-        if(sSearch){
-            sSearch = "%"+sSearch+"%"
+        if (sSearch) {
+            sSearch = "%" + sSearch + "%"
         }
 
         String sortColumn = MessengerUtility.getSortColumn(iSortingCol)
         List dataReturns = new ArrayList()
         def c = Messenger.createCriteria()
 
-        def results = c.list (max: iDisplayLength, offset:iDisplayStart) {
+        def results = c.list(max: iDisplayLength, offset: iDisplayStart) {
             and {
-                eq('sender',senderReg)
-                ne('receiver',senderReg)
-                eq('senderTrash',"off")
+                eq('sender', senderReg)
+                ne('receiver', senderReg)
+                eq('senderTrash', "off")
             }
-            if(sSearch){
+            if (sSearch) {
                 or {
-                    ilike('subject',sSearch)
+                    ilike('subject', sSearch)
                 }
             }
             order(sortColumn, sSortDir)
@@ -322,58 +322,58 @@ class MessengerController {
         int totalCount = results.totalCount
 
         int serial = iDisplayStart;
-        if(totalCount>0){
-            if(sSortDir.equalsIgnoreCase('desc')){
-                serial =(totalCount+1)-iDisplayStart
+        if (totalCount > 0) {
+            if (sSortDir.equalsIgnoreCase('desc')) {
+                serial = (totalCount + 1) - iDisplayStart
             }
-            results.each {String subject ->
+            results.each { String subject ->
                 Messenger messenger = Messenger.findBySubject(subject)
-                if(sSortDir.equalsIgnoreCase('asc')){
+                if (sSortDir.equalsIgnoreCase('asc')) {
                     serial++
-                }else{
+                } else {
                     serial--
                 }
                 /*reply*/
                 List<Messenger> subjectList = Messenger.findAllBySubject(subject.trim())
                 def reply = ''
-                if(subjectList.size() > 1){
-                    reply = "("+subjectList.size()+")"  //'<span class="green">(Reply)</span>'
+                if (subjectList.size() > 1) {
+                    reply = "(" + subjectList.size() + ")"  //'<span class="green">(Reply)</span>'
                 }
-                dataReturns.add([DT_RowId:messenger.id,0:serial,1:messenger.receiver.name+" "+reply,2:messenger.subject,3:messenger.dateOfMessage.format('dd/MM/yyyy'),4:''])
+                dataReturns.add([DT_RowId: messenger.id, 0: serial, 1: messenger.receiver.name + " " + reply, 2: messenger.subject, 3: messenger.dateOfMessage.format('dd/MM/yyyy'), 4: ''])
             }
         }
-        Map gridData =[iTotalRecords:totalCount,iTotalDisplayRecords:totalCount,aaData:dataReturns]
+        Map gridData = [iTotalRecords: totalCount, iTotalDisplayRecords: totalCount, aaData: dataReturns]
         String result = gridData as JSON
         render result
     }
 
-    def inboxList(){
+    def inboxList() {
         User user = getAuthenticatedUser()
         Registration receiverReg = Registration.findByUser(user)
 
-        int sEcho = params.sEcho?params.getInt('sEcho'):1
-        int iDisplayStart = params.iDisplayStart? params.getInt('iDisplayStart'):0
-        int iDisplayLength = params.iDisplayLength? params.getInt('iDisplayLength'):10
-        String sSortDir = params.sSortDir_0? params.sSortDir_0:'asc'
-        int iSortingCol = params.iSortingCols? params.getInt('iSortingCols'):1
+        int sEcho = params.sEcho ? params.getInt('sEcho') : 1
+        int iDisplayStart = params.iDisplayStart ? params.getInt('iDisplayStart') : 0
+        int iDisplayLength = params.iDisplayLength ? params.getInt('iDisplayLength') : 10
+        String sSortDir = params.sSortDir_0 ? params.sSortDir_0 : 'asc'
+        int iSortingCol = params.iSortingCols ? params.getInt('iSortingCols') : 1
         //Search string, use or logic to all fields that required to include
-        String sSearch = params.sSearch?params.sSearch:null
-        if(sSearch){
-            sSearch = "%"+sSearch+"%"
+        String sSearch = params.sSearch ? params.sSearch : null
+        if (sSearch) {
+            sSearch = "%" + sSearch + "%"
         }
 
         String sortColumn = MessengerUtility.getSortColumn(iSortingCol)
         List dataReturns = new ArrayList()
         def c = Messenger.createCriteria()
-        def results = c.list (max: iDisplayLength, offset:iDisplayStart) {
+        def results = c.list(max: iDisplayLength, offset: iDisplayStart) {
             and {
-                eq('receiver',receiverReg)
-                eq('receiverTrash',"off")
-                ne('sender',receiverReg)
+                eq('receiver', receiverReg)
+                eq('receiverTrash', "off")
+                ne('sender', receiverReg)
             }
-            if(sSearch){
+            if (sSearch) {
                 or {
-                    ilike('subject',sSearch)
+                    ilike('subject', sSearch)
                 }
             }
             order(sortColumn, sSortDir)
@@ -382,70 +382,70 @@ class MessengerController {
 
         int totalCount = results.totalCount
         int serial = iDisplayStart;
-        if(totalCount>0){
-            if(sSortDir.equalsIgnoreCase('desc')){
-                serial =(totalCount+1)-iDisplayStart
+        if (totalCount > 0) {
+            if (sSortDir.equalsIgnoreCase('desc')) {
+                serial = (totalCount + 1) - iDisplayStart
             }
-            results.each {String subject ->
+            results.each { String subject ->
                 Messenger messenger = Messenger.findBySubject(subject)
-                if(sSortDir.equalsIgnoreCase('asc')){
+                if (sSortDir.equalsIgnoreCase('asc')) {
                     serial++
-                }else{
+                } else {
                     serial--
                 }
                 /* Reply */
                 List<Messenger> subjectList = Messenger.findAllBySubject(subject.trim())
                 def aArrayList = subjectList.isRead
                 def isRead = ''
-                if( (false in aArrayList) ){
+                if ((false in aArrayList)) {
                     isRead = '<span class="blue">(Read)</span>'
                 }
                 def reply = ''
-                if(subjectList.size() > 1){
-                    reply = "("+subjectList.size()+")"  //'<span class="green">(Reply)</span>'
+                if (subjectList.size() > 1) {
+                    reply = "(" + subjectList.size() + ")"  //'<span class="green">(Reply)</span>'
                 }
-                dataReturns.add([DT_RowId:messenger.id,0:serial,1:messenger.sender.name+" "+reply,2:messenger.subject+" "+isRead,3:messenger.dateOfMessage.format('dd/MM/yyyy'),4:''])
+                dataReturns.add([DT_RowId: messenger.id, 0: serial, 1: messenger.sender.name + " " + reply, 2: messenger.subject + " " + isRead, 3: messenger.dateOfMessage.format('dd/MM/yyyy'), 4: ''])
             }
         }
-        Map gridData =[iTotalRecords:totalCount,iTotalDisplayRecords:totalCount,aaData:dataReturns]
+        Map gridData = [iTotalRecords: totalCount, iTotalDisplayRecords: totalCount, aaData: dataReturns]
         String result = gridData as JSON
         render result
     }
 
-    def trashList(){
+    def trashList() {
         User user = getAuthenticatedUser()
         Registration senderReg = Registration.findByUser(user)
 
-        int sEcho = params.sEcho?params.getInt('sEcho'):1
-        int iDisplayStart = params.iDisplayStart? params.getInt('iDisplayStart'):0
-        int iDisplayLength = params.iDisplayLength? params.getInt('iDisplayLength'):10
-        String sSortDir = params.sSortDir_0? params.sSortDir_0:'asc'
-        int iSortingCol = params.iSortingCols? params.getInt('iSortingCols'):1
+        int sEcho = params.sEcho ? params.getInt('sEcho') : 1
+        int iDisplayStart = params.iDisplayStart ? params.getInt('iDisplayStart') : 0
+        int iDisplayLength = params.iDisplayLength ? params.getInt('iDisplayLength') : 10
+        String sSortDir = params.sSortDir_0 ? params.sSortDir_0 : 'asc'
+        int iSortingCol = params.iSortingCols ? params.getInt('iSortingCols') : 1
         //Search string, use or logic to all fields that required to include
-        String sSearch = params.sSearch?params.sSearch:null
+        String sSearch = params.sSearch ? params.sSearch : null
 
-        if(sSearch){
-            sSearch = "%"+sSearch+"%"
+        if (sSearch) {
+            sSearch = "%" + sSearch + "%"
         }
 
         String sortColumn = MessengerUtility.getSortColumn(iSortingCol)
         List dataReturns = new ArrayList()
         def c = Messenger.createCriteria()
 
-        def results = c.list (max: iDisplayLength, offset:iDisplayStart) {
-            or{
-                and{
-                    eq('senderTrash',"isSenderOff")
-                    eq('sender',senderReg)
+        def results = c.list(max: iDisplayLength, offset: iDisplayStart) {
+            or {
+                and {
+                    eq('senderTrash', "isSenderOff")
+                    eq('sender', senderReg)
                 }
-                and{
-                    eq('receiverTrash',"isReceiverOff")
-                    eq('receiver',senderReg)
+                and {
+                    eq('receiverTrash', "isReceiverOff")
+                    eq('receiver', senderReg)
                 }
             }
-            if(sSearch){
+            if (sSearch) {
                 or {
-                    ilike('subject',sSearch)
+                    ilike('subject', sSearch)
                 }
             }
             order(sortColumn, sSortDir)
@@ -454,27 +454,27 @@ class MessengerController {
 
         int totalCount = results.totalCount
         int serial = iDisplayStart;
-        if(totalCount>0){
-            if(sSortDir.equalsIgnoreCase('desc')){
-                serial =(totalCount+1)-iDisplayStart
+        if (totalCount > 0) {
+            if (sSortDir.equalsIgnoreCase('desc')) {
+                serial = (totalCount + 1) - iDisplayStart
             }
-            results.each {String subject ->
+            results.each { String subject ->
                 Messenger messenger = Messenger.findBySubject(subject)
-                if(sSortDir.equalsIgnoreCase('asc')){
+                if (sSortDir.equalsIgnoreCase('asc')) {
                     serial++
-                }else{
+                } else {
                     serial--
                 }
                 /*reply*/
                 List<Messenger> subjectList = Messenger.findAllBySubject(subject.trim())
                 def reply = ''
-                if(subjectList.size() > 1){
-                    reply = "("+subjectList.size()+")"  //'<span class="green">(Reply)</span>'
+                if (subjectList.size() > 1) {
+                    reply = "(" + subjectList.size() + ")"  //'<span class="green">(Reply)</span>'
                 }
-                dataReturns.add([DT_RowId:messenger.id,0:serial,1:messenger.receiver.name+" "+reply,2:messenger.subject,3:messenger.dateOfMessage.format('dd/MM/yyyy'),4:''])
+                dataReturns.add([DT_RowId: messenger.id, 0: serial, 1: messenger.receiver.name + " " + reply, 2: messenger.subject, 3: messenger.dateOfMessage.format('dd/MM/yyyy'), 4: ''])
             }
         }
-        Map gridData =[iTotalRecords:totalCount,iTotalDisplayRecords:totalCount,aaData:dataReturns]
+        Map gridData = [iTotalRecords: totalCount, iTotalDisplayRecords: totalCount, aaData: dataReturns]
         String result = gridData as JSON
         render result
 
