@@ -25,7 +25,7 @@ class BootStrap {
         createRegistration() // default User add
     }
 
-    def createRegistration(){
+    def createRegistration() {
 
         def superAdmin = Role.findByAuthority('ROLE_MEMBER') ?: new Role(authority: 'ROLE_MEMBER').save(failOnError: true)
         // Rumee User
@@ -84,7 +84,7 @@ class BootStrap {
 
     }
 
-    def createHint(){
+    def createHint() {
         new Hint(question: "What is your feb color ?").save(failOnError: true)
         new Hint(question: "What is the name of your best friend ?").save(failOnError: true)
         new Hint(question: "What was the name of your third grade teacher?").save(failOnError: true)
@@ -107,11 +107,11 @@ class BootStrap {
         new Hint(question: "Where did you vacation last year?").save(failOnError: true)
     }
 
-    def createPackage(){
-        new MemberType(name: "Free", amount:0).save(failOnError: true)
-        new MemberType(name: "Premium", amount:100).save(failOnError: true)
-        new MemberType(name: "Silver", amount:200).save(failOnError: true)
-        new MemberType(name: "Gold", amount:300).save(failOnError: true)
+    def createPackage() {
+        new MemberType(name: "Free", amount: 0).save(failOnError: true)
+        new MemberType(name: "Premium", amount: 100).save(failOnError: true)
+        new MemberType(name: "Silver", amount: 200).save(failOnError: true)
+        new MemberType(name: "Gold", amount: 300).save(failOnError: true)
     }
 
     def createCountryList() {
@@ -120,14 +120,14 @@ class BootStrap {
             bangladesh = new Country(name: "BANGLADESH").save(failOnError: true)
         }
 
-        def afghanistan = Country.findByName("AFGHANISTAN")
+        def afghanistan = Country.findByName("INDIA")
         if (!afghanistan) {
-            afghanistan = new Country(name: "AFGHANISTAN").save(failOnError: true)
+            afghanistan = new Country(name: "INDIA").save(failOnError: true)
         }
 
-        def nigeria = Country.findByName("NIGERIA")
+        def nigeria = Country.findByName("PAKISTAN")
         if (!nigeria) {
-            nigeria = new Country(name: "NIGERIA").save(failOnError: true)
+            nigeria = new Country(name: "PAKISTAN").save(failOnError: true)
         }
     }
 
@@ -179,7 +179,7 @@ class BootStrap {
         println "Request Map code complete"
     }
 
-    def createCommonRole(){
+    def createCommonRole() {
         role = new Role(id: 3, authority: 'ROLE_MEMBER')
         role.save(flush: true)
     }
@@ -187,7 +187,7 @@ class BootStrap {
     def destroy = {
     }
 
-    def createCommonReqMap(){
+    def createCommonReqMap() {
         new RequestMap(url: '/login/**', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY').save(flush: true)
         new RequestMap(url: '/login', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY').save(flush: true)
         new RequestMap(url: '/logout/**', configAttribute: 'IS_AUTHENTICATED_ANONYMOUSLY').save(flush: true)
@@ -201,19 +201,20 @@ class BootStrap {
         new RequestMap(url: '/', configAttribute: 'ROLE_SUPER_ADMIN,ROLE_ADMIN,ROLE_MEMBER').save(flush: true)
     }
 
-    def createAccessReqMap(){
-        // Messenger Controller
-        new RequestMap(url: '/messenger/inbox',     configAttribute: 'ROLE_MEMBER').save(flush: true)
-        new RequestMap(url: '/messenger/send',      configAttribute: 'ROLE_MEMBER').save(flush: true)
-        new RequestMap(url: '/messenger/compose',   configAttribute: 'ROLE_MEMBER').save(flush: true)
-        new RequestMap(url: '/messenger/trash',     configAttribute: 'ROLE_MEMBER').save(flush: true)
-        new RequestMap(url: '/messenger/save',      configAttribute: 'ROLE_MEMBER').save(flush: true)
-        new RequestMap(url: '/messenger/sendList',  configAttribute: 'ROLE_MEMBER').save(flush: true)
-        new RequestMap(url: '/messenger/inboxList', configAttribute: 'ROLE_MEMBER').save(flush: true)
-        new RequestMap(url: '/messenger/view',      configAttribute: 'ROLE_MEMBER').save(flush: true)
-        new RequestMap(url: '/messenger/reply',     configAttribute: 'ROLE_MEMBER').save(flush: true)
-        new RequestMap(url: '/messenger/trashList', configAttribute: 'ROLE_MEMBER').save(flush: true)
-        new RequestMap(url: '/messenger/delete',    configAttribute: 'ROLE_MEMBER').save(flush: true)
-        new RequestMap(url: '/messenger/trashDelete',configAttribute: 'ROLE_MEMBER').save(flush: true)
+    // Messenger Controller
+    def createAccessReqMap() {
+        new RequestMap(url: '/messenger/inbox', configAttribute: 'ROLE_SUPER_ADMIN,ROLE_MEMBER').save(flush: true)
+        new RequestMap(url: '/messenger/send', configAttribute: 'ROLE_SUPER_ADMIN,ROLE_MEMBER').save(flush: true)
+        new RequestMap(url: '/messenger/compose', configAttribute: 'ROLE_SUPER_ADMIN,ROLE_MEMBER').save(flush: true)
+        new RequestMap(url: '/messenger/trash', configAttribute: 'ROLE_SUPER_ADMIN,ROLE_MEMBER').save(flush: true)
+        new RequestMap(url: '/messenger/save', configAttribute: 'ROLE_SUPER_ADMIN,ROLE_MEMBER').save(flush: true)
+        new RequestMap(url: '/messenger/sendList', configAttribute: 'ROLE_SUPER_ADMIN,ROLE_MEMBER').save(flush: true)
+        new RequestMap(url: '/messenger/inboxList', configAttribute: 'ROLE_SUPER_ADMIN,ROLE_MEMBER').save(flush: true)
+        new RequestMap(url: '/messenger/view', configAttribute: 'ROLE_SUPER_ADMIN,ROLE_MEMBER').save(flush: true)
+        new RequestMap(url: '/messenger/reply', configAttribute: 'ROLE_SUPER_ADMIN,ROLE_MEMBER').save(flush: true)
+        new RequestMap(url: '/messenger/trashList', configAttribute: 'ROLE_SUPER_ADMIN,ROLE_MEMBER').save(flush: true)
+        new RequestMap(url: '/messenger/delete', configAttribute: 'ROLE_SUPER_ADMIN,ROLE_MEMBER').save(flush: true)
+        new RequestMap(url: '/messenger/trashDelete', configAttribute: 'ROLE_SUPER_ADMIN,ROLE_MEMBER').save(flush: true)
+        new RequestMap(url: '/messenger/undo', configAttribute: 'ROLE_SUPER_ADMIN,ROLE_MEMBER').save(flush: true)
     }
 }

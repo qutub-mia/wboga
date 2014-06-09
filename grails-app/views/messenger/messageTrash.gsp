@@ -124,6 +124,23 @@
             });
             e.preventDefault();
         });
+
+        // Undo
+        $('#messenger-trash-tbl').on('click', 'a.undo-user', function(e) {
+            var control = this;
+            var userId = $(control).attr('userId');
+            jQuery.ajax({
+                type: 'POST',
+                url: "${g.createLink(controller: 'messenger',action: 'undo')}?id="+userId,
+                success: function (data, textStatus) {
+                    $('body').html(data);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+//                    $('#'+updateDiv).html(data);
+                }
+            });
+            e.preventDefault();
+        });
     })
 
     function getActionButtons(nRow, aData) {

@@ -38,22 +38,27 @@ class MessengerController {
             return
         }
 
+        def subject = messenger.subject.trim()
         User user = getAuthenticatedUser()
         Registration registration = Registration.findByUser(user)
 
-        def messengerSenderList = Messenger.findAllBySender(registration)
+        def messengerSenderList = Messenger.findAllBySenderAndSubject(registration, subject)
         if(messengerSenderList != null){
             for (def messengerSender in messengerSenderList ){
-                messengerSender.senderTrash = "delete"
-                messengerSender.save(flush: true)
+                if(messengerSender.senderTrash == "isSenderOff"){
+                    messengerSender.senderTrash = "delete"
+                    messengerSender.save(flush: true)
+                }
             }
         }
 
-        def messengerReceiverList = Messenger.findAllByReceiver(registration)
+        def messengerReceiverList = Messenger.findAllByReceiverAndSubject(registration, subject)
         if(messengerReceiverList != null){
             for (def messengerReceiver in messengerReceiverList){
-                messengerReceiver.receiverTrash = "delete"
-                messengerReceiver.save(flush: true)
+                if(messengerReceiver.receiverTrash == "isReceiverOff"){
+                    messengerReceiver.receiverTrash = "delete"
+                    messengerReceiver.save(flush: true)
+                }
             }
         }
 
@@ -86,31 +91,33 @@ class MessengerController {
             redirect(action: action)
             return
         }
-
+        def subject = messenger.subject.trim()
         User user = getAuthenticatedUser()
         Registration registration = Registration.findByUser(user)
 
         if(action == "send"){
-            def messengerSenderList = Messenger.findAllBySender(registration)
+            def messengerSenderList = Messenger.findAllBySenderAndSubjectAndSenderTrash(registration,subject,"off")
             if(messengerSenderList != null){
                 for (def messengerSender in messengerSenderList){
-                    messengerSender.senderTrash = "senderOff"
-                    messengerSender.save(flush: true)
+                    //if (messengerSender.senderTrash == "off"){
+                        messengerSender.senderTrash = "isSenderOff"
+                        messengerSender.save(flush: true)
+                   // }
                 }
             }
         }
 
         if (action == "inbox"){
-            def messengerReceiverList = Messenger.findByReceiver(registration)
+            def messengerReceiverList = Messenger.findAllByReceiverAndSubjectAndReceiverTrash(registration,subject,"off")
             if(messengerReceiverList != null){
                 for (def messengerReceiver in messengerReceiverList){
-                    messengerReceiver.receiverTrash = "receiverOff"
-                    messengerReceiver.save(flush: true)
+                    //if(messengerReceiver.receiverTrash == "off"){
+                        messengerReceiver.receiverTrash = "isReceiverOff"
+                        messengerReceiver.save(flush: true)
+                    //}
                 }
             }
         }
-
-
 
         /*def trashMessage = messenger.save(flush: true)
         if(!trashMessage){
@@ -128,13 +135,6 @@ class MessengerController {
             redirect(action: 'inbox')
             return
         }
-
-        /*RetailAccount retailAccount = RetailAccount.read(retailNomineeCommand.retailAccount.id)
-        if (retailNomineeCommand.hasErrors()) {
-            def result = [isError:true, message:"Have some problem!!"]
-            render result as JSON
-            return
-        }*/
         User user = getAuthenticatedUser()
         Registration senderReg = Registration.findByUser(user)
 
@@ -247,6 +247,43 @@ class MessengerController {
         render(view: 'messageView', model: [messengerList: messengerList])
     }
 
+    def undo(){
+        if (!request.method == 'POST') {
+            flash.message = "Message Request Type Problem!"
+            redirect(action: 'trash')
+            return
+        }
+        Messenger messenger = Messenger.get(params.id as Long)
+        if(!messenger){
+            flash.message = "Message invalid!"
+            redirect(action: action)
+            return
+        }
+        def subject = messenger.subject.trim()
+        User user = getAuthenticatedUser()
+        Registration registration = Registration.findByUser(user)
+
+        def messengerSenderList = Messenger.findAllBySenderAndSubjectAndSenderTrash(registration,subject,"isSenderOff")
+        //println ">>" + messengerSenderList.size()
+
+        if(messengerSenderList != null){
+            for (def messengerSender in messengerSenderList){
+                messengerSender.senderTrash = "off"
+                messengerSender.save(flush: true)
+            }
+        }
+        def messengerReceiverList = Messenger.findAllByReceiverAndSubjectAndReceiverTrash(registration,subject,"isReceiverOff")
+        if(messengerReceiverList != null){
+            for (def messengerReceiver in messengerReceiverList){
+                messengerReceiver.receiverTrash = "off"
+                messengerReceiver.save(flush: true)
+            }
+        }
+
+        flash.message = "Message Undo form Trash box!"
+        redirect(action: 'trash')
+    }
+
     def sendList(){
         User user = getAuthenticatedUser()
         Registration senderReg = Registration.findByUser(user)
@@ -331,8 +368,8 @@ class MessengerController {
         def results = c.list (max: iDisplayLength, offset:iDisplayStart) {
             and {
                 eq('receiver',receiverReg)
-                ne('sender',receiverReg)
                 eq('receiverTrash',"off")
+                ne('sender',receiverReg)
             }
             if(sSearch){
                 or {
@@ -398,11 +435,11 @@ class MessengerController {
         def results = c.list (max: iDisplayLength, offset:iDisplayStart) {
             or{
                 and{
-                    eq('senderTrash',"senderOff")
+                    eq('senderTrash',"isSenderOff")
                     eq('sender',senderReg)
                 }
                 and{
-                    eq('receiverTrash',"receiverOff")
+                    eq('receiverTrash',"isReceiverOff")
                     eq('receiver',senderReg)
                 }
             }
