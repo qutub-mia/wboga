@@ -1,4 +1,4 @@
-<%@ page import="com.gsl.wboga.core.Registration" %>
+<%@ page import="com.gsl.wboga.uma.security.User; com.gsl.wboga.core.Registration" %>
 <script src="${resource(dir: 'js', file: 'chosen.jquery.min.js')}"></script>
 <div class="tabbable">
     <ul id="inbox-tabs" class="inbox-tabs nav nav-tabs padding-16 tab-size-bigger tab-space-1">
@@ -70,12 +70,11 @@
                 </span>--}%
 
 
-                <select data-placeholder="User Name..." name="username"  id="form-field-recipient"
+                <select data-placeholder="User Name..." name="user"  id="form-field-recipient"
                         class="width-80 chosen-select" multiple="">
                     <option value="">&nbsp;</option>
-                    <g:each in="${Registration.list(sort: 'name')}" var="register">
-
-                        <option value="${register?.id}" ${userId == register?.user?.id ? 'disabled' : '' }>${register?.user?.username}</option>
+                    <g:each in="${User.list(sort: 'username')}" var="register">
+                        <option value="${register?.id}" ${userId == register?.id ? 'disabled' : '' }>${register?.username}</option>
                     </g:each>
                 </select>
             </div>
@@ -105,7 +104,7 @@
 
             <div class="col-sm-9">
                 %{--<div class="wysiwyg-editor"></div>--}%
-                <textarea name="messageBody" id="wysiwyg-editor" style="width: 100%" class="wysiwyg-editor">Message Body this!</textarea>
+                <textarea name="body" id="wysiwyg-editor" style="width: 100%" class="wysiwyg-editor">Message Body this!</textarea>
             </div>
         </div>
 

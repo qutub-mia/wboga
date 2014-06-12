@@ -35,7 +35,7 @@ class BootStrap {
             def userOneSaved = userOne.save(flush: true)
             new UserRole(user: userOneSaved, role: superAdmin).save(flush: true)
 
-            new Registration(
+            /*new Registration(
                     name: "Rumee",
                     dob: new Date("13/05/1970"),
                     answer: "abc",
@@ -43,7 +43,7 @@ class BootStrap {
                     hint: 2,
                     memberType: 1,
                     user: userOneSaved
-            ).save(failOnError: true)
+            ).save(failOnError: true)*/
         }
 
         // Imran User
@@ -53,7 +53,7 @@ class BootStrap {
             def userTwoSaved = userTwo.save(flush: true)
             new UserRole(user: userTwoSaved, role: superAdmin).save(flush: true)
 
-            new Registration(
+            /*new Registration(
                     name: "Imran",
                     dob: new Date("13/05/1970"),
                     answer: "abc",
@@ -61,7 +61,7 @@ class BootStrap {
                     hint: 2,
                     memberType: 1,
                     user: userTwoSaved
-            ).save(failOnError: true)
+            ).save(failOnError: true)*/
         }
 
         // Imran User
@@ -71,7 +71,7 @@ class BootStrap {
             def userThreeSaved = userThree.save(flush: true)
             new UserRole(user: userThreeSaved, role: superAdmin).save(flush: true)
 
-            new Registration(
+            /*new Registration(
                     name: "Jalal",
                     dob: new Date("13/05/1970"),
                     answer: "abc",
@@ -79,7 +79,7 @@ class BootStrap {
                     hint: 2,
                     memberType: 1,
                     user: userThreeSaved
-            ).save(failOnError: true)
+            ).save(failOnError: true)*/
         }
 
     }

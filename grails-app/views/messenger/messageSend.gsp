@@ -114,9 +114,6 @@
         actionButtons += '<span class="col-xs-3"><a href="" userId="'+aData.DT_RowId+ '" class="view-user" title="View">';
         actionButtons += '<span class="glyphicon glyphicon-envelope"></span>';
         actionButtons += '</a></span>';
-        /*actionButtons += '<span class="col-xs-3"><a href="" userId="'+aData.DT_RowId+ '" class="edit-user" title="Reply">';
-        actionButtons += '<span class="green glyphicon glyphicon-share"></span>';
-        actionButtons += '</a></span>';*/
         actionButtons += '<span class="col-xs-3"><a href="" userId="'+aData.DT_RowId+ '" class="delete-user" title="Delete">';
         actionButtons += '<span class="red glyphicon glyphicon-trash"></span>';
         actionButtons += '</a></span>';

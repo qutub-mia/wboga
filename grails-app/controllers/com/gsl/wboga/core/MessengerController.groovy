@@ -31,47 +31,54 @@ class MessengerController {
             redirect(action: 'inbox')
             return
         }
-        Messenger messenger = Messenger.get(params.id as Long)
+
+        Message messenger = Message.get(params.id as Long)
         if (!messenger) {
             flash.message = "Message invalid!"
             redirect(action: 'trash')
             return
         }
 
-        def subject = messenger.subject.trim()
+        Integer parentId = messenger.parentId
         User user = getAuthenticatedUser()
-        Registration registration = Registration.findByUser(user)
 
-        def messengerSenderList = Messenger.findAllBySenderAndSubject(registration, subject)
-        if (messengerSenderList != null) {
+        def messengerSenderList = Message.findAllBySenderAndParentIdAndIsSenderTrash(user, parentId, 1)
+        if (messengerSenderList) {
             for (def messengerSender in messengerSenderList) {
-                if (messengerSender.senderTrash == "isSenderOff") {
-                    messengerSender.senderTrash = "delete"
-                    messengerSender.save(flush: true)
-                }
+                messengerSender.isSenderTrash = 2
+                messengerSender.save(flush: true)
             }
         }
 
-        def messengerReceiverList = Messenger.findAllByReceiverAndSubject(registration, subject)
-        if (messengerReceiverList != null) {
+        def messengerReceiverList = Message.findAllByReceiverAndParentIdAndIsReceiverTrash(user, parentId, 1)
+        if (messengerReceiverList) {
             for (def messengerReceiver in messengerReceiverList) {
-                if (messengerReceiver.receiverTrash == "isReceiverOff") {
-                    messengerReceiver.receiverTrash = "delete"
-                    messengerReceiver.save(flush: true)
-                }
+                messengerReceiver.isReceiverTrash = 2
+                messengerReceiver.save(flush: true)
             }
         }
 
-        if ((messenger.receiverTrash == "delete") && (messenger.senderTrash == "delete")) {
-            def deleteMessage = messenger.delete()
-            if (!deleteMessage) {
-                flash.message = "Message not delete in trash box!"
+        // Delete message, when sender and receiver all delete message from trash !
+        if ((messenger.isSenderTrash == 2) && (messenger.isReceiverTrash == 2)) {
+            def count = 0
+            def countList = Message.findAllByParentId(params.id as Integer)
+            for (def i=0; i<countList.size(); i++){
+                if(countList.isReceiverTrash[i] && countList.isSenderTrash[i]){
+                    count++
+                }
+            }
+            if( count == countList.size() ){
+                def pId = params.id as Integer
+                def successDelete = Message.where {parentId == pId}.deleteAll()
+                if(!successDelete){
+                    flash.message = "Message delete not success form trash box!"
+                    redirect(action: 'trash')
+                    return
+                }
+                flash.message = "Message delete form trash box!"
                 redirect(action: 'trash')
                 return
             }
-            flash.message = "Message delete form trash box!"
-            redirect(action: 'trash')
-            return
         }
 
         flash.message = "Message delete form trash box!"
@@ -85,46 +92,36 @@ class MessengerController {
             return
         }
         String action = (params.view as String).trim()
-        Messenger messenger = Messenger.get(params.id as Long)
+        Message messenger = Message.get(params.id as Long)
         if (!messenger) {
             flash.message = "Message invalid!"
             redirect(action: action)
             return
         }
-        def subject = messenger.subject.trim()
+
         User user = getAuthenticatedUser()
-        Registration registration = Registration.findByUser(user)
+        Integer parentId  = messenger.parentId
 
         if (action == "send") {
-            def messengerSenderList = Messenger.findAllBySenderAndSubjectAndSenderTrash(registration, subject, "off")
+            def messengerSenderList = Message.findAllBySenderAndParentIdAndIsSenderTrash(user, parentId, 0)
             if (messengerSenderList != null) {
                 for (def messengerSender in messengerSenderList) {
-                    //if (messengerSender.senderTrash == "off"){
-                    messengerSender.senderTrash = "isSenderOff"
+                    messengerSender.isSenderTrash = 1
                     messengerSender.save(flush: true)
-                    // }
                 }
             }
         }
 
         if (action == "inbox") {
-            def messengerReceiverList = Messenger.findAllByReceiverAndSubjectAndReceiverTrash(registration, subject, "off")
+            def messengerReceiverList = Message.findAllByReceiverAndParentIdAndIsReceiverTrash(user, parentId, 0)
             if (messengerReceiverList != null) {
                 for (def messengerReceiver in messengerReceiverList) {
-                    //if(messengerReceiver.receiverTrash == "off"){
-                    messengerReceiver.receiverTrash = "isReceiverOff"
+                    messengerReceiver.isReceiverTrash = 1
                     messengerReceiver.save(flush: true)
-                    //}
                 }
             }
         }
 
-        /*def trashMessage = messenger.save(flush: true)
-        if(!trashMessage){
-            flash.message = "Message not delete in "+action+" box!"
-            redirect(action: action)
-            return
-        }*/
         flash.message = "Message delete form " + action + " box!"
         redirect(action: action)
     }
@@ -136,21 +133,19 @@ class MessengerController {
             return
         }
         User user = getAuthenticatedUser()
-        Registration senderReg = Registration.findByUser(user)
 
-        Messenger messenger
-        for (def userId in params.username) {
+        Message messenger
+
+        for (def userId in params.user) {
             String subject = params.subject
-            String messageBody = params.messageBody
+            String body = params.body
             def receiver = userId
-            def messengerId = params.messenger
 
-            messenger = new Messenger(
+            messenger = new Message(
                     subject: subject,
-                    messageBody: messageBody,
-                    sender: senderReg,
+                    body: body,
+                    sender: user,
                     receiver: receiver,
-                    messenger: messengerId
             )
 
             if (!messenger.validate()) {
@@ -158,17 +153,17 @@ class MessengerController {
                 redirect(action: 'inbox')
                 return
             }
-            Messenger savedMessenger = messenger.save(flush: true)
 
+            Message savedMessenger = messenger.save(flush: true)
             if (!savedMessenger) {
                 flash.message = "Not Added!"
                 render(view: 'messageSend')
                 return
             }
+            savedMessenger.parentId = savedMessenger.id
         }
 
         flash.message = "Send Message Successfully!!"
-        //redirect(controller: 'messenger', action: 'send')
         render(view: 'messageSend', model: [userId: user.id])
     }
 
@@ -178,8 +173,9 @@ class MessengerController {
             redirect(action: 'inbox')
             return
         }
-        Messenger aMessenger = Messenger.get(params.id as Long)
-        List<Messenger> aMessageList = Messenger.findAllByMessenger(aMessenger)
+        Message aMessenger = Message.get(params.id as Long)
+        List<Message> aMessageList = Message.findAllByParentId(aMessenger.parentId as Integer)
+
         if (!aMessenger) {
             flash.message = "Message invalid!"
             redirect(action: 'inbox')
@@ -196,7 +192,7 @@ class MessengerController {
                 a.save(flash: true)
             }
         }
-        render(view: 'messageView', model: [messengerList: aMessenger])
+        render(view: 'messageView', model: [messengerList: aMessageList])
     }
 
     def reply() {
@@ -207,26 +203,23 @@ class MessengerController {
         }
 
         User user = getAuthenticatedUser()
-        Registration senderReg = Registration.findByUser(user)
-
-        Messenger messenger = Messenger.read(params.parentId as Long)
+        Message messenger = Message.findByParentId(params.parentId as Integer)
         if (!messenger) {
             flash.message = "Message invalid!"
             redirect(action: 'inbox')
             return
         }
+        String subject = messenger.subject
+        String body = params.body
+        User receiver = messenger.sender
+        Integer parentId = messenger.parentId
 
-        def subject = messenger.subject
-        String messageBody = params.messageBody
-        def receiver = messenger.sender
-        def messengerId = messenger
-
-        messenger = new Messenger(
+        messenger = new Message(
                 subject: subject,
-                messageBody: messageBody,
-                sender: senderReg,
+                body: body,
+                sender: user,
                 receiver: receiver,
-                messenger: messengerId
+                parentId: parentId
         )
 
         if (!messenger.validate()) {
@@ -234,7 +227,7 @@ class MessengerController {
             redirect(action: 'inbox')
             return
         }
-        Messenger savedMessenger = messenger.save(flush: true)
+        Message savedMessenger = messenger.save(flush: true)
 
         if (!savedMessenger) {
             flash.message = "Message Not send!"
@@ -242,8 +235,14 @@ class MessengerController {
             return
         }
 
+        if (savedMessenger.sender.id == savedMessenger.receiver.id){
+            Message message = Message.findById(savedMessenger.parentId as Long)
+            message.isReceiverTrash = 0
+            message.save(flush: true)
+        }
+
         flash.message = "Reply Message send Success!!"
-        Messenger messengerList = Messenger.read(params.parentId as Long)
+        def messengerList = Message.findAllByParentId(params.parentId as Integer)
         render(view: 'messageView', model: [messengerList: messengerList])
     }
 
@@ -253,29 +252,27 @@ class MessengerController {
             redirect(action: 'trash')
             return
         }
-        Messenger messenger = Messenger.get(params.id as Long)
+        Message messenger = Message.get(params.id as Long)
         if (!messenger) {
             flash.message = "Message invalid!"
-            redirect(action: action)
+            redirect(action: 'trash')
             return
         }
-        def subject = messenger.subject.trim()
         User user = getAuthenticatedUser()
-        Registration registration = Registration.findByUser(user)
+        Integer parentId  = messenger.parentId
 
-        def messengerSenderList = Messenger.findAllBySenderAndSubjectAndSenderTrash(registration, subject, "isSenderOff")
-        //println ">>" + messengerSenderList.size()
+        List<Message> messengerSenderList = Message.findAllBySenderAndParentIdAndIsSenderTrash(user, parentId, 1)
 
         if (messengerSenderList != null) {
             for (def messengerSender in messengerSenderList) {
-                messengerSender.senderTrash = "off"
+                messengerSender.isSenderTrash = 0
                 messengerSender.save(flush: true)
             }
         }
-        def messengerReceiverList = Messenger.findAllByReceiverAndSubjectAndReceiverTrash(registration, subject, "isReceiverOff")
+        List<Message> messengerReceiverList = Message.findAllByReceiverAndParentIdAndIsReceiverTrash(user, parentId, 1)
         if (messengerReceiverList != null) {
             for (def messengerReceiver in messengerReceiverList) {
-                messengerReceiver.receiverTrash = "off"
+                messengerReceiver.isReceiverTrash = 0
                 messengerReceiver.save(flush: true)
             }
         }
@@ -286,7 +283,7 @@ class MessengerController {
 
     def sendList() {
         User user = getAuthenticatedUser()
-        Registration senderReg = Registration.findByUser(user)
+        //User senderReg = User.findById(user)
 
         int sEcho = params.sEcho ? params.getInt('sEcho') : 1
         int iDisplayStart = params.iDisplayStart ? params.getInt('iDisplayStart') : 0
@@ -302,13 +299,13 @@ class MessengerController {
 
         String sortColumn = MessengerUtility.getSortColumn(iSortingCol)
         List dataReturns = new ArrayList()
-        def c = Messenger.createCriteria()
+        def c = Message.createCriteria()
 
         def results = c.list(max: iDisplayLength, offset: iDisplayStart) {
             and {
-                eq('sender', senderReg)
-                ne('receiver', senderReg)
-                eq('senderTrash', "off")
+                eq('sender', user)
+                eq('isSenderTrash', 0)
+                ne('receiver', user)  // when not use distinct
             }
             if (sSearch) {
                 or {
@@ -316,8 +313,9 @@ class MessengerController {
                 }
             }
             order(sortColumn, sSortDir)
-            distinct('subject')
+            distinct('parentId')
         }
+
 
         int totalCount = results.totalCount
 
@@ -326,20 +324,21 @@ class MessengerController {
             if (sSortDir.equalsIgnoreCase('desc')) {
                 serial = (totalCount + 1) - iDisplayStart
             }
-            results.each { String subject ->
-                Messenger messenger = Messenger.findBySubject(subject)
+            results.each { Integer parentId ->
                 if (sSortDir.equalsIgnoreCase('asc')) {
                     serial++
                 } else {
                     serial--
                 }
+
                 /*reply*/
-                List<Messenger> subjectList = Messenger.findAllBySubject(subject.trim())
+                Message messenger = Message.findByParentId(parentId)
+                List<Message> subjectList = Message.findAllByParentId(parentId)
                 def reply = ''
                 if (subjectList.size() > 1) {
                     reply = "(" + subjectList.size() + ")"  //'<span class="green">(Reply)</span>'
                 }
-                dataReturns.add([DT_RowId: messenger.id, 0: serial, 1: messenger.receiver.name + " " + reply, 2: messenger.subject, 3: messenger.dateOfMessage.format('dd/MM/yyyy'), 4: ''])
+                dataReturns.add([DT_RowId: messenger.id, 0: serial, 1: messenger.receiver.username + " " + reply, 2: messenger.subject, 3: messenger.createdBy.format('dd/MM/yyyy'), 4: ''])
             }
         }
         Map gridData = [iTotalRecords: totalCount, iTotalDisplayRecords: totalCount, aaData: dataReturns]
@@ -349,7 +348,6 @@ class MessengerController {
 
     def inboxList() {
         User user = getAuthenticatedUser()
-        Registration receiverReg = Registration.findByUser(user)
 
         int sEcho = params.sEcho ? params.getInt('sEcho') : 1
         int iDisplayStart = params.iDisplayStart ? params.getInt('iDisplayStart') : 0
@@ -364,12 +362,11 @@ class MessengerController {
 
         String sortColumn = MessengerUtility.getSortColumn(iSortingCol)
         List dataReturns = new ArrayList()
-        def c = Messenger.createCriteria()
+        def c = Message.createCriteria()
         def results = c.list(max: iDisplayLength, offset: iDisplayStart) {
             and {
-                eq('receiver', receiverReg)
-                eq('receiverTrash', "off")
-                ne('sender', receiverReg)
+                eq('receiver', user)
+                eq('isReceiverTrash', 0)
             }
             if (sSearch) {
                 or {
@@ -377,7 +374,7 @@ class MessengerController {
                 }
             }
             order(sortColumn, sSortDir)
-            distinct('subject')
+            distinct('parentId')
         }
 
         int totalCount = results.totalCount
@@ -386,25 +383,24 @@ class MessengerController {
             if (sSortDir.equalsIgnoreCase('desc')) {
                 serial = (totalCount + 1) - iDisplayStart
             }
-            results.each { String subject ->
-                Messenger messenger = Messenger.findBySubject(subject)
+            results.each { Integer parentId ->
                 if (sSortDir.equalsIgnoreCase('asc')) {
                     serial++
                 } else {
                     serial--
                 }
-                /* Reply */
-                List<Messenger> subjectList = Messenger.findAllBySubject(subject.trim())
-                def aArrayList = subjectList.isRead
+                Message messenger = Message.findByParentId(parentId)
+                List<Message> messageList = Message.findAllByParentId(parentId)
+                def aArrayList = messenger.isRead
                 def isRead = ''
                 if ((false in aArrayList)) {
                     isRead = '<span class="blue">(Read)</span>'
                 }
                 def reply = ''
-                if (subjectList.size() > 1) {
-                    reply = "(" + subjectList.size() + ")"  //'<span class="green">(Reply)</span>'
+                if (messageList.size() > 1) {
+                    reply = "(" + messageList.size() + ")"
                 }
-                dataReturns.add([DT_RowId: messenger.id, 0: serial, 1: messenger.sender.name + " " + reply, 2: messenger.subject + " " + isRead, 3: messenger.dateOfMessage.format('dd/MM/yyyy'), 4: ''])
+                dataReturns.add([DT_RowId: messenger.id, 0: serial, 1: messenger.sender.username + " " + reply, 2: messenger.subject + " " + isRead, 3: messenger.createdBy.format('dd/MM/yyyy'), 4: ''])
             }
         }
         Map gridData = [iTotalRecords: totalCount, iTotalDisplayRecords: totalCount, aaData: dataReturns]
@@ -414,7 +410,6 @@ class MessengerController {
 
     def trashList() {
         User user = getAuthenticatedUser()
-        Registration senderReg = Registration.findByUser(user)
 
         int sEcho = params.sEcho ? params.getInt('sEcho') : 1
         int iDisplayStart = params.iDisplayStart ? params.getInt('iDisplayStart') : 0
@@ -430,17 +425,17 @@ class MessengerController {
 
         String sortColumn = MessengerUtility.getSortColumn(iSortingCol)
         List dataReturns = new ArrayList()
-        def c = Messenger.createCriteria()
+        def c = Message.createCriteria()
 
         def results = c.list(max: iDisplayLength, offset: iDisplayStart) {
             or {
                 and {
-                    eq('senderTrash', "isSenderOff")
-                    eq('sender', senderReg)
+                    eq('isSenderTrash', 1)
+                    eq('sender', user)
                 }
                 and {
-                    eq('receiverTrash', "isReceiverOff")
-                    eq('receiver', senderReg)
+                    eq('isReceiverTrash', 1)
+                    eq('receiver', user)
                 }
             }
             if (sSearch) {
@@ -449,7 +444,7 @@ class MessengerController {
                 }
             }
             order(sortColumn, sSortDir)
-            distinct('subject')
+            distinct('parentId')
         }
 
         int totalCount = results.totalCount
@@ -458,20 +453,19 @@ class MessengerController {
             if (sSortDir.equalsIgnoreCase('desc')) {
                 serial = (totalCount + 1) - iDisplayStart
             }
-            results.each { String subject ->
-                Messenger messenger = Messenger.findBySubject(subject)
+            results.each { Integer parentId ->
                 if (sSortDir.equalsIgnoreCase('asc')) {
                     serial++
                 } else {
                     serial--
                 }
-                /*reply*/
-                List<Messenger> subjectList = Messenger.findAllBySubject(subject.trim())
+                Message messenger = Message.findByParentId(parentId)
+                List<Message> messageListList = Message.findAllByParentId(parentId)
                 def reply = ''
-                if (subjectList.size() > 1) {
-                    reply = "(" + subjectList.size() + ")"  //'<span class="green">(Reply)</span>'
+                if (messageListList.size() > 1) {
+                    reply = "(" + messageListList.size() + ")"
                 }
-                dataReturns.add([DT_RowId: messenger.id, 0: serial, 1: messenger.receiver.name + " " + reply, 2: messenger.subject, 3: messenger.dateOfMessage.format('dd/MM/yyyy'), 4: ''])
+                dataReturns.add([DT_RowId: messenger.id, 0: serial, 1: messenger.receiver.username + " " + reply, 2: messenger.subject, 3: messenger.createdBy.format('dd/MM/yyyy'), 4: ''])
             }
         }
         Map gridData = [iTotalRecords: totalCount, iTotalDisplayRecords: totalCount, aaData: dataReturns]
