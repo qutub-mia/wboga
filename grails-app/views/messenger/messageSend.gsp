@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="layout" content="wboga"/>
-    <title>Inbox - Ace Admin</title>
+    <title>Inbox - Admin</title>
 </head>
 
 <body>
@@ -13,7 +13,7 @@
     </div>
 </g:if>
 <div class="page-header">
-    <h1>Sendbox Message</h1>
+    <h1>Sendbox</h1>
 </div>
 
 <div class="row">
